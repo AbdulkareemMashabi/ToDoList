@@ -5,7 +5,7 @@ export const Lottie = ({navigation}) => {
   return (
     <View style={styles.takingAllPage}>
       <LottieView
-        source={require('../../assets/lottie.json')}
+        source={require('../../assets/Lottie/splash.json')}
         autoPlay
         loop={false}
         onAnimationFinish={() => navigation.replace('Dashboard')}
@@ -16,7 +16,7 @@ export const Lottie = ({navigation}) => {
 };
 
 const styles = StyleSheet.create({
-  takingAllPage: {flex: 1},
+  takingAllPage: {flex: 1, backgroundColor: '#D6D5CB'},
 });
 
 export default Lottie;
