@@ -1,0 +1,10 @@
+{
+  "myWishesPage": {
+    "myWishes": "أمنياتي",
+    "emptyFormTitle": "لا تملك مهام",
+    "emptyFormTDescription": "لإنشاء مهمه جديده إضغط على “+” زر"
+  },
+  "backupPage": {
+    "backupTitle": "دعم"
+  }
+}

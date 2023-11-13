@@ -1,0 +1,12 @@
+{
+  "myWishesPage": {
+    "myWishes": "My Wishes",
+    "emptyFormTitle": "Yay, you don't have tasks",
+    "emptyFormTDescription": "To create new task click on “+” button"
+  },
+  "backupPage": {
+    "backupTitle": "Backup",
+    "title": "Don't miss your wishes",
+    "description": "Login here to save your wishes to the cloud"
+  }
+}
