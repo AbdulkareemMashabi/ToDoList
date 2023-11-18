@@ -4,8 +4,11 @@ import Button from '../../Components/Button';
 import {Icons} from '../../assets/Icons';
 import EmptyList from '../../Components/EmptyList';
 import {Images} from '../../assets/Images';
+import {useDispatch} from 'react-redux';
+import {setPage} from '../../helpers/Redux/currentPageReducer';
 
 export const Dashboard = ({navigation}) => {
+  const dispatch = useDispatch();
   useEffect(() => {
     navigation.setOptions({
       headerRight: () => (
@@ -17,6 +20,7 @@ export const Dashboard = ({navigation}) => {
         />
       ),
     });
+    dispatch(setPage('Dashboard'));
   }, [navigation]);
   return (
     <View style={styles.takingAllPage}>
