@@ -12,6 +12,8 @@ import {NativeModules} from 'react-native';
 import Locale from './helpers/localization';
 import en from './Language/en.json';
 import ar from './Language/ar.json';
+import {Provider} from 'react-redux';
+import {store} from './helpers/Redux/store';
 
 const deviceLanguage =
   Platform.OS === 'ios'
@@ -22,4 +24,14 @@ const lang = deviceLanguage.slice(0, 2);
 Locale.config({en: en, ar: ar});
 Locale.setLanguage(lang);
 
-AppRegistry.registerComponent(appName, () => App);
+const rootComponent = () => {
+  <Provider store={store}>
+    <App />
+  </Provider>;
+};
+
+AppRegistry.registerComponent(appName, () => () => (
+  <Provider store={store}>
+    <App />
+  </Provider>
+));
