@@ -16,7 +16,7 @@ export const Lottie = ({navigation}) => {
 };
 
 const styles = StyleSheet.create({
-  takingAllPage: {flex: 1, backgroundColor: '#D6D5CB'},
+  takingAllPage: {flex: 1},
 });
 
 export default Lottie;
