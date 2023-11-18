@@ -24,12 +24,6 @@ const lang = deviceLanguage.slice(0, 2);
 Locale.config({en: en, ar: ar});
 Locale.setLanguage(lang);
 
-const rootComponent = () => {
-  <Provider store={store}>
-    <App />
-  </Provider>;
-};
-
 AppRegistry.registerComponent(appName, () => () => (
   <Provider store={store}>
     <App />
