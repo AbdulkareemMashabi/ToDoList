@@ -2,9 +2,15 @@
   "myWishesPage": {
     "myWishes": "أمنياتي",
     "emptyFormTitle": "لا تملك مهام",
-    "emptyFormTDescription": "لإنشاء مهمه جديده إضغط على “+” زر"
+    "emptyFormTDescription": "لإنشاء مهمه جديده إضغط على زر “+”",
+    "languageErrorChange": "لا يمكن تغيير اللغة في الوقت الحالي"
   },
   "backupPage": {
     "backupTitle": "دعم"
+  },
+  "common": {
+    "userName": "اسم المستخدم",
+    "password": "كلمة المرور",
+    "errorOccurred": "حدث خطأ"
   }
 }

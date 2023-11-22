@@ -2,11 +2,17 @@
   "myWishesPage": {
     "myWishes": "My Wishes",
     "emptyFormTitle": "Yay, you don't have tasks",
-    "emptyFormTDescription": "To create new task click on “+” button"
+    "emptyFormTDescription": "To create new task click on “+” button",
+    "languageErrorChange": "Language could not be change at mean time"
   },
   "backupPage": {
     "backupTitle": "Backup",
     "title": "Don't miss your wishes",
     "description": "Login here to save your wishes to the cloud"
+  },
+  "common": {
+    "userName": "Username",
+    "password": "Password",
+    "errorOccurred": "Error Occurred"
   }
 }
