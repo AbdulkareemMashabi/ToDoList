@@ -5,7 +5,7 @@ const initialState = {
 };
 
 export const currentPageSlice = createSlice({
-  name: 'counter',
+  name: 'paging',
   initialState,
   reducers: {
     setPage: (state, action) => {
