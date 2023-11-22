@@ -1,4 +1,4 @@
-import {Text as AppText, StyleSheet} from 'react-native';
+import {Text as AppText, StyleSheet, Animated} from 'react-native';
 import Locale from '../helpers/localization';
 export const Text = ({
   value,
@@ -7,17 +7,21 @@ export const Text = ({
   variant = 'h2',
   isGrey,
   style,
+  secure,
 }) => {
   return (
-    <AppText style={[styles[variant], isGrey ? styles.greyColor : null, style]}>
+    <Animated.Text
+      style={[styles[variant], isGrey ? styles.greyColor : null, style]}>
       {value ? value : Locale.t(localeKey, localeProps)}
-    </AppText>
+    </Animated.Text>
   );
 };
 
 const styles = StyleSheet.create({
   h2: {color: 'black', fontSize: 22, fontWeight: 700},
-  body: {color: 'black', fontSize: 17, fontWeight: 600},
+  bodySemibold: {color: 'black', fontSize: 17, fontWeight: 600},
+  bodyRegular: {fontSize: 17, fontWeight: 400},
+  captionRegular: {color: '#FC5555', fontSize: 13, fontWeight: 400},
   greyColor: {color: '#72788E'},
 });
 
