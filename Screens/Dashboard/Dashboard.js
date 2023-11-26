@@ -1,17 +1,14 @@
 import {useEffect} from 'react';
-import {StyleSheet, Text, View, FlatList, Alert} from 'react-native';
+import {StyleSheet, View, FlatList, Alert} from 'react-native';
 import Button from '../../Components/Button';
 import {Icons} from '../../assets/Icons';
 import EmptyList from '../../Components/EmptyList';
 import {Images} from '../../assets/Images';
-import {useDispatch} from 'react-redux';
-import {setPage} from '../../helpers/Redux/currentPageReducer';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Locale from '../../helpers/localization';
 import RNRestart from 'react-native-restart';
 
 export const Dashboard = ({navigation}) => {
-  const dispatch = useDispatch();
   useEffect(() => {
     navigation.setOptions({
       headerRight: () => (
@@ -42,7 +39,6 @@ export const Dashboard = ({navigation}) => {
         </View>
       ),
     });
-    dispatch(setPage('Dashboard'));
   }, [navigation]);
   return (
     <View style={styles.takingAllPage}>
