@@ -8,15 +8,17 @@ import Lottie from './Screens/Lottie/Lottie';
 import {SafeAreaView, StyleSheet, Keyboard} from 'react-native';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import Dashboard from './Screens/Dashboard/Dashboard';
-import Locale from './helpers/localization';
 import Login from './Screens/Login/Login';
+import {useSelector} from 'react-redux';
 
 const Stack = createStackNavigator();
 
 export const App = () => {
+  const {page} = useSelector(state => state.paging) || {};
+
   return (
     <SafeAreaView
-      style={styles.safeAreaView}
+      style={[styles.safeAreaView, page === 'Lottie' ? styles.greyColor : null]}
       onStartShouldSetResponder={() => {
         Keyboard.dismiss();
       }}>
@@ -43,20 +45,8 @@ export const App = () => {
                 headerShown: false,
               }}
             />
-            <Stack.Screen
-              name="Dashboard"
-              component={Dashboard}
-              options={{
-                headerTitle: Locale.t('myWishesPage.myWishes'),
-              }}
-            />
-            <Stack.Screen
-              name="Login"
-              component={Login}
-              options={{
-                headerTitle: Locale.t('backupPage.backupTitle'),
-              }}
-            />
+            <Stack.Screen name="Dashboard" component={Dashboard} />
+            <Stack.Screen name="Login" component={Login} />
           </Stack.Navigator>
         </NavigationContainer>
       </GestureHandlerRootView>
@@ -80,6 +70,7 @@ const styles = StyleSheet.create({
     paddingBottom: 16,
     backgroundColor: 'transparent',
   },
+  greyColor: {backgroundColor: '#e5e5e5'},
 });
 
 export default App;
