@@ -1,5 +1,5 @@
 import {useEffect} from 'react';
-import {StyleSheet, View, FlatList, Alert} from 'react-native';
+import {StyleSheet, View, FlatList, Alert, I18nManager} from 'react-native';
 import Button from '../../Components/Button';
 import {Icons} from '../../assets/Icons';
 import EmptyList from '../../Components/EmptyList';
@@ -7,10 +7,14 @@ import {Images} from '../../assets/Images';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Locale from '../../helpers/localization';
 import RNRestart from 'react-native-restart';
+import {useDispatch} from 'react-redux';
+import {setPage} from '../../helpers/Redux/currentPageReducer';
 
 export const Dashboard = ({navigation}) => {
+  const dispatch = useDispatch();
   useEffect(() => {
     navigation.setOptions({
+      headerTitle: Locale.t('myWishesPage.myWishes'),
       headerRight: () => (
         <View style={styles.buttonsContainer}>
           <Button
@@ -21,6 +25,7 @@ export const Dashboard = ({navigation}) => {
                   'language',
                   Locale.language === 'ar' ? 'en' : 'ar',
                 );
+                I18nManager.forceRTL(!Locale.isRTL);
                 RNRestart.restart();
               } catch (e) {
                 Alert.alert(
@@ -39,7 +44,9 @@ export const Dashboard = ({navigation}) => {
         </View>
       ),
     });
-  }, [navigation]);
+    dispatch(setPage('Dashboard'));
+  }, []);
+
   return (
     <View style={styles.takingAllPage}>
       {/* <FlatList /> */}
