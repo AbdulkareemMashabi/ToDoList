@@ -6,7 +6,9 @@
     "languageErrorChange": "لا يمكن تغيير اللغة في الوقت الحالي"
   },
   "backupPage": {
-    "backupTitle": "دعم"
+    "backupTitle": "دعم",
+    "title": "لا تنسى أمنياتك",
+    "description": "سجل دخولك هنا لحفظ أمنياتك في الإنترنت"
   },
   "common": {
     "userName": "اسم المستخدم",
