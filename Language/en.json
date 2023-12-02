@@ -8,11 +8,15 @@
   "backupPage": {
     "backupTitle": "Backup",
     "title": "Don't miss your wishes",
-    "description": "Login here to save your wishes to the cloud"
+    "description": "Login here to save your wishes to the cloud",
+    "login": "Login",
+    "forgetPassword": "Forget Password"
   },
   "common": {
     "userName": "Username",
     "password": "Password",
-    "errorOccurred": "Error Occurred"
+    "errorOccurred": "Error Occurred",
+    "submit": "Submit",
+    "register": "Register"
   }
 }

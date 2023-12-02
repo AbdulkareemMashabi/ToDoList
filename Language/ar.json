@@ -8,11 +8,15 @@
   "backupPage": {
     "backupTitle": "دعم",
     "title": "لا تنسى أمنياتك",
-    "description": "سجل دخولك هنا لحفظ أمنياتك في الإنترنت"
+    "description": "سجل دخولك هنا لحفظ أمنياتك في الإنترنت",
+    "login": "تسجيل دخول",
+    "forgetPassword": "نسيت كلمة المرور"
   },
   "common": {
     "userName": "اسم المستخدم",
     "password": "كلمة المرور",
-    "errorOccurred": "حدث خطأ"
+    "errorOccurred": "حدث خطأ",
+    "submit": "تأكيد",
+    "Register": "تسجيل"
   }
 }
