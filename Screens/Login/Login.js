@@ -4,7 +4,7 @@ import Text from '../../Components/Text';
 import {Images} from '../../assets/Images';
 import Locale from '../../helpers/localization';
 import Form from '../../Components/Form';
-import * as Yup from 'yup';
+// import * as Yup from 'yup';
 import Button from '../../Components/Button';
 
 export const Login = ({navigation}) => {
