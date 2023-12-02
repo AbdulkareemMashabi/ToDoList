@@ -7,7 +7,6 @@ export const Text = ({
   variant = 'h2',
   isGrey,
   style,
-  secure,
 }) => {
   return (
     <Animated.Text
