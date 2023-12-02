@@ -1,4 +1,4 @@
-import {useRef, useState} from 'react';
+import {useEffect, useRef} from 'react';
 import {
   Animated,
   TextInput,
@@ -17,10 +17,15 @@ export const TextField = ({
   secure,
   style,
   withoutShadow,
+  onBlurField,
 }) => {
   const fontSizeRef = useRef(new Animated.Value(17)).current;
   const positionRef = useRef(new Animated.Value(16)).current;
   const refsFocus = useRef(null);
+
+  useEffect(() => {
+    if (value) onFocus();
+  }, [value]);
 
   const onFocus = () => {
     Animated.parallel([
@@ -69,7 +74,10 @@ export const TextField = ({
         style={[styles.textInput, {textAlign: Locale.isRTL ? 'right' : 'left'}]}
         ref={refsFocus}
         onFocus={onFocus}
-        onBlur={onBlur}
+        onBlur={e => {
+          onBlur();
+          onBlurField(e);
+        }}
         value={value}
         onChangeText={onValueChange}
         secureTextEntry={secure}
