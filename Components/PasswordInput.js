@@ -5,7 +5,7 @@ import Button from './Button';
 import {Icons} from '../assets/Icons';
 import {getShadow} from '../helpers/shadow';
 
-export const PasswordInput = ({onValueChange, value, label}) => {
+export const PasswordInput = ({onValueChange, value, label, onBlurField}) => {
   const [isHidden, setIsHidden] = useState(true);
   return (
     <View style={[styles.root, getShadow('white')]}>
@@ -16,6 +16,7 @@ export const PasswordInput = ({onValueChange, value, label}) => {
         label={label}
         secure={isHidden}
         withoutShadow
+        onBlurField={onBlurField}
       />
       <Button
         containerStyle={styles.button}
