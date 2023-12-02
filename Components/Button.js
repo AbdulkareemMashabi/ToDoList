@@ -38,6 +38,7 @@ export const Button = ({
     else
       return (
         <Text
+          variant="bodySemibold"
           style={[
             contentStyle,
             styles.text,
@@ -69,8 +70,6 @@ const styles = StyleSheet.create({
   },
   loading: {flex: 1},
   text: {
-    fontSize: 17,
-    fontWeight: 600,
     textAlign: 'center',
   },
   blueText: {color: '#32ADE6'},
