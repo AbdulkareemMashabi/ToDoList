@@ -1,5 +1,6 @@
 import {View, StyleSheet} from 'react-native';
 import LottieView from 'lottie-react-native';
+import {pagesNames} from '../../helpers/utils';
 
 export const Lottie = ({navigation}) => {
   return (
@@ -8,7 +9,7 @@ export const Lottie = ({navigation}) => {
         source={require('../../assets/Lottie/splash.json')}
         autoPlay
         loop={false}
-        onAnimationFinish={() => navigation.replace('Dashboard')}
+        onAnimationFinish={() => navigation.replace(pagesNames.dashboard)}
         style={styles.takingAllPage}
       />
     </View>
