@@ -17,6 +17,16 @@
     "password": "كلمة المرور",
     "errorOccurred": "حدث خطأ",
     "submit": "تأكيد",
+    "Register": "تسجيل",
+    "email": "ايميل",
+    "required": "هذا الحقل مطلوب"
+  },
+  "register": {
     "Register": "تسجيل"
+  },
+  "forgetPassword": {
+    "forgetPassword": "نسيت كلمة المرور",
+    "enterEmail": "لو سمحت أدخل ايميلك",
+    "receiveEmail": "سوف تتلقى رسالة مع رابط لاعادة كلمة السر"
   }
 }

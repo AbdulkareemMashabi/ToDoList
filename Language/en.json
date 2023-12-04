@@ -17,6 +17,16 @@
     "password": "Password",
     "errorOccurred": "Error Occurred",
     "submit": "Submit",
+    "register": "Register",
+    "email": "Email",
+    "required": "This field is required"
+  },
+  "register": {
     "register": "Register"
+  },
+  "forgetPassword": {
+    "forgetPassword": "Forget Password",
+    "enterEmail": "Please enter email",
+    "receiveEmail": "Will receive an email with reset link"
   }
 }
