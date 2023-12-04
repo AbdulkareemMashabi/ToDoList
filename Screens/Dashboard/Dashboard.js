@@ -7,11 +7,9 @@ import {Images} from '../../assets/Images';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Locale from '../../helpers/localization';
 import RNRestart from 'react-native-restart';
-import {useDispatch} from 'react-redux';
-import {setPage} from '../../helpers/Redux/currentPageReducer';
+import {pagesNames} from '../../helpers/utils';
 
 export const Dashboard = ({navigation}) => {
-  const dispatch = useDispatch();
   useEffect(() => {
     navigation.setOptions({
       headerTitle: Locale.t('myWishesPage.myWishes'),
@@ -38,13 +36,12 @@ export const Dashboard = ({navigation}) => {
           <Button
             source={Icons.cloud}
             onPress={() => {
-              navigation.push('Login');
+              navigation.push(pagesNames.login);
             }}
           />
         </View>
       ),
     });
-    dispatch(setPage('Dashboard'));
   }, []);
 
   return (
