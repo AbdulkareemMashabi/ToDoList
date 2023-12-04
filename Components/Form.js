@@ -1,4 +1,4 @@
-import {useEffect} from 'react';
+import {useEffect, useState} from 'react';
 import {Formik} from 'formik';
 import TextField from './TextField';
 import Text from './Text';
@@ -14,20 +14,31 @@ export const Form = ({
   buttonLocaleKey,
   renderFooter,
 }) => {
-  const additionalInitialValues = {};
+  const [additionalInitialValues, setAdditionalInitialValues] = useState({});
 
   useEffect(() => {
+    let initialFieldsValues = {};
     fields.map(item => {
-      if (!initialValues?.[item.name]) additionalInitialValues[item.name] = '';
+      if (!initialValues?.[item.name]) initialFieldsValues[item.name] = '';
     });
+    setAdditionalInitialValues(initialFieldsValues);
   }, []);
 
   return (
     <Formik
+      enableReinitialize
       initialValues={{...initialValues, ...additionalInitialValues}}
       onSubmit={values => onSubmit(values)}
       validationSchema={validationSchema}>
-      {({handleChange, handleBlur, handleSubmit, values, errors}) => (
+      {({
+        handleChange,
+        handleBlur,
+        handleSubmit,
+        values,
+        errors,
+        touched,
+        setTouched,
+      }) => (
         <>
           <View style={styles.view}>
             {fields.map((item, index) => {
@@ -36,13 +47,17 @@ export const Form = ({
                   return (
                     <View key={index}>
                       <TextField
-                        style={!errors?.[item.name] ? styles.mainField : null}
+                        style={
+                          !touched?.[item.name] || !errors?.[item.name]
+                            ? styles.mainField
+                            : null
+                        }
                         label={item.label}
                         value={values[item.name]}
                         onValueChange={handleChange(item.name)}
                         onBlurField={handleBlur(item.name)}
                       />
-                      {errors?.[item.name] ? (
+                      {touched?.[item.name] && errors?.[item.name] ? (
                         <Text
                           style={styles.error}
                           value={errors[item.name]}
@@ -55,13 +70,17 @@ export const Form = ({
                   return (
                     <View key={index}>
                       <PasswordInput
-                        style={!errors?.[item.name] ? styles.mainField : null}
+                        style={
+                          !touched?.[item.name] || !errors?.[item.name]
+                            ? styles.mainField
+                            : null
+                        }
                         label={item.label}
                         value={values[item.name]}
                         onValueChange={handleChange(item.name)}
                         onBlurField={handleBlur(item.name)}
                       />
-                      {errors?.[item.name] ? (
+                      {touched?.[item.name] && errors?.[item.name] ? (
                         <Text
                           style={styles.error}
                           value={errors[item.name]}
@@ -76,7 +95,14 @@ export const Form = ({
           {renderFooter}
           <Button
             containerStyle={styles.button}
-            onPress={handleSubmit}
+            onPress={v => {
+              let touchFields = {};
+              fields.map(item => {
+                touchFields[item.name] = true;
+              });
+              setTouched(touchFields);
+              handleSubmit(v);
+            }}
             source={buttonLocaleKey ? buttonLocaleKey : 'common.submit'}
           />
         </>
@@ -87,12 +113,12 @@ export const Form = ({
 
 const styles = StyleSheet.create({
   mainField: {
-    marginVertical: 16,
+    marginVertical: 8,
   },
   error: {marginTop: 8, marginBottom: 16},
   view: {marginVertical: 16},
   button: {
-    marginVertical: 16,
+    marginVertical: 8,
   },
 });
 
