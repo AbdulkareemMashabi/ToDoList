@@ -81,7 +81,6 @@ export const TextField = ({
         value={value}
         onChangeText={onValueChange}
         secureTextEntry={secure}
-        rt
       />
     </TouchableOpacity>
   );
@@ -96,6 +95,7 @@ const styles = StyleSheet.create({
   textInput: {
     width: '100%',
     height: 46,
+    color: 'black',
   },
   touchableOpacity: {
     paddingHorizontal: 16,
