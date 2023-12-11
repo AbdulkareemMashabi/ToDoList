@@ -6,6 +6,7 @@ const Icons = {
   eye: require('./eye.png'),
   language: require('./language.png'),
   eyeOff: require('./eyeOff.png'),
+  checkMark: require('./checkMark.png'),
 };
 
 export {Icons};
