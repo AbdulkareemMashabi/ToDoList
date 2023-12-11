@@ -17,16 +17,22 @@
     "password": "كلمة المرور",
     "errorOccurred": "حدث خطأ",
     "submit": "تأكيد",
-    "Register": "تسجيل",
+    "register": "تسجيل",
     "email": "ايميل",
-    "required": "هذا الحقل مطلوب"
+    "required": "هذا الحقل مطلوب",
+    "emailValidation": "النص المدخل يجب أن يكون ايميل"
   },
   "register": {
-    "Register": "تسجيل"
+    "register": "تسجيل",
+    "passwordValidation": "كلمة السر يجب على الاقل ان تكون مكونة من 6 أو أرقام"
   },
   "forgetPassword": {
     "forgetPassword": "نسيت كلمة المرور",
     "enterEmail": "لو سمحت أدخل ايميلك",
     "receiveEmail": "سوف تتلقى رسالة مع رابط لاعادة كلمة السر"
+  },
+  "APIErrorMessages": {
+    "weakPassword": "كلمة سر ضعيفة",
+    "emailUsed": "هذا الايميل مستخدم مسبقا"
   }
 }

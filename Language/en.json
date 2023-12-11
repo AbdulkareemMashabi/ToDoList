@@ -19,14 +19,20 @@
     "submit": "Submit",
     "register": "Register",
     "email": "Email",
-    "required": "This field is required"
+    "required": "This field is required",
+    "emailValidation": "The Text entered should be an Email"
   },
   "register": {
-    "register": "Register"
+    "register": "Register",
+    "passwordValidation": "Password should be at least 6 characters"
   },
   "forgetPassword": {
     "forgetPassword": "Forget Password",
     "enterEmail": "Please enter email",
     "receiveEmail": "Will receive an email with reset link"
+  },
+  "APIErrorMessages": {
+    "weakPassword": "Weak Password",
+    "emailUsed": "This Email is already used"
   }
 }
