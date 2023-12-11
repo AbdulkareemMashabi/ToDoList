@@ -13,7 +13,9 @@ export const ForgetPassword = ({navigation}) => {
   }, []);
 
   const validation = Yup.object().shape({
-    email: Yup.string().required(Locale.t('common.required')),
+    email: Yup.string()
+      .email(Locale.t('common.emailValidation'))
+      .required(Locale.t('common.required')),
   });
 
   return (
