@@ -1,10 +1,10 @@
-import {View, ImageBackground, StyleSheet} from 'react-native';
+import {View, StyleSheet, Image} from 'react-native';
 import Text from './Text';
 
 export const EmptyList = ({image, title, description}) => {
   return (
     <View style={styles.container}>
-      <ImageBackground source={image} style={styles.image} />
+      <Image source={image} style={styles.image} />
       <Text style={styles.title} localeKey={title} />
       <Text style={styles.description} localeKey={description} isGrey />
     </View>

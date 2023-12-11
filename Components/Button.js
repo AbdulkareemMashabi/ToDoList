@@ -1,10 +1,5 @@
 import LottieView from 'lottie-react-native';
-import {
-  ImageBackground,
-  StyleSheet,
-  TouchableOpacity,
-  Platform,
-} from 'react-native';
+import {StyleSheet, TouchableOpacity, Image} from 'react-native';
 import Text from './Text';
 import {getShadow} from '../helpers/shadow';
 
@@ -30,10 +25,7 @@ export const Button = ({
       );
     else if (isIcon)
       return (
-        <ImageBackground
-          source={source}
-          style={[containerStyle, styles.imageSize]}
-        />
+        <Image source={source} style={[containerStyle, styles.imageSize]} />
       );
     else
       return (
@@ -68,7 +60,7 @@ const styles = StyleSheet.create({
     height: 24,
     alignSelf: 'center',
   },
-  loading: {flex: 1},
+  loading: {width: '100%', height: 30},
   text: {
     textAlign: 'center',
   },
