@@ -5,10 +5,9 @@ import Text from '../../Components/Text';
 import Form from '../../Components/Form';
 import * as Yup from 'yup';
 import {createUserWithEmailAndPassword} from 'firebase/auth';
-import Reactotron from 'reactotron-react-native';
 import {auth} from '../../helpers/firebase';
 import {useDispatch} from 'react-redux';
-import {setIsLoading} from '../../helpers/Redux/loadingReducer';
+import {setIsLoading, setUserId} from '../../helpers/Redux/mainReducer';
 import {handleAPIErrors, showToast} from '../../helpers/utils';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -51,7 +50,9 @@ export const Register = ({navigation}) => {
               values.email,
               values.password,
             );
-            await AsyncStorage.setItem('UID', userCredential.user.uid);
+            const userId = userCredential.user.uid;
+            await AsyncStorage.setItem('userId', userId);
+            dispatch(setUserId(userId));
             showToast('register.registeredSuccessfully');
             navigation.popToTop();
           } catch (e) {
