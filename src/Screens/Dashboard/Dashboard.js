@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react';
+import {useEffect} from 'react';
 import {StyleSheet, View, FlatList, Alert, I18nManager} from 'react-native';
 import Button from '../../Components/Button';
 import {Icons} from '../../assets/Icons';
@@ -9,64 +9,55 @@ import Locale from '../../helpers/localization';
 import RNRestart from 'react-native-restart';
 import {pagesNames} from '../../helpers/utils';
 import Skeleton from '../../Components/Skeleton';
+import {useSelector} from 'react-redux';
 
 export const Dashboard = ({navigation}) => {
-  const [userId, setUserId] = useState(null);
+  const {userId} = useSelector(state => state.main);
   useEffect(() => {
     navigation.setOptions({
       headerTitle: Locale.t('myWishesPage.myWishes'),
       headerRight: () => (
-        <View style={styles.buttonsContainer}>
-          <Button
-            source={Icons.language}
-            onPress={async () => {
-              try {
-                await AsyncStorage.setItem(
-                  'language',
-                  Locale.language === 'ar' ? 'en' : 'ar',
-                );
-                I18nManager.forceRTL(!Locale.isRTL);
-                RNRestart.restart();
-              } catch (e) {
-                Alert.alert(
-                  Locale.t('common.errorOccurred'),
-                  Locale.t('myWishesPage.languageErrorChange'),
-                );
-              }
-            }}
-          />
-          {userId ? (
+        <View style={styles.viewContainer}>
+          <View style={styles.buttonsContainer}>
             <Button
-              source={Icons.logOut}
+              source={Icons.language}
               onPress={async () => {
-                await AsyncStorage.setItem('UID', '');
-                RNRestart.restart();
+                try {
+                  await AsyncStorage.setItem(
+                    'language',
+                    Locale.language === 'ar' ? 'en' : 'ar',
+                  );
+                  I18nManager.forceRTL(!Locale.isRTL);
+                  RNRestart.restart();
+                } catch (e) {
+                  Alert.alert(
+                    Locale.t('common.errorOccurred'),
+                    Locale.t('myWishesPage.languageErrorChange'),
+                  );
+                }
               }}
             />
-          ) : (
-            <Button
-              source={Icons.cloud}
-              onPress={() => {
-                navigation.push(pagesNames.login);
-              }}
-            />
-          )}
+            {userId ? (
+              <Button
+                source={Icons.logOut}
+                onPress={async () => {
+                  await AsyncStorage.setItem('userId', '');
+                  RNRestart.restart();
+                }}
+              />
+            ) : (
+              <Button
+                source={Icons.cloud}
+                onPress={() => {
+                  navigation.push(pagesNames.login);
+                }}
+              />
+            )}
+          </View>
         </View>
       ),
     });
-  }, []);
-
-  const getUserId = async () => {
-    if (!userId) {
-      const UID = await AsyncStorage.getItem('UID');
-      setUserId(UID);
-    }
-  };
-
-  useEffect(() => {
-    console.log('sms');
-    getUserId();
-  }, [navigation]);
+  }, [userId]);
 
   return (
     <View style={styles.takingAllPage}>
@@ -95,8 +86,10 @@ const styles = StyleSheet.create({
   buttonsContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    width: '70%',
+    flex: 1,
+    paddingLeft: 24,
   },
+  viewContainer: {flexDirection: 'row'},
 });
 
 export default Dashboard;
