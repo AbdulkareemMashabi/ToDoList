@@ -8,7 +8,7 @@ import {sendPasswordResetEmail} from 'firebase/auth';
 import {handleAPIErrors, showToast} from '../../helpers/utils';
 import {useDispatch} from 'react-redux';
 import reactotron from 'reactotron-react-native';
-import {setIsLoading} from '../../helpers/Redux/loadingReducer';
+import {setIsLoading} from '../../helpers/Redux/mainReducer';
 import {auth} from '../../helpers/firebase';
 
 export const ForgetPassword = ({navigation}) => {
