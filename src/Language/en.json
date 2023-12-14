@@ -5,8 +5,8 @@
     "emptyFormTDescription": "To create new task click on “+” button",
     "languageErrorChange": "Language could not be change at mean time"
   },
-  "backupPage": {
-    "backupTitle": "Backup",
+  "loginPage": {
+    "loginTitle": "Login",
     "title": "Don't miss your wishes",
     "description": "Login here to save your wishes to the cloud",
     "login": "Login",

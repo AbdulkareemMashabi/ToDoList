@@ -5,8 +5,8 @@
     "emptyFormTDescription": "لإنشاء مهمه جديده إضغط على زر “+”",
     "languageErrorChange": "لا يمكن تغيير اللغة في الوقت الحالي"
   },
-  "backupPage": {
-    "backupTitle": "دعم",
+  "loginPage": {
+    "loginTitle": "تسجيل دخول",
     "title": "لا تنسى أمنياتك",
     "description": "سجل دخولك هنا لحفظ أمنياتك في الإنترنت",
     "login": "تسجيل دخول",
