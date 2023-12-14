@@ -8,16 +8,15 @@ import Button from '../../Components/Button';
 import {handleAPIErrors, pagesNames, showToast} from '../../helpers/utils';
 import {signInWithEmailAndPassword} from 'firebase/auth';
 import {auth} from '../../helpers/firebase';
-import Reactotron from 'reactotron-react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useDispatch} from 'react-redux';
-import {setIsLoading} from '../../helpers/Redux/loadingReducer';
+import {setIsLoading, setUserId} from '../../helpers/Redux/mainReducer';
 
 export const Login = ({navigation}) => {
   const dispatch = useDispatch();
   useEffect(() => {
     navigation.setOptions({
-      headerTitle: Locale.t('backupPage.backupTitle'),
+      headerTitle: Locale.t('loginPage.loginTitle'),
     });
   }, []);
 
@@ -30,11 +29,11 @@ export const Login = ({navigation}) => {
 
   return (
     <View style={styles.takingAllPage}>
-      <Text localeKey={'backupPage.title'} />
+      <Text localeKey={'loginPage.title'} />
       <Text
         variant={'bodySemibold'}
         isGrey
-        localeKey={'backupPage.description'}
+        localeKey={'loginPage.description'}
       />
       <Form
         fields={[
@@ -50,8 +49,10 @@ export const Login = ({navigation}) => {
               values.email,
               values.password,
             );
-            await AsyncStorage.setItem('UID', userCredential.user.uid);
-            showToast('backupPage.loginSuccessfully');
+            const userId = userCredential.user.uid;
+            await AsyncStorage.setItem('userId', userId);
+            dispatch(setUserId(userId));
+            showToast('loginPage.loginSuccessfully');
             navigation.popToTop();
           } catch (e) {
             handleAPIErrors(e);
@@ -59,10 +60,10 @@ export const Login = ({navigation}) => {
             dispatch(setIsLoading(false));
           }
         }}
-        buttonLocaleKey={'backupPage.login'}
+        buttonLocaleKey={'loginPage.login'}
         renderFooter={
           <Button
-            source={'backupPage.forgetPassword'}
+            source={'loginPage.forgetPassword'}
             variant="secondary"
             containerStyle={styles.forgetPasswordButton}
             onPress={() => {
