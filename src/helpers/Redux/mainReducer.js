@@ -2,7 +2,7 @@ import {createSlice} from '@reduxjs/toolkit';
 
 const initialState = {
   isLoading: false,
-  UID: null,
+  userId: null,
 };
 
 export const LoadingSlice = createSlice({
@@ -12,12 +12,12 @@ export const LoadingSlice = createSlice({
     setIsLoading: (state, action) => {
       state.isLoading = action.payload;
     },
-    setUID: (state, action) => {
-      state.UID = action.payload;
+    setUserId: (state, action) => {
+      state.userId = action.payload;
     },
   },
 });
 
-export const {setIsLoading, setUID} = LoadingSlice.actions;
+export const {setIsLoading, setUserId} = LoadingSlice.actions;
 
 export default LoadingSlice.reducer;

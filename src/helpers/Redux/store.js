@@ -1,8 +1,8 @@
 import {configureStore} from '@reduxjs/toolkit';
-import loadingReducer from './loadingReducer';
+import mainReducer from './mainReducer';
 
 export const store = configureStore({
   reducer: {
-    loading: loadingReducer,
+    main: mainReducer,
   },
 });
