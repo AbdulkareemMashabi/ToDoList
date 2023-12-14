@@ -6,11 +6,15 @@ import App from './App';
 import {Alert, I18nManager} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import RNRestart from 'react-native-restart';
+import {useDispatch} from 'react-redux';
+import {setUserId} from './helpers/Redux/mainReducer';
 
 export const Root = () => {
   const [startApp, setStartApp] = useState(false);
+  const dispatch = useDispatch();
   useEffect(() => {
     getUserLanguage();
+    getUserId();
   }, []);
 
   const supportRTL = () => {
@@ -36,6 +40,11 @@ export const Root = () => {
         Locale.t('myWishesPage.languageErrorChange'),
       );
     }
+  };
+
+  const getUserId = async () => {
+    const userId = await AsyncStorage.getItem('userId');
+    dispatch(setUserId(userId));
   };
 
   return startApp ? <App /> : <></>;
