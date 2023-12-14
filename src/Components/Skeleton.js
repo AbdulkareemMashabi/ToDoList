@@ -3,7 +3,7 @@ import Shimmer from './Shimmer';
 import {useSelector} from 'react-redux';
 
 export const Skeleton = () => {
-  const {isLoading} = useSelector(state => state.loading);
+  const {isLoading} = useSelector(state => state.main);
   return (
     <>
       {isLoading ? (

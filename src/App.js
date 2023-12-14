@@ -26,7 +26,7 @@ const Stack = createStackNavigator();
 
 export const App = () => {
   const [currentPage, setCurrentPage] = useState(pagesNames.lottie);
-  const {isLoading} = useSelector(state => state.loading);
+  const {isLoading} = useSelector(state => state.main);
 
   useEffect(() => {
     BackHandler.addEventListener('hardwareBackPress', () => !isLoading);

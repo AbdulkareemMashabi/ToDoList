@@ -17,7 +17,7 @@ export const Form = ({
   renderFooter,
 }) => {
   const [additionalInitialValues, setAdditionalInitialValues] = useState({});
-  const {isLoading} = useSelector(state => state.loading);
+  const {isLoading} = useSelector(state => state.main);
 
   useEffect(() => {
     let initialFieldsValues = {};
