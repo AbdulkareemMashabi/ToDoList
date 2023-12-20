@@ -8,6 +8,7 @@ import Button from '../Button/Button';
 import {useSelector} from 'react-redux';
 import styles from './Form.style';
 import {getErrorAndHint} from './utils';
+import {DatePicker} from '../DatePicker/DatePicker';
 
 export const Form = ({
   validationSchema,
@@ -96,6 +97,22 @@ export const Form = ({
                         value={values[item.name]}
                         onValueChange={handleChange(item.name)}
                         onBlurField={handleBlur(item.name)}
+                      />
+                      {getErrorAndHint(touched, errors, item)}
+                    </View>
+                  );
+                case 'DatePicker':
+                  return (
+                    <View key={index}>
+                      <DatePicker
+                        style={
+                          !touched?.[item.name] || !errors?.[item.name]
+                            ? styles.mainField
+                            : null
+                        }
+                        label={item.label}
+                        value={values[item.name]}
+                        onValueChange={handleChange(item.name)}
                       />
                       {getErrorAndHint(touched, errors, item)}
                     </View>
