@@ -21,6 +21,8 @@ import {pagesNames, pagesUseWaveImage, toastConfig} from './helpers/utils';
 import {Images} from './assets/Images';
 import {useSelector} from 'react-redux';
 import Toast from 'react-native-toast-message';
+import CreateNewTask from './Screens/CreateNewTask/CreateNewTask';
+import {CreateNewTaskImages} from './assets/CreateNewTaskImages';
 
 const Stack = createStackNavigator();
 
@@ -31,6 +33,15 @@ export const App = () => {
   useEffect(() => {
     BackHandler.addEventListener('hardwareBackPress', () => !isLoading);
   }, []);
+
+  const getRandomImages = () => {
+    if (pagesUseWaveImage.includes(currentPage)) return Images.waves;
+    else if (currentPage === pagesNames.createNewTask) {
+      const values = Object.values(CreateNewTaskImages);
+      const randomValue = values[Math.floor(Math.random() * values.length)];
+      return randomValue;
+    } else return null;
+  };
 
   return (
     <SafeAreaView
@@ -43,11 +54,7 @@ export const App = () => {
         Keyboard.dismiss();
       }}>
       <GestureHandlerRootView style={styles.gestureStyle}>
-        <ImageBackground
-          style={styles.image}
-          source={
-            pagesUseWaveImage.includes(currentPage) ? Images.waves : null
-          }>
+        <ImageBackground style={styles.image} source={getRandomImages()}>
           <NavigationContainer
             theme={{
               ...DefaultTheme,
@@ -61,7 +68,10 @@ export const App = () => {
               screenOptions={{
                 headerStyle: styles.headerPageTitle,
                 headerTitleAlign: 'center',
-                cardStyle: styles.pageStyle,
+                cardStyle:
+                  currentPage !== pagesNames.createNewTask
+                    ? styles.pageStyle
+                    : null,
               }}>
               <Stack.Screen
                 name={pagesNames.lottie}
@@ -103,6 +113,15 @@ export const App = () => {
                 listeners={{
                   focus: () => {
                     setCurrentPage(pagesNames.register);
+                  },
+                }}
+              />
+              <Stack.Screen
+                name={pagesNames.createNewTask}
+                component={CreateNewTask}
+                listeners={{
+                  focus: () => {
+                    setCurrentPage(pagesNames.createNewTask);
                   },
                 }}
               />
