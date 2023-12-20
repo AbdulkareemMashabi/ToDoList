@@ -1,14 +1,14 @@
 import {useEffect} from 'react';
 import {StyleSheet, View, FlatList, Alert, I18nManager} from 'react-native';
-import Button from '../../Components/Button';
+import Button from '../../Components/Button/Button';
 import {Icons} from '../../assets/Icons';
-import EmptyList from '../../Components/EmptyList';
+import EmptyList from '../../Components/EmptyList/EmptyList';
 import {Images} from '../../assets/Images';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Locale from '../../helpers/localization';
 import RNRestart from 'react-native-restart';
 import {pagesNames} from '../../helpers/utils';
-import Skeleton from '../../Components/Skeleton';
+import Skeleton from '../../Components/Skeleton/Skeleton';
 import {useSelector} from 'react-redux';
 
 export const Dashboard = ({navigation}) => {
@@ -68,7 +68,13 @@ export const Dashboard = ({navigation}) => {
         title={'myWishesPage.emptyFormTitle'}
         description={'myWishesPage.emptyFormTDescription'}
       />
-      <Button containerStyle={styles.button} source={Icons.plus} />
+      <Button
+        containerStyle={styles.button}
+        source={Icons.plus}
+        onPress={() => {
+          navigation.push(pagesNames.createNewTask);
+        }}
+      />
     </View>
   );
 };
