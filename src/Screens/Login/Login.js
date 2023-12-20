@@ -1,10 +1,10 @@
 import {useEffect} from 'react';
 import {StyleSheet, View} from 'react-native';
-import Text from '../../Components/Text';
+import Text from '../../Components/Text/Text';
 import Locale from '../../helpers/localization';
-import Form from '../../Components/Form';
+import Form from '../../Components/Form/Form';
 import * as Yup from 'yup';
-import Button from '../../Components/Button';
+import Button from '../../Components/Button/Button';
 import {handleAPIErrors, pagesNames, showToast} from '../../helpers/utils';
 import {signInWithEmailAndPassword} from 'firebase/auth';
 import {auth} from '../../helpers/firebase';

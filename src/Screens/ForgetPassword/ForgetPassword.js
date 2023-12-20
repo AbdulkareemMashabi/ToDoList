@@ -1,8 +1,8 @@
 import {useEffect} from 'react';
 import {View, StyleSheet} from 'react-native';
 import Locale from '../../helpers/localization';
-import Text from '../../Components/Text';
-import Form from '../../Components/Form';
+import Text from '../../Components/Text/Text';
+import Form from '../../Components/Form/Form';
 import * as Yup from 'yup';
 import {sendPasswordResetEmail} from 'firebase/auth';
 import {handleAPIErrors, showToast} from '../../helpers/utils';
