@@ -1,7 +1,7 @@
 import {Alert, Image, View} from 'react-native';
 import Locale from './localization';
 import {Icons} from '../assets/Icons';
-import Text from '../Components/Text';
+import Text from '../Components/Text/Text';
 import Toast from 'react-native-toast-message';
 
 export const pagesNames = {
@@ -10,6 +10,7 @@ export const pagesNames = {
   login: 'Login',
   register: 'Register',
   forgetPassword: 'ForgetPassword',
+  createNewTask: 'createNewTask',
 };
 
 export const pagesUseWaveImage = ['Login', 'Register', 'ForgetPassword'];
