@@ -37,5 +37,11 @@
   "APIErrorMessages": {
     "weakPassword": "Weak Password",
     "emailUsed": "This Email is already used"
+  },
+  "newTask": {
+    "newTaskTitle": "New Task",
+    "title": "Title",
+    "date": "Date",
+    "description": "Description"
   }
 }
