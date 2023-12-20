@@ -11,7 +11,7 @@ export const Text = ({
   return (
     <Animated.Text
       style={[styles[variant], isGrey ? styles.greyColor : null, style]}>
-      {value ? value : Locale.t(localeKey, localeProps)}
+      {value || value === '' ? value : Locale.t(localeKey, localeProps)}
     </Animated.Text>
   );
 };
