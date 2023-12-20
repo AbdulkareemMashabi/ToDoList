@@ -68,7 +68,6 @@ export const TextField = ({
         style={[styles.text, {fontSize: fontSizeRef, top: positionRef}]}
         localeKey={label}
         variant="bodyRegular"
-        secure={secure}
       />
       <TextInput
         multiline
@@ -95,7 +94,6 @@ const styles = StyleSheet.create({
   },
   textInput: {
     width: '100%',
-    height: 46,
     color: 'black',
   },
   touchableOpacity: {
@@ -103,6 +101,8 @@ const styles = StyleSheet.create({
     paddingTop: 10,
     backgroundColor: 'white',
     borderRadius: 16,
+    height: 56,
+    justifyContent: 'center',
   },
 });
 
