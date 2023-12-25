@@ -3,6 +3,7 @@ import {createSlice} from '@reduxjs/toolkit';
 const initialState = {
   isLoading: false,
   userId: null,
+  backgroundColor: null,
 };
 
 export const LoadingSlice = createSlice({
@@ -15,9 +16,13 @@ export const LoadingSlice = createSlice({
     setUserId: (state, action) => {
       state.userId = action.payload;
     },
+    setBackgroundColor: (state, action) => {
+      state.backgroundColor = action.payload;
+    },
   },
 });
 
-export const {setIsLoading, setUserId} = LoadingSlice.actions;
+export const {setIsLoading, setUserId, setBackgroundColor} =
+  LoadingSlice.actions;
 
 export default LoadingSlice.reducer;
