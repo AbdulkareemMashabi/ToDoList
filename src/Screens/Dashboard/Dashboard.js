@@ -72,7 +72,8 @@ export const Dashboard = ({navigation}) => {
         containerStyle={styles.button}
         source={Icons.plus}
         onPress={() => {
-          navigation.push(pagesNames.createNewTask);
+          if (userId) navigation.push(pagesNames.createNewTask);
+          else navigation.push(pagesNames.login);
         }}
       />
     </View>
