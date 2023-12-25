@@ -5,17 +5,22 @@ import {
   TouchableOpacity,
   StyleSheet,
   Platform,
+  Image,
 } from 'react-native';
 import Text from '../Text/Text';
 import Locale from '../../helpers/localization';
 import {getShadow} from '../../helpers/shadow';
 import {default as RNDatePicker} from 'react-native-date-picker';
+import {Icons} from '../../assets/Icons';
+import {useSelector} from 'react-redux';
 
 export const DatePicker = ({onValueChange, value, label, style}) => {
   const [open, setOpen] = useState(false);
   const [date, setDate] = useState(new Date());
   const fontSizeRef = useRef(new Animated.Value(17)).current;
   const positionRef = useRef(new Animated.Value(16)).current;
+
+  const {backgroundColor} = useSelector(state => state.main);
 
   useEffect(() => {
     if (value) {
@@ -59,6 +64,7 @@ export const DatePicker = ({onValueChange, value, label, style}) => {
           value={value || ''}
           variant="bodySemibold"
         />
+        <Image source={Icons.calendar} tintColor={backgroundColor} />
       </TouchableOpacity>
       <RNDatePicker
         style={{backgroundColor: 'red'}}
@@ -95,12 +101,14 @@ const styles = StyleSheet.create({
     color: 'black',
   },
   touchableOpacity: {
-    paddingHorizontal: 16,
+    paddingHorizontal: 30,
     paddingTop: 10,
     backgroundColor: 'white',
     borderRadius: 16,
     height: 56,
     justifyContent: 'center',
+    flexDirection: 'row',
+    alignItems: 'center',
   },
 });
 
