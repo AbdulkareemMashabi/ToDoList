@@ -1,5 +1,5 @@
 import 'react-native-gesture-handler';
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {NavigationContainer, DefaultTheme} from '@react-navigation/native';
 import Reactotron from 'reactotron-react-native';
 
@@ -17,31 +17,56 @@ import Dashboard from './Screens/Dashboard/Dashboard';
 import Login from './Screens/Login/Login';
 import ForgetPassword from './Screens/ForgetPassword/ForgetPassword';
 import Register from './Screens/Register/Register';
-import {pagesNames, pagesUseWaveImage, toastConfig} from './helpers/utils';
+import {
+  backgroundColors,
+  pagesNames,
+  pagesUseWaveImage,
+  toastConfig,
+} from './helpers/utils';
 import {Images} from './assets/Images';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import Toast from 'react-native-toast-message';
 import CreateNewTask from './Screens/CreateNewTask/CreateNewTask';
 import {CreateNewTaskImages} from './assets/CreateNewTaskImages';
+import {setBackgroundColor} from './helpers/Redux/mainReducer';
 
 const Stack = createStackNavigator();
 
 export const App = () => {
   const [currentPage, setCurrentPage] = useState(pagesNames.lottie);
+  const [image, setImage] = useState(null);
   const {isLoading} = useSelector(state => state.main);
+  const usedNumbers = useRef([]);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     BackHandler.addEventListener('hardwareBackPress', () => !isLoading);
   }, []);
 
-  const getRandomImages = () => {
-    if (pagesUseWaveImage.includes(currentPage)) return Images.waves;
-    else if (currentPage === pagesNames.createNewTask) {
-      const values = Object.values(CreateNewTaskImages);
-      const randomValue = values[Math.floor(Math.random() * values.length)];
-      return randomValue;
-    } else return null;
+  const getRandomNumber = () => {
+    let randomNumber = Math.floor(Math.random() * 4);
+    if (usedNumbers.current.length === 4) {
+      usedNumbers.current = [];
+    }
+    while (usedNumbers.current.includes(randomNumber)) {
+      randomNumber = Math.floor(Math.random() * 4);
+    }
+    usedNumbers.current.push(randomNumber);
+
+    return randomNumber;
   };
+
+  useEffect(() => {
+    if (pagesUseWaveImage.includes(currentPage)) setImage(Images.waves);
+    else if (currentPage === pagesNames.createNewTask) {
+      const keys = Object.keys(CreateNewTaskImages);
+      const randomNumber = getRandomNumber();
+      const randomKey = keys[randomNumber];
+
+      dispatch(setBackgroundColor(backgroundColors[randomKey]));
+      setImage(CreateNewTaskImages[randomKey]);
+    } else setImage(null);
+  }, [currentPage]);
 
   return (
     <SafeAreaView
@@ -54,7 +79,7 @@ export const App = () => {
         Keyboard.dismiss();
       }}>
       <GestureHandlerRootView style={styles.gestureStyle}>
-        <ImageBackground style={styles.image} source={getRandomImages()}>
+        <ImageBackground style={styles.image} source={image}>
           <NavigationContainer
             theme={{
               ...DefaultTheme,
@@ -122,6 +147,12 @@ export const App = () => {
                 listeners={{
                   focus: () => {
                     setCurrentPage(pagesNames.createNewTask);
+                  },
+                  beforeRemove: () => {
+                    dispatch(setBackgroundColor(null));
+                  },
+                  blur: () => {
+                    dispatch(setBackgroundColor(null));
                   },
                 }}
               />
