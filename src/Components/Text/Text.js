@@ -17,10 +17,10 @@ export const Text = ({
 };
 
 const styles = StyleSheet.create({
-  h2: {color: 'black', fontSize: 22, fontWeight: 700},
-  bodySemibold: {color: 'black', fontSize: 17, fontWeight: 600},
-  bodyRegular: {fontSize: 17, fontWeight: 400, color: '#72788E'},
-  captionRegular: {color: '#FC5555', fontSize: 13, fontWeight: 400},
+  h2: {color: 'black', fontSize: 22, fontWeight: '700'},
+  bodySemibold: {color: 'black', fontSize: 17, fontWeight: '600'},
+  bodyRegular: {fontSize: 17, fontWeight: '400', color: '#72788E'},
+  captionRegular: {color: '#FC5555', fontSize: 13, fontWeight: '400'},
   greyColor: {color: '#72788E'},
 });
 
