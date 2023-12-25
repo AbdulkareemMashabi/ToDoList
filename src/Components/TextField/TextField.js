@@ -95,6 +95,8 @@ const styles = StyleSheet.create({
   textInput: {
     width: '100%',
     color: 'black',
+    fontSize: 17,
+    fontWeight: '600',
   },
   touchableOpacity: {
     paddingHorizontal: 16,
