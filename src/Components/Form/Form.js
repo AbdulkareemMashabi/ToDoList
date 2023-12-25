@@ -19,7 +19,7 @@ export const Form = ({
   renderFooter,
 }) => {
   const [additionalInitialValues, setAdditionalInitialValues] = useState({});
-  const {isLoading} = useSelector(state => state.main);
+  const {isLoading, backgroundColor} = useSelector(state => state.main);
 
   useEffect(() => {
     let initialFieldsValues = {};
@@ -122,8 +122,12 @@ export const Form = ({
           </View>
           {renderFooter}
           <Button
+            shadowColor={backgroundColor}
             isLoading={isLoading}
-            containerStyle={styles.button}
+            containerStyle={[
+              styles.button,
+              backgroundColor ? {backgroundColor: backgroundColor} : null,
+            ]}
             onPress={v => {
               let touchFields = {};
               fields.map(item => {
