@@ -20,6 +20,18 @@ const errorMessages = {
   'weak-password': 'APIErrorMessages.weakPassword',
 };
 
+export const backgroundColors = {
+  blue: '#32ADE6',
+  red: '#FF3B30',
+  green: '#34C759',
+  orange: '#FF9500',
+};
+
+export const shadowColors = {
+  ...backgroundColors,
+  blue: '#0387D1',
+};
+
 export const handleAPIErrors = error => {
   const message = errorMessages[error.code.split('/')[1]];
   Alert.alert(Locale.t('common.errorOccurred'), Locale.t(message));
