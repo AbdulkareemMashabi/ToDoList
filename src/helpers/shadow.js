@@ -1,7 +1,9 @@
 import {Platform} from 'react-native';
+import {shadowColors} from './utils';
 
 export const getShadow = color => {
-  if (Platform.OS === 'ios') return IOSShadow(color);
+  const shadow = shadowColors[color];
+  if (Platform.OS === 'ios') return IOSShadow(shadow);
   else return androidShadow;
 };
 
