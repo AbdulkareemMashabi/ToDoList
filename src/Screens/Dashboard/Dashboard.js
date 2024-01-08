@@ -1,4 +1,4 @@
-import {useEffect} from 'react';
+import {useEffect, useState} from 'react';
 import {StyleSheet, View, FlatList, Alert, I18nManager} from 'react-native';
 import Button from '../../Components/Button/Button';
 import {Icons} from '../../assets/Icons';
@@ -13,6 +13,7 @@ import {useSelector} from 'react-redux';
 
 export const Dashboard = ({navigation}) => {
   const {userId} = useSelector(state => state.main);
+  const {isLoading} = useState(false);
   useEffect(() => {
     navigation.setOptions({
       headerTitle: Locale.t('myWishesPage.myWishes'),
@@ -28,6 +29,7 @@ export const Dashboard = ({navigation}) => {
                     Locale.language === 'ar' ? 'en' : 'ar',
                   );
                   I18nManager.forceRTL(!Locale.isRTL);
+                  I18nManager.allowRTL(!Locale.isRTL);
                   RNRestart.restart();
                 } catch (e) {
                   Alert.alert(
@@ -61,21 +63,26 @@ export const Dashboard = ({navigation}) => {
 
   return (
     <View style={styles.takingAllPage}>
-      {/* <FlatList /> */}
-      <Skeleton />
-      <EmptyList
-        image={Images.emptyListPic}
-        title={'myWishesPage.emptyFormTitle'}
-        description={'myWishesPage.emptyFormTDescription'}
-      />
-      <Button
-        containerStyle={styles.button}
-        source={Icons.plus}
-        onPress={() => {
-          if (userId) navigation.push(pagesNames.createNewTask);
-          else navigation.push(pagesNames.login);
-        }}
-      />
+      {!isLoading ? (
+        <>
+          {/* <FlatList /> */}
+          <EmptyList
+            image={Images.emptyListPic}
+            title={'myWishesPage.emptyFormTitle'}
+            description={'myWishesPage.emptyFormTDescription'}
+          />
+          <Button
+            containerStyle={styles.button}
+            source={Icons.plus}
+            onPress={() => {
+              if (userId) navigation.push(pagesNames.createNewTask);
+              else navigation.push(pagesNames.login);
+            }}
+          />
+        </>
+      ) : (
+        <Skeleton />
+      )}
     </View>
   );
 };
