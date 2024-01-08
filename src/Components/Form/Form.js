@@ -2,7 +2,7 @@ import {useEffect, useState} from 'react';
 import {Formik} from 'formik';
 import TextField from '../TextField/TextField';
 import Text from '../Text/Text';
-import {StyleSheet, View} from 'react-native';
+import {Keyboard, View} from 'react-native';
 import PasswordInput from '../PasswordInput/PasswordInput';
 import Button from '../Button/Button';
 import {useSelector} from 'react-redux';
@@ -35,6 +35,7 @@ export const Form = ({
       initialValues={{...initialValues, ...additionalInitialValues}}
       onSubmit={values => {
         onSubmit(values);
+        Keyboard.dismiss();
       }}
       validationSchema={validationSchema}>
       {({
