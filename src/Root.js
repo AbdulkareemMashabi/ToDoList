@@ -19,6 +19,7 @@ export const Root = () => {
 
   const supportRTL = () => {
     I18nManager.forceRTL(true);
+    I18nManager.allowRTL(true);
     RNRestart.restart();
   };
 
