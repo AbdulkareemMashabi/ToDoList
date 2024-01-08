@@ -8,6 +8,9 @@ const Icons = {
   eyeOff: require('./eyeOff.png'),
   checkMark: require('./checkMark.png'),
   calendar: require('./calendar.png'),
+  delete: require('./delete.png'),
+  edit: require('./edit.png'),
+  plusCircle: require('./plusCircle.png'),
 };
 
 export {Icons};
