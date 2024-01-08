@@ -55,6 +55,7 @@ export const DatePicker = ({onValueChange, value, label, style}) => {
           style={[styles.text, {fontSize: fontSizeRef, top: positionRef}]}
           localeKey={label}
           variant="bodyRegular"
+          isGrey
         />
         <Text
           style={[

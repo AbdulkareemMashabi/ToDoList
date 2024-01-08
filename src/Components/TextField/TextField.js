@@ -1,11 +1,5 @@
 import {useEffect, useRef} from 'react';
-import {
-  Animated,
-  TextInput,
-  TouchableOpacity,
-  StyleSheet,
-  Platform,
-} from 'react-native';
+import {Animated, TextInput, TouchableOpacity, StyleSheet} from 'react-native';
 import Text from '../Text/Text';
 import Locale from '../../helpers/localization';
 import {getShadow} from '../../helpers/shadow';
@@ -18,6 +12,7 @@ export const TextField = ({
   style,
   withoutShadow,
   onBlurField,
+  multiline,
 }) => {
   const fontSizeRef = useRef(new Animated.Value(17)).current;
   const positionRef = useRef(new Animated.Value(16)).current;
@@ -68,9 +63,10 @@ export const TextField = ({
         style={[styles.text, {fontSize: fontSizeRef, top: positionRef}]}
         localeKey={label}
         variant="bodyRegular"
+        isGrey
       />
       <TextInput
-        multiline
+        multiline={multiline}
         style={[styles.textInput, {textAlign: Locale.isRTL ? 'right' : 'left'}]}
         ref={refsFocus}
         onFocus={onFocus}
