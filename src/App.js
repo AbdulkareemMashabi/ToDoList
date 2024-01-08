@@ -11,6 +11,7 @@ import {
   Keyboard,
   ImageBackground,
   BackHandler,
+  View,
 } from 'react-native';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import Dashboard from './Screens/Dashboard/Dashboard';
@@ -29,13 +30,15 @@ import Toast from 'react-native-toast-message';
 import CreateNewTask from './Screens/CreateNewTask/CreateNewTask';
 import {CreateNewTaskImages} from './assets/CreateNewTaskImages';
 import {setBackgroundColor} from './helpers/Redux/mainReducer';
+import TaskDetailsScreen from './Screens/TaskDetailsScreen/TaskDetailsScreen';
+import LottieView from 'lottie-react-native';
 
 const Stack = createStackNavigator();
 
 export const App = () => {
   const [currentPage, setCurrentPage] = useState(pagesNames.lottie);
   const [image, setImage] = useState(null);
-  const {isLoading} = useSelector(state => state.main);
+  const {isLoading, isLoadingOverLay} = useSelector(state => state.main);
   const usedNumbers = useRef([]);
   const dispatch = useDispatch();
 
@@ -70,7 +73,7 @@ export const App = () => {
 
   return (
     <SafeAreaView
-      pointerEvents={isLoading ? 'none' : 'auto'}
+      pointerEvents={isLoading || isLoadingOverLay ? 'none' : 'auto'}
       style={[
         styles.safeAreaView,
         currentPage === pagesNames.lottie ? styles.greyColor : null,
@@ -142,6 +145,15 @@ export const App = () => {
                 }}
               />
               <Stack.Screen
+                name={pagesNames.taskDetailsScreen}
+                component={TaskDetailsScreen}
+                listeners={{
+                  focus: () => {
+                    setCurrentPage(pagesNames.taskDetailsScreen);
+                  },
+                }}
+              />
+              <Stack.Screen
                 name={pagesNames.createNewTask}
                 component={CreateNewTask}
                 listeners={{
@@ -161,6 +173,16 @@ export const App = () => {
         </ImageBackground>
       </GestureHandlerRootView>
       <Toast config={toastConfig} />
+      {isLoadingOverLay ? (
+        <View style={styles.lottieView}>
+          <LottieView
+            source={require('./assets/Lottie/loading.json')}
+            autoPlay
+            loop
+            style={styles.takingAllPage}
+          />
+        </View>
+      ) : null}
     </SafeAreaView>
   );
 };
@@ -183,6 +205,11 @@ const styles = StyleSheet.create({
   },
   greyColor: {backgroundColor: '#e5e5e5'},
   image: {flex: 1},
+  takingAllPage: {flex: 1},
+  lottieView: {
+    backgroundColor: 'rgba(0,0,0,0.5)',
+    ...StyleSheet.absoluteFillObject,
+  },
 });
 
 export default App;
