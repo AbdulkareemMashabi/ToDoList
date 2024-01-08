@@ -205,10 +205,11 @@ const styles = StyleSheet.create({
   },
   greyColor: {backgroundColor: '#e5e5e5'},
   image: {flex: 1},
-  takingAllPage: {flex: 1},
+  takingAllPage: {width: '100%', height: 80},
   lottieView: {
     backgroundColor: 'rgba(0,0,0,0.5)',
     ...StyleSheet.absoluteFillObject,
+    justifyContent: 'center',
   },
 });
 
