@@ -2,6 +2,7 @@ import {createSlice} from '@reduxjs/toolkit';
 
 const initialState = {
   isLoading: false,
+  isLoadingOverLay: false,
   userId: null,
   backgroundColor: null,
 };
@@ -13,6 +14,9 @@ export const LoadingSlice = createSlice({
     setIsLoading: (state, action) => {
       state.isLoading = action.payload;
     },
+    setIsLoadingOverLay: (state, action) => {
+      state.isLoadingOverLay = action.payload;
+    },
     setUserId: (state, action) => {
       state.userId = action.payload;
     },
@@ -22,7 +26,11 @@ export const LoadingSlice = createSlice({
   },
 });
 
-export const {setIsLoading, setUserId, setBackgroundColor} =
-  LoadingSlice.actions;
+export const {
+  setIsLoading,
+  setIsLoadingOverLay,
+  setUserId,
+  setBackgroundColor,
+} = LoadingSlice.actions;
 
 export default LoadingSlice.reducer;
