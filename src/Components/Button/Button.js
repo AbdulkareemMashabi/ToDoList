@@ -1,7 +1,8 @@
 import LottieView from 'lottie-react-native';
-import {StyleSheet, TouchableOpacity, Image} from 'react-native';
+import {StyleSheet, TouchableOpacity, Image, View} from 'react-native';
 import Text from '../Text/Text';
 import {getShadow} from '../../helpers/shadow';
+import {Icons} from '../../assets/Icons';
 
 export const Button = ({
   source,
@@ -23,6 +24,17 @@ export const Button = ({
           loop
           style={styles.loading}
         />
+      );
+    else if (variant === 'addButton')
+      return (
+        <View style={styles.addButton}>
+          <Image source={Icons.plusCircle} style={styles.plusImage} />
+          <Text
+            localeKey={'taskDetails.addNewTask'}
+            variant="bodySemibold"
+            isBlue
+          />
+        </View>
       );
     else if (isIcon)
       return (
@@ -73,6 +85,13 @@ const styles = StyleSheet.create({
     backgroundColor: '#32ADE6',
     borderRadius: 16,
     justifyContent: 'center',
+  },
+  addButton: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
+  plusImage: {
+    marginRight: 16,
   },
 });
 
