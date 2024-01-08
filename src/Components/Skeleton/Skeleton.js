@@ -1,19 +1,13 @@
 import {FlatList, StyleSheet, View} from 'react-native';
 import Shimmer from './Shimmer';
-import {useSelector} from 'react-redux';
 
 export const Skeleton = () => {
-  const {isLoading} = useSelector(state => state.main);
   return (
-    <>
-      {isLoading ? (
-        <FlatList
-          data={[1, 2, 3, 4, 5]}
-          renderItem={() => <Shimmer />}
-          ItemSeparatorComponent={<View style={styles.separator} />}
-        />
-      ) : null}
-    </>
+    <FlatList
+      data={[1, 2, 3, 4, 5]}
+      renderItem={() => <Shimmer />}
+      ItemSeparatorComponent={<View style={styles.separator} />}
+    />
   );
 };
 
