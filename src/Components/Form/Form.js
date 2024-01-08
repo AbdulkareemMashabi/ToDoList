@@ -88,6 +88,7 @@ export const Form = ({
                   return (
                     <View key={index}>
                       <TextField
+                        multiline
                         style={
                           !touched?.[item.name] || !errors?.[item.name]
                             ? styles.textArea
