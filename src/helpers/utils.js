@@ -10,7 +10,8 @@ export const pagesNames = {
   login: 'Login',
   register: 'Register',
   forgetPassword: 'ForgetPassword',
-  createNewTask: 'createNewTask',
+  createNewTask: 'CreateNewTask',
+  taskDetailsScreen: 'TaskDetailsScreen',
 };
 
 export const pagesUseWaveImage = ['Login', 'Register', 'ForgetPassword'];
@@ -33,8 +34,11 @@ export const shadowColors = {
 };
 
 export const handleAPIErrors = error => {
-  const message = errorMessages[error.code.split('/')[1]];
-  Alert.alert(Locale.t('common.errorOccurred'), Locale.t(message));
+  const message = errorMessages?.[error?.code?.split('/')[1]];
+  Alert.alert(
+    Locale.t('common.errorOccurred'),
+    Locale.t(message || 'APIErrorMessages.generalError'),
+  );
 };
 
 export const toastConfig = {
@@ -65,4 +69,8 @@ export const showToast = text => {
     position: 'top',
     text1: text,
   });
+};
+
+export const isNil = value => {
+  return value === null || value === undefined;
 };
