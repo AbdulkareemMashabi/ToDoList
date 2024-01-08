@@ -36,12 +36,17 @@
   },
   "APIErrorMessages": {
     "weakPassword": "كلمة سر ضعيفة",
-    "emailUsed": "هذا الايميل مستخدم مسبقا"
+    "emailUsed": "هذا الايميل مستخدم مسبقا",
+    "generalError": "حدث خطأ بالنظام الرجاء المحاولة في وقت لاحق"
   },
   "newTask": {
     "newTaskTitle": "مهمة جديدة",
     "title": "العنوان",
     "date": "التاريخ",
     "description": "Description"
+  },
+  "taskDetails": {
+    "addNewTask": "اضافة مهمة جديدة",
+    "subTask": "مهام جانبية"
   }
 }

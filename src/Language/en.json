@@ -36,12 +36,17 @@
   },
   "APIErrorMessages": {
     "weakPassword": "Weak Password",
-    "emailUsed": "This Email is already used"
+    "emailUsed": "This Email is already used",
+    "generalError": "System Error, please try again later"
   },
   "newTask": {
     "newTaskTitle": "New Task",
     "title": "Title",
     "date": "Date",
     "description": "Description"
+  },
+  "taskDetails": {
+    "addNewTask": "Add New Task",
+    "subTask": "Sub Tasks"
   }
 }
