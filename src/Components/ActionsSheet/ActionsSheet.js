@@ -1,6 +1,6 @@
 import React, {useEffect, useRef} from 'react';
 import {default as RNActionSheet} from 'react-native-actions-sheet';
-import {View} from 'react-native';
+import {Keyboard, View} from 'react-native';
 import styles from './ActionsSheet.style';
 
 const ActionsSheet = ({children, visible, onClose}) => {
@@ -16,7 +16,10 @@ const ActionsSheet = ({children, visible, onClose}) => {
       <RNActionSheet
         gestureEnabled
         ref={actionSheetRef}
-        onClose={onClose}
+        onClose={() => {
+          onClose();
+          Keyboard.dismiss();
+        }}
         containerStyle={styles.container}>
         {children}
       </RNActionSheet>
