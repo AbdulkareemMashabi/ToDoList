@@ -11,6 +11,7 @@ const Icons = {
   delete: require('./delete.png'),
   edit: require('./edit.png'),
   plusCircle: require('./plusCircle.png'),
+  check: require('./check.png'),
 };
 
 export {Icons};
