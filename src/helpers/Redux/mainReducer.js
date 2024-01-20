@@ -5,6 +5,7 @@ const initialState = {
   isLoadingOverLay: false,
   userId: null,
   backgroundColor: null,
+  userData: {},
 };
 
 export const LoadingSlice = createSlice({
@@ -23,6 +24,9 @@ export const LoadingSlice = createSlice({
     setBackgroundColor: (state, action) => {
       state.backgroundColor = action.payload;
     },
+    setUserData: (state, action) => {
+      state.userData = action.payload;
+    },
   },
 });
 
@@ -31,6 +35,7 @@ export const {
   setIsLoadingOverLay,
   setUserId,
   setBackgroundColor,
+  setUserData,
 } = LoadingSlice.actions;
 
 export default LoadingSlice.reducer;
