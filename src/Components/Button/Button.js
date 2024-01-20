@@ -40,6 +40,7 @@ export const Button = ({
       return (
         <Image source={source} style={[containerStyle, styles.imageSize]} />
       );
+    else if (variant === 'manualDraw') return null;
     else
       return (
         <Text
