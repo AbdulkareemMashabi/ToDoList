@@ -32,13 +32,16 @@ import {CreateNewTaskImages} from './assets/CreateNewTaskImages';
 import {setBackgroundColor} from './helpers/Redux/mainReducer';
 import TaskDetailsScreen from './Screens/TaskDetailsScreen/TaskDetailsScreen';
 import LottieView from 'lottie-react-native';
+import {getUserData} from './App.utils';
 
 const Stack = createStackNavigator();
 
 export const App = () => {
   const [currentPage, setCurrentPage] = useState(pagesNames.lottie);
   const [image, setImage] = useState(null);
-  const {isLoading, isLoadingOverLay} = useSelector(state => state.main);
+  const {isLoading, isLoadingOverLay, userId} = useSelector(
+    state => state.main,
+  );
   const usedNumbers = useRef([]);
   const dispatch = useDispatch();
 
@@ -114,6 +117,7 @@ export const App = () => {
                 listeners={{
                   focus: () => {
                     setCurrentPage(pagesNames.dashboard);
+                    getUserData(userId, dispatch);
                   },
                 }}
               />
