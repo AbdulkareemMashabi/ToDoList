@@ -40,10 +40,10 @@ export const ForgetPassword = ({navigation}) => {
             dispatch(setIsLoading(true));
             await sendPasswordResetEmail(auth, values.email);
             showToast('forgetPassword.resetSuccessfully');
+            dispatch(setIsLoading(false));
             navigation.goBack();
           } catch (e) {
             handleAPIErrors(e);
-          } finally {
             dispatch(setIsLoading(false));
           }
         }}
