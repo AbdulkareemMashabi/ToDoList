@@ -54,10 +54,10 @@ export const Register = ({navigation}) => {
             await AsyncStorage.setItem('userId', userId);
             dispatch(setUserId(userId));
             showToast('register.registeredSuccessfully');
-            navigation.popToTop();
+            dispatch(setIsLoading(false));
+            navigation.navigate(pagesNames.dashboard);
           } catch (e) {
             handleAPIErrors(e);
-          } finally {
             dispatch(setIsLoading(false));
           }
         }}

@@ -16,7 +16,7 @@ import {
 } from '../../helpers/Redux/mainReducer';
 import Skeleton from '../../Components/Skeleton/Skeleton';
 import Button from '../../Components/Button/Button';
-import {getInitialValues} from './utils';
+import {getFormFields, getInitialValues} from './utils';
 import Text from '../../Components/Text/Text';
 
 export const TaskDetailsScreen = ({navigation, route}) => {
@@ -130,15 +130,7 @@ export const TaskDetailsScreen = ({navigation, route}) => {
         }}>
         <Form
           initialValues={getInitialValues(formData, selectedIndex)}
-          fields={[
-            {type: 'TextField', name: 'title', label: 'newTask.title'},
-            {type: 'DatePicker', name: 'date', label: 'newTask.date'},
-            {
-              type: 'TextArea',
-              name: 'description',
-              label: 'newTask.description',
-            },
-          ]}
+          fields={getFormFields(formData, selectedIndex)}
           validationSchema={validation}
           onSubmit={async values => {
             try {
