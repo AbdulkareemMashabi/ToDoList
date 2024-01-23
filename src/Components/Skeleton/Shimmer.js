@@ -2,6 +2,7 @@ import React from 'react';
 import {createShimmerPlaceholder} from 'react-native-shimmer-placeholder';
 import LinearGradient from 'react-native-linear-gradient';
 import {Animated, StyleSheet, View} from 'react-native';
+import Locale from '../../helpers/localization';
 
 const ShimmerPlaceholder = createShimmerPlaceholder(LinearGradient);
 const Shimmer = () => {
@@ -20,8 +21,16 @@ const Shimmer = () => {
 
   return (
     <View style={styles.container}>
-      <ShimmerPlaceholder ref={firstLineRef} style={styles.biggerShimmer} />
-      <ShimmerPlaceholder ref={secondLineRef} style={styles.smallShimmer} />
+      <ShimmerPlaceholder
+        ref={firstLineRef}
+        style={styles.biggerShimmer}
+        isReversed={Locale.isRTL}
+      />
+      <ShimmerPlaceholder
+        ref={secondLineRef}
+        style={styles.smallShimmer}
+        isReversed={Locale.isRTL}
+      />
     </View>
   );
 };
