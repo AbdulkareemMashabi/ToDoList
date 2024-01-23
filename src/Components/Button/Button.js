@@ -12,6 +12,7 @@ export const Button = ({
   isLoading,
   variant = 'primary',
   shadowColor,
+  withoutShadow,
 }) => {
   const isIcon = typeof source === 'number';
 
@@ -59,7 +60,9 @@ export const Button = ({
       style={[
         !isIcon && variant === 'primary' ? styles.container : null,
         containerStyle,
-        variant === 'primary' ? getShadow(shadowColor || 'blue') : null,
+        variant === 'primary' && !withoutShadow
+          ? getShadow(shadowColor || 'blue')
+          : null,
       ]}
       hitSlop={{top: 15, bottom: 15, left: 15, right: 15}}
       onPress={onPress}>
