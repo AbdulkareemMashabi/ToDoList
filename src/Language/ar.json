@@ -3,7 +3,9 @@
     "myWishes": "أمنياتي",
     "emptyFormTitle": "لا تملك مهام",
     "emptyFormTDescription": "لإنشاء مهمه جديده إضغط على زر “+”",
-    "languageErrorChange": "لا يمكن تغيير اللغة في الوقت الحالي"
+    "languageErrorChange": "لا يمكن تغيير اللغة في الوقت الحالي",
+    "deletePopUpTitle": "حذف مهمة",
+    "deletePopUpDescription": "هل انت متأكد من حذف هذه المهمة؟"
   },
   "loginPage": {
     "loginTitle": "تسجيل دخول",
@@ -21,7 +23,10 @@
     "register": "تسجيل",
     "email": "ايميل",
     "required": "هذا الحقل مطلوب",
-    "emailValidation": "النص المدخل يجب أن يكون ايميل"
+    "emailValidation": "النص المدخل يجب أن يكون ايميل",
+    "selectDate": "اختر التاريخ",
+    "confirm": "تأكيد",
+    "cancel": "الغاء"
   },
   "register": {
     "register": "تسجيل",
@@ -43,7 +48,7 @@
     "newTaskTitle": "مهمة جديدة",
     "title": "العنوان",
     "date": "التاريخ",
-    "description": "Description"
+    "description": "وصف"
   },
   "taskDetails": {
     "addNewTask": "اضافة مهمة جديدة",
