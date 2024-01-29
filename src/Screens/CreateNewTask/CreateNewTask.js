@@ -20,6 +20,7 @@ export const CreateNewTask = ({navigation}) => {
 
   const validation = Yup.object().shape({
     title: Yup.string().required(Locale.t('common.required')),
+    date: Yup.string().required(Locale.t('common.required')),
   });
 
   return (
@@ -28,7 +29,11 @@ export const CreateNewTask = ({navigation}) => {
         validationSchema={validation}
         fields={[
           {type: 'TextField', name: 'title', label: 'newTask.title'},
-          {type: 'DatePicker', name: 'date', label: 'newTask.date'},
+          {
+            type: 'DatePicker',
+            name: 'date',
+            label: 'newTask.date',
+          },
           {
             type: 'TextArea',
             name: 'description',
@@ -39,12 +44,12 @@ export const CreateNewTask = ({navigation}) => {
           try {
             dispatch(setIsLoading(true));
             const docId = await addUserData(userId, values);
+            dispatch(setIsLoading(false));
             navigation.replace(pagesNames.taskDetailsScreen, {
               documentId: docId,
             });
           } catch (e) {
             handleAPIErrors(e);
-          } finally {
             dispatch(setIsLoading(false));
           }
         }}
