@@ -8,8 +8,8 @@ const initialState = {
   userData: {},
 };
 
-export const LoadingSlice = createSlice({
-  name: 'loading',
+export const mainReducer = createSlice({
+  name: 'mainReducer',
   initialState,
   reducers: {
     setIsLoading: (state, action) => {
@@ -36,6 +36,6 @@ export const {
   setUserId,
   setBackgroundColor,
   setUserData,
-} = LoadingSlice.actions;
+} = mainReducer.actions;
 
-export default LoadingSlice.reducer;
+export default mainReducer.reducer;
