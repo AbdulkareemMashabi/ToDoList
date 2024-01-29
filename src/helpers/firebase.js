@@ -8,6 +8,7 @@ import {
   getDoc,
   doc,
   updateDoc,
+  deleteDoc,
 } from 'firebase/firestore/lite';
 import {
   FIREBASE_API_KEY,
@@ -55,6 +56,10 @@ export const getSpecificDocument = async (userId, documentId) => {
 export const updateDocuments = async (userId, documentId, data) => {
   const documentRef = doc(db, userId, documentId);
   await updateDoc(documentRef, data);
+};
+
+export const deleteDocument = async (userId, documentId) => {
+  await deleteDoc(doc(db, userId, documentId));
 };
 
 export default app;
