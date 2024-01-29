@@ -12,6 +12,7 @@ export const pagesNames = {
   forgetPassword: 'ForgetPassword',
   createNewTask: 'CreateNewTask',
   taskDetailsScreen: 'TaskDetailsScreen',
+  popUp: 'PopUp',
 };
 
 export const pagesUseWaveImage = ['Login', 'Register', 'ForgetPassword'];
