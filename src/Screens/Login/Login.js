@@ -32,7 +32,7 @@ export const Login = ({navigation}) => {
       <Text localeKey={'loginPage.title'} />
       <Text
         variant={'bodySemibold'}
-        isGrey
+        color={'grey'}
         localeKey={'loginPage.description'}
       />
       <Form
