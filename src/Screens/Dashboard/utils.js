@@ -4,8 +4,10 @@ import Button from '../../Components/Button/Button';
 import {Icons} from '../../assets/Icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import RNRestart from 'react-native-restart';
-import {pagesNames} from '../../helpers/utils';
+import {handleAPIErrors, pagesNames} from '../../helpers/utils';
 import styles from './Dashboard.styles';
+import {deleteDocument} from '../../helpers/firebase';
+import {setIsLoadingOverLay} from '../../helpers/Redux/mainReducer';
 
 export const handleEnterFace = (navigation, userId) => {
   navigation.setOptions({
@@ -52,4 +54,22 @@ export const handleEnterFace = (navigation, userId) => {
       </View>
     ),
   });
+};
+
+export const deleteSpecificDocument = async (
+  userId,
+  documentId,
+  dispatch,
+  dismissPopUp,
+) => {
+  try {
+    dispatch(setIsLoadingOverLay(true));
+    await deleteDocument(userId, documentId);
+    dispatch(setIsLoadingOverLay(false));
+  } catch (e) {
+    handleAPIErrors(e);
+    dispatch(setIsLoadingOverLay(false));
+  } finally {
+    dismissPopUp?.();
+  }
 };

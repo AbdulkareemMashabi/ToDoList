@@ -1,71 +1,97 @@
 import {useEffect, useState} from 'react';
-import {StyleSheet, View, FlatList, Alert, I18nManager} from 'react-native';
+import {View, FlatList} from 'react-native';
 import Button from '../../Components/Button/Button';
 import {Icons} from '../../assets/Icons';
 import EmptyList from '../../Components/EmptyList/EmptyList';
 import {Images} from '../../assets/Images';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import Locale from '../../helpers/localization';
-import RNRestart from 'react-native-restart';
 import {pagesNames} from '../../helpers/utils';
 import Skeleton from '../../Components/Skeleton/Skeleton';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
+import {deleteSpecificDocument, handleEnterFace} from './utils';
+import styles from './Dashboard.styles';
+import Task from '../../Components/Task/Task';
+import {getShadow} from '../../helpers/shadow';
+import Swipeable from '../../Components/Swipeable/Swipeable';
 
 export const Dashboard = ({navigation}) => {
   const {userId} = useSelector(state => state.main);
-  const {isLoading} = useState(false);
+  const {isLoading, userData} = useSelector(state => state.main);
+  const dispatch = useDispatch();
+
   useEffect(() => {
-    navigation.setOptions({
-      headerTitle: Locale.t('myWishesPage.myWishes'),
-      headerRight: () => (
-        <View style={styles.viewContainer}>
-          <View style={styles.buttonsContainer}>
-            <Button
-              source={Icons.language}
-              onPress={async () => {
-                try {
-                  await AsyncStorage.setItem(
-                    'language',
-                    Locale.language === 'ar' ? 'en' : 'ar',
-                  );
-                  I18nManager.forceRTL(!Locale.isRTL);
-                  I18nManager.allowRTL(!Locale.isRTL);
-                  RNRestart.restart();
-                } catch (e) {
-                  Alert.alert(
-                    Locale.t('common.errorOccurred'),
-                    Locale.t('myWishesPage.languageErrorChange'),
-                  );
-                }
-              }}
-            />
-            {userId ? (
-              <Button
-                source={Icons.logOut}
-                onPress={async () => {
-                  await AsyncStorage.setItem('userId', '');
-                  RNRestart.restart();
-                }}
-              />
-            ) : (
-              <Button
-                source={Icons.cloud}
-                onPress={() => {
-                  navigation.push(pagesNames.login);
-                }}
-              />
-            )}
-          </View>
-        </View>
-      ),
-    });
+    handleEnterFace(navigation, userId);
   }, [userId]);
 
-  return (
-    <View style={styles.takingAllPage}>
-      {!isLoading ? (
+  const getJsx = () => {
+    if (isLoading)
+      return (
+        <View style={[styles.container, styles.skeleton]}>
+          <Skeleton />
+        </View>
+      );
+    let returnedJsx = [];
+    if (userData.length > 0)
+      returnedJsx.push(
         <>
-          {/* <FlatList /> */}
+          <FlatList
+            ListHeaderComponent={<View style={styles.flatListHeader} />}
+            ListFooterComponent={<View style={styles.flatListHeader} />}
+            showsVerticalScrollIndicator={false}
+            ItemSeparatorComponent={<View style={styles.separator} />}
+            data={userData}
+            renderItem={({item, index}) => (
+              <Swipeable
+                isSwipeableAtBegin={index === 0}
+                renderAction={() => (
+                  <View style={styles.buttonsTaskContainer}>
+                    <Button
+                      containerStyle={[styles.button, styles.infoButton]}
+                      source={Icons.info}
+                      withoutShadow
+                      onPress={() => {
+                        navigation.navigate(pagesNames.taskDetailsScreen, {
+                          documentId: item.id,
+                        });
+                      }}
+                    />
+                    <Button
+                      containerStyle={[styles.button, styles.deleteButton]}
+                      source={Icons.trash}
+                      withoutShadow
+                      onPress={() => {
+                        navigation.navigate(pagesNames.popUp, {
+                          title: 'myWishesPage.deletePopUpTitle',
+                          description: 'myWishesPage.deletePopUpDescription',
+                          confirmButton: dismissPopUp => {
+                            deleteSpecificDocument(
+                              userId,
+                              item.id,
+                              dispatch,
+                              dismissPopUp,
+                            );
+                          },
+                        });
+                      }}
+                    />
+                  </View>
+                )}>
+                <Task id={item.id} data={item.data} userId={userId} />
+              </Swipeable>
+            )}
+          />
+          <View style={[styles.viewButton, getShadow('white')]}>
+            <Button
+              source={'taskDetails.addNewTask'}
+              onPress={() => {
+                navigation.push(pagesNames.createNewTask);
+              }}
+            />
+          </View>
+        </>,
+      );
+    else
+      returnedJsx.push(
+        <>
           <EmptyList
             image={Images.emptyListPic}
             title={'myWishesPage.emptyFormTitle'}
@@ -79,31 +105,13 @@ export const Dashboard = ({navigation}) => {
               else navigation.push(pagesNames.login);
             }}
           />
-        </>
-      ) : (
-        <Skeleton />
-      )}
-    </View>
-  );
-};
+        </>,
+      );
 
-const styles = StyleSheet.create({
-  takingAllPage: {flex: 1},
-  button: {
-    width: 64,
-    height: 64,
-    alignSelf: 'flex-end',
-    backgroundColor: '#32ADE6',
-    borderRadius: 16,
-    justifyContent: 'center',
-  },
-  buttonsContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    flex: 1,
-    paddingLeft: 24,
-  },
-  viewContainer: {flexDirection: 'row'},
-});
+    return returnedJsx;
+  };
+
+  return <View style={styles.container}>{getJsx()}</View>;
+};
 
 export default Dashboard;
