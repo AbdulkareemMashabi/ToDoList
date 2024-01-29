@@ -13,10 +13,20 @@ import {getShadow} from '../../helpers/shadow';
 import {default as RNDatePicker} from 'react-native-date-picker';
 import {Icons} from '../../assets/Icons';
 import {useSelector} from 'react-redux';
+import moment from 'moment';
 
-export const DatePicker = ({onValueChange, value, label, style}) => {
+export const DatePicker = ({
+  onValueChange,
+  value,
+  label,
+  style,
+  maximumDate,
+  minimumDate,
+}) => {
   const [open, setOpen] = useState(false);
-  const [date, setDate] = useState(new Date());
+  const [dateValue, setDateValue] = useState(
+    minimumDate || new Date(moment().format('YYYY-MM-DD')),
+  );
   const fontSizeRef = useRef(new Animated.Value(17)).current;
   const positionRef = useRef(new Animated.Value(16)).current;
 
@@ -25,9 +35,13 @@ export const DatePicker = ({onValueChange, value, label, style}) => {
   useEffect(() => {
     if (value) {
       let dataObject = value.split('/');
-      dataObject = new Date(dataObject[2], dataObject[1], dataObject[0]);
+      dataObject = new Date(
+        moment(`${dataObject[2]}-${dataObject[1]}-${dataObject[0]}`).format(
+          'YYYY-MM-DD',
+        ),
+      );
       onFocus();
-      setDate(dataObject);
+      setDateValue(dataObject);
     }
   }, [value]);
 
@@ -55,25 +69,24 @@ export const DatePicker = ({onValueChange, value, label, style}) => {
           style={[styles.text, {fontSize: fontSizeRef, top: positionRef}]}
           localeKey={label}
           variant="bodyRegular"
-          isGrey
+          color={'grey'}
         />
         <Text
-          style={[
-            styles.textInput,
-            {textAlign: Locale.isRTL ? 'right' : 'left'},
-          ]}
+          style={styles.textInput}
           value={value || ''}
           variant="bodySemibold"
         />
         <Image source={Icons.calendar} tintColor={backgroundColor} />
       </TouchableOpacity>
       <RNDatePicker
-        style={{backgroundColor: 'red'}}
         modal
         locale={Locale.language}
         mode="date"
+        title={Locale.t('common.selectDate')}
+        maximumDate={maximumDate}
+        minimumDate={minimumDate || new Date(moment().format('YYYY-MM-DD'))}
         open={open}
-        date={date}
+        date={dateValue}
         onConfirm={date => {
           const year = date.getFullYear();
           const month = String(date.getMonth() + 1).padStart(2, '0');
