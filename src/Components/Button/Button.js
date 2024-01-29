@@ -33,7 +33,7 @@ export const Button = ({
           <Text
             localeKey={'taskDetails.addNewTask'}
             variant="bodySemibold"
-            isBlue
+            color={'blue'}
           />
         </View>
       );
