@@ -80,7 +80,7 @@ export const TaskDetailsScreen = ({navigation, route}) => {
           <View style={styles.separator} />
           <Text
             style={styles.subTaskHeader}
-            isGrey
+            color={'grey'}
             localeKey={'taskDetails.subTask'}
           />
         </>
