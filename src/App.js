@@ -1,5 +1,5 @@
 import 'react-native-gesture-handler';
-import React, {useCallback, useEffect, useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {NavigationContainer, DefaultTheme} from '@react-navigation/native';
 import Reactotron from 'reactotron-react-native';
 
@@ -33,6 +33,8 @@ import {setBackgroundColor} from './helpers/Redux/mainReducer';
 import TaskDetailsScreen from './Screens/TaskDetailsScreen/TaskDetailsScreen';
 import LottieView from 'lottie-react-native';
 import {getUserData} from './App.utils';
+import {getShadow} from './helpers/shadow';
+import PopUp from './Components/PopUp/PopUp';
 
 const Stack = createStackNavigator();
 
@@ -99,10 +101,13 @@ export const App = () => {
               screenOptions={{
                 headerStyle: styles.headerPageTitle,
                 headerTitleAlign: 'center',
-                cardStyle:
-                  currentPage !== pagesNames.createNewTask
-                    ? styles.pageStyle
-                    : null,
+                cardStyle: ![
+                  pagesNames.createNewTask,
+                  pagesNames.dashboard,
+                  pagesNames.popUp,
+                ].includes(currentPage)
+                  ? styles.pageStyle
+                  : null,
               }}>
               <Stack.Screen
                 name={pagesNames.lottie}
@@ -158,6 +163,20 @@ export const App = () => {
                 }}
               />
               <Stack.Screen
+                name={pagesNames.popUp}
+                component={PopUp}
+                options={{
+                  presentation: 'transparentModal',
+                  headerShown: false,
+                  animationEnabled: false,
+                }}
+                listeners={{
+                  focus: () => {
+                    setCurrentPage(pagesNames.popUp);
+                  },
+                }}
+              />
+              <Stack.Screen
                 name={pagesNames.createNewTask}
                 component={CreateNewTask}
                 listeners={{
@@ -194,9 +213,7 @@ export const App = () => {
 const styles = StyleSheet.create({
   safeAreaView: {flex: 1, backgroundColor: 'white'},
   headerPageTitle: {
-    backgroundColor: 'transparent',
-    elevation: 0,
-    shadowOpacity: 0,
+    ...getShadow('white'),
   },
   headerTitle: {fontSize: 17, fontWeight: 600},
   gestureStyle: {
@@ -214,6 +231,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0,0,0,0.5)',
     ...StyleSheet.absoluteFillObject,
     justifyContent: 'center',
+    alignItems: 'center',
   },
 });
 
