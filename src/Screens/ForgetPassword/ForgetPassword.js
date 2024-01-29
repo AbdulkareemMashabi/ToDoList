@@ -29,7 +29,7 @@ export const ForgetPassword = ({navigation}) => {
       <Text localeKey={'forgetPassword.enterEmail'} />
       <Text
         variant={'bodySemibold'}
-        isGrey
+        color={'grey'}
         localeKey={'forgetPassword.receiveEmail'}
       />
       <Form
