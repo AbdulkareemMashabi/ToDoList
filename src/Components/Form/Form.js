@@ -114,6 +114,8 @@ export const Form = ({
                         }
                         label={item.label}
                         value={values[item.name]}
+                        maximumDate={item?.maximumDate}
+                        minimumDate={item?.minimumDate}
                         onValueChange={handleChange(item.name)}
                       />
                       {getErrorAndHint(touched, errors, item)}
