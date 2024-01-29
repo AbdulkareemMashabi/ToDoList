@@ -63,7 +63,7 @@ export const TextField = ({
         style={[styles.text, {fontSize: fontSizeRef, top: positionRef}]}
         localeKey={label}
         variant="bodyRegular"
-        isGrey
+        color={'grey'}
       />
       <TextInput
         multiline={multiline}
