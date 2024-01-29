@@ -22,7 +22,7 @@ export const DoubleText = ({
         />
       </View>
       <View style={styles.container}>
-        <Text value={date} variant="bodyRegular" isGrey />
+        <Text value={date} variant="bodyRegular" color={'grey'} />
         <View style={styles.buttonContainer}>
           {editButtonPress ? (
             <Button source={Icons.edit} onPress={editButtonPress} />
