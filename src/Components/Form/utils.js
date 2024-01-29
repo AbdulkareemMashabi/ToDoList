@@ -13,7 +13,7 @@ export const getErrorAndHint = (touched, errors, item) => {
         />
       ) : null}
       {(!touched?.[item.name] || !errors?.[item.name]) && item?.hint ? (
-        <Text localeKey={item.hint} variant="captionRegular" isGrey />
+        <Text localeKey={item.hint} variant="captionRegular" color={'grey'} />
       ) : null}
     </View>
   );
