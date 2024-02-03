@@ -1,5 +1,7 @@
-import {FlatList, StyleSheet, View} from 'react-native';
+import {FlatList, View} from 'react-native';
 import Shimmer from './Shimmer';
+
+import styles from './Skeleton.style';
 
 export const Skeleton = () => {
   return (
@@ -10,12 +12,5 @@ export const Skeleton = () => {
     />
   );
 };
-
-const styles = StyleSheet.create({
-  separator: {
-    flex: 1,
-    height: 16,
-  },
-});
 
 export default Skeleton;

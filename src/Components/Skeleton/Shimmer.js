@@ -1,8 +1,10 @@
 import React from 'react';
 import {createShimmerPlaceholder} from 'react-native-shimmer-placeholder';
 import LinearGradient from 'react-native-linear-gradient';
-import {Animated, StyleSheet, View} from 'react-native';
+import {Animated, View} from 'react-native';
 import Locale from '../../helpers/localization';
+
+import styles from './Skeleton.style';
 
 const ShimmerPlaceholder = createShimmerPlaceholder(LinearGradient);
 const Shimmer = () => {
@@ -34,27 +36,5 @@ const Shimmer = () => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    height: 70,
-    borderRadius: 16,
-    backgroundColor: '#F4F6F9',
-    justifyContent: 'space-between',
-    paddingVertical: 12,
-    paddingHorizontal: 16,
-  },
-  biggerShimmer: {
-    width: 144,
-    height: 18,
-    borderRadius: 4,
-  },
-  smallShimmer: {
-    width: 95,
-    height: 14,
-    borderRadius: 4,
-  },
-});
 
 export default Shimmer;

@@ -1,8 +1,10 @@
 import {useEffect, useRef} from 'react';
-import {Animated, TextInput, TouchableOpacity, StyleSheet} from 'react-native';
+import {Animated, TextInput, TouchableOpacity} from 'react-native';
 import Text from '../Text/Text';
 import Locale from '../../helpers/localization';
 import {getShadow} from '../../helpers/shadow';
+
+import styles from './TextField.style';
 
 export const TextField = ({
   onValueChange,
@@ -81,27 +83,5 @@ export const TextField = ({
     </TouchableOpacity>
   );
 };
-
-const styles = StyleSheet.create({
-  text: {
-    zIndex: 1,
-    left: 16,
-    position: 'absolute',
-  },
-  textInput: {
-    width: '100%',
-    color: 'black',
-    fontSize: 17,
-    fontWeight: '600',
-  },
-  touchableOpacity: {
-    paddingHorizontal: 16,
-    paddingTop: 10,
-    backgroundColor: 'white',
-    borderRadius: 16,
-    height: 56,
-    justifyContent: 'center',
-  },
-});
 
 export default TextField;

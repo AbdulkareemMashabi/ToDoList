@@ -1,9 +1,11 @@
 import {useState} from 'react';
-import {View, StyleSheet} from 'react-native';
+import {View} from 'react-native';
 import TextField from '../TextField/TextField';
 import Button from '../Button/Button';
 import {Icons} from '../../assets/Icons';
 import {getShadow} from '../../helpers/shadow';
+
+import styles from './PasswordInput.style';
 
 export const PasswordInput = ({
   onValueChange,
@@ -34,17 +36,5 @@ export const PasswordInput = ({
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  root: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    backgroundColor: 'white',
-    borderRadius: 16,
-  },
-  textField: {flex: 1},
-  button: {marginHorizontal: 6},
-});
 
 export default PasswordInput;

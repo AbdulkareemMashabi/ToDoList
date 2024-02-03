@@ -1,5 +1,7 @@
-import {View, StyleSheet, Image} from 'react-native';
+import {View, Image} from 'react-native';
 import Text from '../Text/Text';
+
+import styles from './EmptyList.style';
 
 export const EmptyList = ({image, title, description}) => {
   return (
@@ -10,28 +12,5 @@ export const EmptyList = ({image, title, description}) => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  title: {
-    fontSize: 22,
-    fontWeight: '700',
-    marginTop: 24,
-    marginBottom: 16,
-    color: 'black',
-  },
-  description: {
-    fontSize: 17,
-    fontWeight: '600',
-  },
-  image: {
-    width: 267.66,
-    height: 268.61,
-  },
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
 
 export default EmptyList;
