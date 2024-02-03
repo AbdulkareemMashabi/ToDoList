@@ -5,7 +5,8 @@
     "emptyFormTDescription": "To create new task click on “+” button",
     "languageErrorChange": "Language could not be change at mean time",
     "deletePopUpTitle": "Delete Task",
-    "deletePopUpDescription": "Are you sure about deleting this task?"
+    "deletePopUpDescription": "Are you sure about deleting this task?",
+    "TaskDeletedSuccessfully": "Task Deleted Successfully"
   },
   "loginPage": {
     "loginTitle": "Login",
