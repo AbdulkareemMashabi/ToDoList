@@ -5,7 +5,7 @@ export const Skeleton = () => {
   return (
     <FlatList
       data={[1, 2, 3, 4, 5]}
-      renderItem={() => <Shimmer />}
+      renderItem={({index}) => <Shimmer key={index} />}
       ItemSeparatorComponent={<View style={styles.separator} />}
     />
   );
