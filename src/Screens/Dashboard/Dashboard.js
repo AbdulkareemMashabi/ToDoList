@@ -12,7 +12,7 @@ import styles from './Dashboard.styles';
 import Task from '../../Components/Task/Task';
 import {getShadow} from '../../helpers/shadow';
 import Swipeable from '../../Components/Swipeable/Swipeable';
-import {getUserData} from '../../App.utils';
+import {getUserData} from '../../App/utils';
 import Container from '../../Components/Contianer/Container';
 
 export const Dashboard = ({navigation}) => {

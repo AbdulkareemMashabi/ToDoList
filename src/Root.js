@@ -2,7 +2,7 @@ import {useEffect, useState} from 'react';
 import Locale from './helpers/localization';
 import en from './Language/en.json';
 import ar from './Language/ar.json';
-import App from './App';
+import App from './App/App';
 import {Alert, I18nManager} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import RNRestart from 'react-native-restart';

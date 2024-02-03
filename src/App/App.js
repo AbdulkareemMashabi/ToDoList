@@ -4,37 +4,37 @@ import {NavigationContainer, DefaultTheme} from '@react-navigation/native';
 import Reactotron from 'reactotron-react-native';
 
 import {createStackNavigator} from '@react-navigation/stack';
-import Lottie from './Screens/Lottie/Lottie';
+import Lottie from '../Screens/Lottie/Lottie';
 import {
   SafeAreaView,
-  StyleSheet,
   Keyboard,
   ImageBackground,
   BackHandler,
   View,
 } from 'react-native';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
-import Dashboard from './Screens/Dashboard/Dashboard';
-import Login from './Screens/Login/Login';
-import ForgetPassword from './Screens/ForgetPassword/ForgetPassword';
-import Register from './Screens/Register/Register';
+import Dashboard from '../Screens/Dashboard/Dashboard';
+import Login from '../Screens/Login/Login';
+import ForgetPassword from '../Screens/ForgetPassword/ForgetPassword';
+import Register from '../Screens/Register/Register';
 import {
   backgroundColors,
   pagesNames,
   pagesUseWaveImage,
   toastConfig,
-} from './helpers/utils';
-import {Images} from './assets/Images';
+} from '../helpers/utils';
+import {Images} from '../assets/Images';
 import {useDispatch, useSelector} from 'react-redux';
 import Toast from 'react-native-toast-message';
-import CreateNewTask from './Screens/CreateNewTask/CreateNewTask';
-import {CreateNewTaskImages} from './assets/CreateNewTaskImages';
-import {setBackgroundColor} from './helpers/Redux/mainReducer';
-import TaskDetailsScreen from './Screens/TaskDetailsScreen/TaskDetailsScreen';
+import CreateNewTask from '../Screens/CreateNewTask/CreateNewTask';
+import {CreateNewTaskImages} from '../assets/CreateNewTaskImages';
+import {setBackgroundColor} from '../helpers/Redux/mainReducer';
+import TaskDetailsScreen from '../Screens/TaskDetailsScreen/TaskDetailsScreen';
 import LottieView from 'lottie-react-native';
-import {getUserData} from './App.utils';
-import {getShadow} from './helpers/shadow';
-import PopUp from './Components/PopUp/PopUp';
+import {getUserData} from './utils';
+import PopUp from '../Components/PopUp/PopUp';
+
+import styles from './App.style';
 
 const Stack = createStackNavigator();
 
@@ -193,7 +193,7 @@ export const App = () => {
       {isLoadingOverLay ? (
         <View style={styles.lottieView}>
           <LottieView
-            source={require('./assets/Lottie/loading.json')}
+            source={require('../assets/Lottie/loading.json')}
             autoPlay
             loop
             style={styles.takingAllPage}
@@ -203,28 +203,5 @@ export const App = () => {
     </SafeAreaView>
   );
 };
-
-const styles = StyleSheet.create({
-  safeAreaView: {flex: 1, backgroundColor: 'white'},
-  headerPageTitle: {
-    ...getShadow('white'),
-  },
-  headerTitle: {fontSize: 17, fontWeight: 600},
-  gestureStyle: {
-    flex: 1,
-  },
-  pageStyle: {
-    backgroundColor: 'transparent',
-  },
-  greyColor: {backgroundColor: '#e5e5e5'},
-  image: {flex: 1},
-  takingAllPage: {width: '100%', height: 80},
-  lottieView: {
-    backgroundColor: 'rgba(0,0,0,0.5)',
-    ...StyleSheet.absoluteFillObject,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-});
 
 export default App;

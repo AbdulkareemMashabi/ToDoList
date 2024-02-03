@@ -1,6 +1,6 @@
-import {setIsLoading, setUserData} from './helpers/Redux/mainReducer';
-import {getAllDocuments} from './helpers/firebase';
-import {handleAPIErrors} from './helpers/utils';
+import {setIsLoading, setUserData} from '../helpers/Redux/mainReducer';
+import {getAllDocuments} from '../helpers/firebase';
+import {handleAPIErrors} from '../helpers/utils';
 
 export const getUserData = async (userId, dispatch) => {
   if (userId)
