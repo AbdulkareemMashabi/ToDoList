@@ -101,13 +101,7 @@ export const App = () => {
               screenOptions={{
                 headerStyle: styles.headerPageTitle,
                 headerTitleAlign: 'center',
-                cardStyle: ![
-                  pagesNames.createNewTask,
-                  pagesNames.dashboard,
-                  pagesNames.popUp,
-                ].includes(currentPage)
-                  ? styles.pageStyle
-                  : null,
+                cardStyle: styles.pageStyle,
               }}>
               <Stack.Screen
                 name={pagesNames.lottie}
@@ -220,8 +214,6 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   pageStyle: {
-    paddingHorizontal: 16,
-    paddingBottom: 16,
     backgroundColor: 'transparent',
   },
   greyColor: {backgroundColor: '#e5e5e5'},
