@@ -1,5 +1,4 @@
 import {useEffect} from 'react';
-import {View, StyleSheet} from 'react-native';
 import Locale from '../../helpers/localization';
 import Text from '../../Components/Text/Text';
 import Form from '../../Components/Form/Form';
@@ -9,6 +8,7 @@ import {handleAPIErrors, showToast} from '../../helpers/utils';
 import {useDispatch} from 'react-redux';
 import {setIsLoading} from '../../helpers/Redux/mainReducer';
 import {auth} from '../../helpers/firebase';
+import Container from '../../Components/Contianer/Container';
 
 export const ForgetPassword = ({navigation}) => {
   const dispatch = useDispatch();
@@ -25,7 +25,7 @@ export const ForgetPassword = ({navigation}) => {
   });
 
   return (
-    <View style={styles.takingAllPage}>
+    <Container>
       <Text localeKey={'forgetPassword.enterEmail'} />
       <Text
         variant={'bodySemibold'}
@@ -48,13 +48,8 @@ export const ForgetPassword = ({navigation}) => {
           }
         }}
       />
-    </View>
+    </Container>
   );
 };
-
-const styles = StyleSheet.create({
-  takingAllPage: {flex: 1},
-  forgetPasswordButton: {alignSelf: 'flex-start'},
-});
 
 export default ForgetPassword;

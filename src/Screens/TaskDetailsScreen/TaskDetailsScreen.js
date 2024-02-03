@@ -1,5 +1,5 @@
 import {useEffect, useState} from 'react';
-import {FlatList, Keyboard, View} from 'react-native';
+import {FlatList, View} from 'react-native';
 import {handleAPIErrors, isNil} from '../../helpers/utils';
 import {getSpecificDocument, updateDocuments} from '../../helpers/firebase';
 import {useDispatch, useSelector} from 'react-redux';
@@ -9,7 +9,6 @@ import ActionsSheet from '../../Components/ActionsSheet/ActionsSheet';
 import Form from '../../Components/Form/Form';
 import * as Yup from 'yup';
 import Locale from '../../helpers/localization';
-import {ScrollView} from 'react-native-virtualized-view';
 import {
   setIsLoading,
   setIsLoadingOverLay,
@@ -18,6 +17,7 @@ import Skeleton from '../../Components/Skeleton/Skeleton';
 import Button from '../../Components/Button/Button';
 import {getFormFields, getInitialValues} from './utils';
 import Text from '../../Components/Text/Text';
+import Container from '../../Components/Contianer/Container';
 
 export const TaskDetailsScreen = ({navigation, route}) => {
   const {userId} = useSelector(state => state.main);
@@ -67,7 +67,7 @@ export const TaskDetailsScreen = ({navigation, route}) => {
   );
 
   return !initialLoading ? (
-    <View style={styles.container}>
+    <Container>
       <DoubleText
         title={formData?.mainTask?.title}
         description={formData?.mainTask?.description}
@@ -161,7 +161,7 @@ export const TaskDetailsScreen = ({navigation, route}) => {
           }}
         />
       </ActionsSheet>
-    </View>
+    </Container>
   ) : (
     <Skeleton />
   );

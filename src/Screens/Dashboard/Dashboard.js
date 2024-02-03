@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react';
+import {useEffect} from 'react';
 import {View, FlatList} from 'react-native';
 import Button from '../../Components/Button/Button';
 import {Icons} from '../../assets/Icons';
@@ -13,6 +13,7 @@ import Task from '../../Components/Task/Task';
 import {getShadow} from '../../helpers/shadow';
 import Swipeable from '../../Components/Swipeable/Swipeable';
 import {getUserData} from '../../App.utils';
+import Container from '../../Components/Contianer/Container';
 
 export const Dashboard = ({navigation}) => {
   const {userId} = useSelector(state => state.main);
@@ -119,7 +120,7 @@ export const Dashboard = ({navigation}) => {
     return returnedJsx;
   };
 
-  return <View style={styles.container}>{getJsx()}</View>;
+  return <Container noPadding>{getJsx()}</Container>;
 };
 
 export default Dashboard;

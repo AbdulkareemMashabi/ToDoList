@@ -1,5 +1,4 @@
 import {useEffect} from 'react';
-import {StyleSheet, View} from 'react-native';
 import Text from '../../Components/Text/Text';
 import Locale from '../../helpers/localization';
 import Form from '../../Components/Form/Form';
@@ -11,6 +10,8 @@ import {auth} from '../../helpers/firebase';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useDispatch} from 'react-redux';
 import {setIsLoading, setUserId} from '../../helpers/Redux/mainReducer';
+import Container from '../../Components/Contianer/Container';
+import styles from './Login.style';
 
 export const Login = ({navigation}) => {
   const dispatch = useDispatch();
@@ -28,7 +29,7 @@ export const Login = ({navigation}) => {
   });
 
   return (
-    <View style={styles.takingAllPage}>
+    <Container>
       <Text localeKey={'loginPage.title'} />
       <Text
         variant={'bodySemibold'}
@@ -79,13 +80,8 @@ export const Login = ({navigation}) => {
           navigation.push(pagesNames.register);
         }}
       />
-    </View>
+    </Container>
   );
 };
-
-const styles = StyleSheet.create({
-  takingAllPage: {flex: 1},
-  forgetPasswordButton: {alignSelf: 'flex-start'},
-});
 
 export default Login;

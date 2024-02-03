@@ -1,23 +1,20 @@
-import {View, StyleSheet} from 'react-native';
 import LottieView from 'lottie-react-native';
 import {pagesNames} from '../../helpers/utils';
+import Container from '../../Components/Contianer/Container';
+import styles from './Lottie.style';
 
 export const Lottie = ({navigation}) => {
   return (
-    <View style={styles.takingAllPage}>
+    <Container>
       <LottieView
         source={require('../../assets/Lottie/splash.json')}
         autoPlay
         loop={false}
         onAnimationFinish={() => navigation.replace(pagesNames.dashboard)}
-        style={styles.takingAllPage}
+        style={styles.lottie}
       />
-    </View>
+    </Container>
   );
 };
-
-const styles = StyleSheet.create({
-  takingAllPage: {flex: 1},
-});
 
 export default Lottie;

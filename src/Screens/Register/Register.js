@@ -1,5 +1,4 @@
 import {useEffect} from 'react';
-import {View, StyleSheet} from 'react-native';
 import Locale from '../../helpers/localization';
 import Text from '../../Components/Text/Text';
 import Form from '../../Components/Form/Form';
@@ -10,6 +9,7 @@ import {useDispatch} from 'react-redux';
 import {setIsLoading, setUserId} from '../../helpers/Redux/mainReducer';
 import {handleAPIErrors, pagesNames, showToast} from '../../helpers/utils';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Container from '../../Components/Contianer/Container';
 
 export const Register = ({navigation}) => {
   const dispatch = useDispatch();
@@ -29,7 +29,7 @@ export const Register = ({navigation}) => {
   });
 
   return (
-    <View style={styles.takingAllPage}>
+    <Container>
       <Text localeKey={'register.register'} />
       <Form
         validationSchema={validation}
@@ -62,13 +62,8 @@ export const Register = ({navigation}) => {
           }
         }}
       />
-    </View>
+    </Container>
   );
 };
-
-const styles = StyleSheet.create({
-  takingAllPage: {flex: 1},
-  forgetPasswordButton: {alignSelf: 'flex-start'},
-});
 
 export default Register;

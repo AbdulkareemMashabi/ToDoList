@@ -1,6 +1,5 @@
 import {useEffect} from 'react';
 import Locale from '../../helpers/localization';
-import {StyleSheet, View} from 'react-native';
 import Form from '../../Components/Form/Form';
 import * as Yup from 'yup';
 import {getShadow} from '../../helpers/shadow';
@@ -8,6 +7,8 @@ import {useDispatch, useSelector} from 'react-redux';
 import {setIsLoading} from '../../helpers/Redux/mainReducer';
 import {handleAPIErrors, pagesNames} from '../../helpers/utils';
 import {addUserData} from '../../helpers/firebase';
+import Container from '../../Components/Contianer/Container';
+import styles from './CreateNewTask.style';
 
 export const CreateNewTask = ({navigation}) => {
   const {userId, backgroundColor} = useSelector(state => state.main);
@@ -24,7 +25,7 @@ export const CreateNewTask = ({navigation}) => {
   });
 
   return (
-    <View style={[styles.container, getShadow(backgroundColor)]}>
+    <Container style={[styles.container, getShadow(backgroundColor)]} noPadding>
       <Form
         validationSchema={validation}
         fields={[
@@ -54,20 +55,8 @@ export const CreateNewTask = ({navigation}) => {
           }
         }}
       />
-    </View>
+    </Container>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    width: '100%',
-    backgroundColor: 'white',
-    position: 'absolute',
-    bottom: 0,
-    borderTopLeftRadius: 16,
-    borderTopRightRadius: 16,
-    paddingHorizontal: 16,
-  },
-});
 
 export default CreateNewTask;

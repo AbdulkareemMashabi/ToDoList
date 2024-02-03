@@ -2,6 +2,7 @@ import {View} from 'react-native';
 import Text from '../Text/Text';
 import Button from '../Button/Button';
 import styles from './PopUp.style';
+import Container from '../Contianer/Container';
 
 export const PopUp = ({navigation, route}) => {
   const {title, description, confirmButton} = route.params;
@@ -11,7 +12,7 @@ export const PopUp = ({navigation, route}) => {
   };
 
   return (
-    <View style={styles.container}>
+    <Container style={styles.container} noPadding>
       <View style={styles.modal}>
         <Text localeKey={title} textAlign={'center'} />
         <Text
@@ -34,7 +35,7 @@ export const PopUp = ({navigation, route}) => {
           }}
         />
       </View>
-    </View>
+    </Container>
   );
 };
 
