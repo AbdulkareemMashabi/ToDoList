@@ -30,6 +30,7 @@ export const TaskDetailsScreen = ({navigation, route}) => {
 
   const validation = Yup.object().shape({
     title: Yup.string().required(Locale.t('common.required')),
+    date: Yup.string().required(Locale.t('common.required')),
   });
 
   const getData = async () => {
@@ -92,32 +93,34 @@ export const TaskDetailsScreen = ({navigation, route}) => {
         data={formData?.subTasks || []}
         renderItem={({item, index}) => {
           return (
-            <DoubleText
-              title={item?.title}
-              description={item?.description}
-              date={item?.date}
-              editButtonPress={() => {
-                setSelectedIndex(index);
-                setOpenMainForm(true);
-              }}
-              deleteButtonPress={async () => {
-                try {
-                  let finalValues = {};
-                  finalValues = {
-                    subTasks: formData?.subTasks,
-                  };
-                  finalValues.subTasks.splice(index, 1);
+            <View key={index}>
+              <DoubleText
+                title={item?.title}
+                description={item?.description}
+                date={item?.date}
+                editButtonPress={() => {
+                  setSelectedIndex(index);
+                  setOpenMainForm(true);
+                }}
+                deleteButtonPress={async () => {
+                  try {
+                    let finalValues = {};
+                    finalValues = {
+                      subTasks: formData?.subTasks,
+                    };
+                    finalValues.subTasks.splice(index, 1);
 
-                  dispatch(setIsLoadingOverLay(true));
-                  await updateDocuments(userId, documentId, finalValues);
-                  setFormData({...formData, ...finalValues});
-                } catch (e) {
-                  handleAPIErrors(e);
-                } finally {
-                  dispatch(setIsLoadingOverLay(false));
-                }
-              }}
-            />
+                    dispatch(setIsLoadingOverLay(true));
+                    await updateDocuments(userId, documentId, finalValues);
+                    setFormData({...formData, ...finalValues});
+                  } catch (e) {
+                    handleAPIErrors(e);
+                  } finally {
+                    dispatch(setIsLoadingOverLay(false));
+                  }
+                }}
+              />
+            </View>
           );
         }}
       />
