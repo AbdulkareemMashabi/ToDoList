@@ -4,7 +4,7 @@ import Button from '../../Components/Button/Button';
 import {Icons} from '../../assets/Icons';
 import EmptyList from '../../Components/EmptyList/EmptyList';
 import {Images} from '../../assets/Images';
-import {pagesNames} from '../../helpers/utils';
+import {pagesNames, showToast} from '../../helpers/utils';
 import Skeleton from '../../Components/Skeleton/Skeleton';
 import {useDispatch, useSelector} from 'react-redux';
 import {deleteSpecificDocument, handleEnterFace} from './utils';
@@ -12,6 +12,7 @@ import styles from './Dashboard.styles';
 import Task from '../../Components/Task/Task';
 import {getShadow} from '../../helpers/shadow';
 import Swipeable from '../../Components/Swipeable/Swipeable';
+import {getUserData} from '../../App.utils';
 
 export const Dashboard = ({navigation}) => {
   const {userId} = useSelector(state => state.main);
@@ -32,51 +33,58 @@ export const Dashboard = ({navigation}) => {
     let returnedJsx = [];
     if (userData.length > 0)
       returnedJsx.push(
-        <>
+        <View key={0} style={styles.container}>
           <FlatList
+            refreshing={isLoading}
+            onRefresh={() => {
+              getUserData(userId, dispatch);
+            }}
             ListHeaderComponent={<View style={styles.flatListHeader} />}
             ListFooterComponent={<View style={styles.flatListHeader} />}
             showsVerticalScrollIndicator={false}
             ItemSeparatorComponent={<View style={styles.separator} />}
             data={userData}
             renderItem={({item, index}) => (
-              <Swipeable
-                isSwipeableAtBegin={index === 0}
-                renderAction={() => (
-                  <View style={styles.buttonsTaskContainer}>
-                    <Button
-                      containerStyle={[styles.button, styles.infoButton]}
-                      source={Icons.info}
-                      withoutShadow
-                      onPress={() => {
-                        navigation.navigate(pagesNames.taskDetailsScreen, {
-                          documentId: item.id,
-                        });
-                      }}
-                    />
-                    <Button
-                      containerStyle={[styles.button, styles.deleteButton]}
-                      source={Icons.trash}
-                      withoutShadow
-                      onPress={() => {
-                        navigation.navigate(pagesNames.popUp, {
-                          title: 'myWishesPage.deletePopUpTitle',
-                          description: 'myWishesPage.deletePopUpDescription',
-                          confirmButton: dismissPopUp => {
-                            deleteSpecificDocument(
-                              userId,
-                              item.id,
-                              dispatch,
-                              dismissPopUp,
-                            );
-                          },
-                        });
-                      }}
-                    />
-                  </View>
-                )}>
-                <Task id={item.id} data={item.data} userId={userId} />
-              </Swipeable>
+              <View key={index}>
+                <Swipeable
+                  isSwipeableAtBegin={index === 0}
+                  renderAction={() => (
+                    <View style={styles.buttonsTaskContainer}>
+                      <Button
+                        containerStyle={[styles.button, styles.infoButton]}
+                        source={Icons.info}
+                        withoutShadow
+                        onPress={() => {
+                          navigation.navigate(pagesNames.taskDetailsScreen, {
+                            documentId: item.id,
+                          });
+                        }}
+                      />
+                      <Button
+                        containerStyle={[styles.button, styles.deleteButton]}
+                        source={Icons.trash}
+                        withoutShadow
+                        onPress={() => {
+                          navigation.navigate(pagesNames.popUp, {
+                            title: 'myWishesPage.deletePopUpTitle',
+                            description: 'myWishesPage.deletePopUpDescription',
+                            confirmButton: dismissPopUp => {
+                              deleteSpecificDocument(
+                                userId,
+                                item.id,
+                                dispatch,
+                                dismissPopUp,
+                              );
+                              showToast('myWishesPage.TaskDeletedSuccessfully');
+                            },
+                          });
+                        }}
+                      />
+                    </View>
+                  )}>
+                  <Task id={item.id} data={item.data} userId={userId} />
+                </Swipeable>
+              </View>
             )}
           />
           <View style={[styles.viewButton, getShadow('white')]}>
@@ -87,11 +95,11 @@ export const Dashboard = ({navigation}) => {
               }}
             />
           </View>
-        </>,
+        </View>,
       );
     else
       returnedJsx.push(
-        <>
+        <View key={1} style={styles.container}>
           <EmptyList
             image={Images.emptyListPic}
             title={'myWishesPage.emptyFormTitle'}
@@ -105,7 +113,7 @@ export const Dashboard = ({navigation}) => {
               else navigation.push(pagesNames.login);
             }}
           />
-        </>,
+        </View>,
       );
 
     return returnedJsx;
