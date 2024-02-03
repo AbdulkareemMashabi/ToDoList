@@ -76,7 +76,6 @@ export const Dashboard = ({navigation}) => {
                                 dispatch,
                                 dismissPopUp,
                               );
-                              showToast('myWishesPage.TaskDeletedSuccessfully');
                             },
                           });
                         }}
