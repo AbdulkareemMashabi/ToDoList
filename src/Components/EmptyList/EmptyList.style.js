@@ -6,7 +6,6 @@ export default StyleSheet.create({
     fontWeight: '700',
     marginTop: 24,
     marginBottom: 16,
-    color: 'black',
   },
   description: {
     fontSize: 17,

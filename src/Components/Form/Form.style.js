@@ -1,6 +1,6 @@
 import {StyleSheet} from 'react-native';
 
-const styles = StyleSheet.create({
+export default StyleSheet.create({
   mainField: {
     marginVertical: 8,
   },
@@ -14,5 +14,3 @@ const styles = StyleSheet.create({
     marginVertical: 8,
   },
 });
-
-export default styles;
