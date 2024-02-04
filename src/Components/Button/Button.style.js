@@ -10,8 +10,6 @@ export default StyleSheet.create({
   text: {
     textAlign: 'center',
   },
-  blueText: {color: '#32ADE6'},
-  whiteText: {color: 'white'},
   container: {
     width: '100%',
     height: 48,
@@ -25,5 +23,8 @@ export default StyleSheet.create({
   },
   plusImage: {
     marginRight: 16,
+  },
+  rtl: {
+    transform: [{scaleX: -1}],
   },
 });

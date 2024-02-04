@@ -3,6 +3,7 @@ import {TouchableOpacity, Image, View} from 'react-native';
 import Text from '../Text/Text';
 import {getShadow} from '../../helpers/shadow';
 import {Icons} from '../../assets/Icons';
+import Locale from '../../helpers/localization';
 
 import styles from './Button.style';
 
@@ -41,18 +42,23 @@ export const Button = ({
       );
     else if (isIcon)
       return (
-        <Image source={source} style={[containerStyle, styles.imageSize]} />
+        <Image
+          source={source}
+          style={[
+            containerStyle,
+            styles.imageSize,
+            Locale.isRTL ? styles.rtl : null,
+          ]}
+        />
       );
     else if (variant === 'manualDraw') return null;
     else
       return (
         <Text
+          textAlign={'center'}
+          color={variant === 'primary' ? 'white' : '#32ADE6'}
           variant="bodySemibold"
-          style={[
-            contentStyle,
-            styles.text,
-            variant === 'primary' ? styles.whiteText : styles.blueText,
-          ]}
+          style={contentStyle}
           localeKey={source}
         />
       );
