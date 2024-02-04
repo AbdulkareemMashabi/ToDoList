@@ -1,12 +1,5 @@
 import {useEffect, useRef, useState} from 'react';
-import {
-  Animated,
-  TextInput,
-  TouchableOpacity,
-  StyleSheet,
-  Platform,
-  Image,
-} from 'react-native';
+import {Animated, TouchableOpacity, Image} from 'react-native';
 import Text from '../Text/Text';
 import Locale from '../../helpers/localization';
 import {getShadow} from '../../helpers/shadow';
@@ -14,6 +7,8 @@ import {default as RNDatePicker} from 'react-native-date-picker';
 import {Icons} from '../../assets/Icons';
 import {useSelector} from 'react-redux';
 import moment from 'moment';
+
+import styles from './DatePicker.style';
 
 export const DatePicker = ({
   onValueChange,
@@ -103,27 +98,5 @@ export const DatePicker = ({
     </>
   );
 };
-
-const styles = StyleSheet.create({
-  text: {
-    zIndex: 1,
-    left: 16,
-    position: 'absolute',
-  },
-  textInput: {
-    width: '100%',
-    color: 'black',
-  },
-  touchableOpacity: {
-    paddingHorizontal: 30,
-    paddingTop: 10,
-    backgroundColor: 'white',
-    borderRadius: 16,
-    height: 56,
-    justifyContent: 'center',
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-});
 
 export default DatePicker;
