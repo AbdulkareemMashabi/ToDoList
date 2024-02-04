@@ -106,7 +106,7 @@ export const TaskDetailsScreen = ({navigation, route}) => {
                   try {
                     let finalValues = {};
                     finalValues = {
-                      subTasks: formData?.subTasks,
+                      subTasks: formData?.subTasks.slice(),
                     };
                     finalValues.subTasks.splice(index, 1);
 
@@ -139,7 +139,7 @@ export const TaskDetailsScreen = ({navigation, route}) => {
             try {
               let finalValues = {};
               if (!isNil(selectedIndex)) {
-                finalValues = {subTasks: formData?.subTasks};
+                finalValues = {subTasks: formData?.subTasks.slice()};
                 finalValues.subTasks[selectedIndex] = {
                   ...values,
                   status: false,
