@@ -31,7 +31,7 @@
   },
   "register": {
     "register": "تسجيل",
-    "passwordValidation": "كلمة السر يجب على الاقل ان تكون مكونة من 6 أو أرقام",
+    "passwordValidation": "كلمة السر يجب على الاقل ان تكون مكونة من أحرف 6 أو أرقام",
     "registeredSuccessfully": "لقد تم تسجيلك بنجاح"
   },
   "forgetPassword": {
