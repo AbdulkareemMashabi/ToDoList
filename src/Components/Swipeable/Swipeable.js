@@ -1,10 +1,8 @@
 import React, {useRef, useEffect} from 'react';
-import {Animated} from 'react-native';
 import {default as RNSwipeable} from 'react-native-gesture-handler/Swipeable';
 import Locale from '../../helpers/localization';
 
 const Swipeable = ({isSwipeableAtBegin, children, renderAction}) => {
-  const animatedValue = useRef(new Animated.Value(0)).current;
   const ref = useRef(null);
 
   const swipeAtBegin = () => {
@@ -26,7 +24,6 @@ const Swipeable = ({isSwipeableAtBegin, children, renderAction}) => {
       renderRightActions={!Locale.isRTL ? renderAction : undefined}
       renderLeftActions={Locale.isRTL ? renderAction : undefined}
       containerStyle={{
-        transform: [{translateX: animatedValue}],
         paddingVertical: 8,
       }}>
       {children}
