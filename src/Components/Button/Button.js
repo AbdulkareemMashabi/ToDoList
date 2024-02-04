@@ -42,14 +42,7 @@ export const Button = ({
       );
     else if (isIcon)
       return (
-        <Image
-          source={source}
-          style={[
-            containerStyle,
-            styles.imageSize,
-            Locale.isRTL ? styles.rtl : null,
-          ]}
-        />
+        <Image source={source} style={[containerStyle, styles.imageSize]} />
       );
     else if (variant === 'manualDraw') return null;
     else

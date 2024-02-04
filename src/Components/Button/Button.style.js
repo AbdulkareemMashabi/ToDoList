@@ -24,7 +24,4 @@ export default StyleSheet.create({
   plusImage: {
     marginRight: 16,
   },
-  rtl: {
-    transform: [{scaleX: -1}],
-  },
 });
