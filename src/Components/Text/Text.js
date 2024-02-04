@@ -19,7 +19,7 @@ export const Text = ({
   const getColor = () => {
     if (!color) return null;
     else {
-      isColorExist = styles[`${color}Color`];
+      isColorExist = styles?.[`${color}Color`];
       if (isColorExist) return isColorExist;
       else return {color: color};
     }
@@ -33,8 +33,7 @@ export const Text = ({
         styles.blackColor,
         styles[variant],
         getColor(),
-        styles.mainStyle,
-        {textAlign: textAlign},
+        {textAlign: textAlign || 'left'},
         isLineThrough ? {textDecorationLine: 'line-through'} : null,
         style,
       ]}>

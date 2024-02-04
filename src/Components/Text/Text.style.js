@@ -1,7 +1,6 @@
 import {StyleSheet} from 'react-native';
 
 export default StyleSheet.create({
-  mainStyle: {textAlign: 'left'},
   h2: {fontSize: 22, fontWeight: '700'},
   bodySemibold: {fontSize: 17, fontWeight: '600'},
   bodyRegular: {fontSize: 17, fontWeight: '400'},
