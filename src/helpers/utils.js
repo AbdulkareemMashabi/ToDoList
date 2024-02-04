@@ -55,11 +55,7 @@ export const toastConfig = {
         marginHorizontal: 20,
       }}>
       <Image source={Icons.checkMark} style={{marginHorizontal: 10}} />
-      <Text
-        style={{color: 'white'}}
-        localeKey={props.text1}
-        variant="bodySemibold"
-      />
+      <Text color={'white'} localeKey={props.text1} variant="bodySemibold" />
     </View>
   ),
 };
