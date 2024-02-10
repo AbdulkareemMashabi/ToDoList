@@ -73,21 +73,21 @@ export const App = () => {
 
       dispatch(setBackgroundColor(backgroundColors[randomKey]));
       setImage(CreateNewTaskImages[randomKey]);
-    } else setImage(null);
+    } else setImage(Images.light);
   }, [currentPage]);
 
   return (
-    <SafeAreaView
-      pointerEvents={isLoading || isLoadingOverLay ? 'none' : 'auto'}
-      style={[
-        styles.safeAreaView,
-        currentPage === pagesNames.lottie ? styles.greyColor : null,
-      ]}
-      onStartShouldSetResponder={() => {
-        Keyboard.dismiss();
-      }}>
-      <GestureHandlerRootView style={styles.gestureStyle}>
-        <ImageBackground style={styles.image} source={image}>
+    <ImageBackground style={styles.image} source={image}>
+      <SafeAreaView
+        pointerEvents={isLoading || isLoadingOverLay ? 'none' : 'auto'}
+        style={[
+          styles.safeAreaView,
+          currentPage === pagesNames.lottie ? styles.greyColor : null,
+        ]}
+        onStartShouldSetResponder={() => {
+          Keyboard.dismiss();
+        }}>
+        <GestureHandlerRootView style={styles.gestureStyle}>
           <NavigationContainer
             theme={{
               ...DefaultTheme,
@@ -102,6 +102,8 @@ export const App = () => {
                 headerTitleAlign: 'center',
                 cardStyle: styles.pageStyle,
                 headerTransparent: true,
+                headerLeftLabelVisible: false,
+                headerTintColor: 'black',
               }}>
               <Stack.Screen
                 name={pagesNames.lottie}
@@ -187,20 +189,20 @@ export const App = () => {
               />
             </Stack.Navigator>
           </NavigationContainer>
-        </ImageBackground>
-      </GestureHandlerRootView>
-      <Toast config={toastConfig} />
-      {isLoadingOverLay ? (
-        <View style={styles.lottieView}>
-          <LottieView
-            source={require('../assets/Lottie/loading.json')}
-            autoPlay
-            loop
-            style={styles.takingAllPage}
-          />
-        </View>
-      ) : null}
-    </SafeAreaView>
+        </GestureHandlerRootView>
+        <Toast config={toastConfig} />
+        {isLoadingOverLay ? (
+          <View style={styles.lottieView}>
+            <LottieView
+              source={require('../assets/Lottie/loading.json')}
+              autoPlay
+              loop
+              style={styles.takingAllPage}
+            />
+          </View>
+        ) : null}
+      </SafeAreaView>
+    </ImageBackground>
   );
 };
 
