@@ -3,9 +3,6 @@ import {getShadow} from '../helpers/shadow';
 
 export default StyleSheet.create({
   safeAreaView: {flex: 1, backgroundColor: 'white'},
-  headerPageTitle: {
-    ...getShadow('white'),
-  },
   headerTitle: {fontSize: 17, fontWeight: 600},
   gestureStyle: {
     flex: 1,

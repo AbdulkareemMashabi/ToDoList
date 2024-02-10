@@ -99,9 +99,9 @@ export const App = () => {
             <Stack.Navigator
               initialRouteName={pagesNames.lottie}
               screenOptions={{
-                headerStyle: styles.headerPageTitle,
                 headerTitleAlign: 'center',
                 cardStyle: styles.pageStyle,
+                headerTransparent: true,
               }}>
               <Stack.Screen
                 name={pagesNames.lottie}
