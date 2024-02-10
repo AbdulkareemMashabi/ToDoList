@@ -2,7 +2,7 @@ import {useEffect, useRef, useState} from 'react';
 import {Animated, TouchableOpacity, Image} from 'react-native';
 import Text from '../Text/Text';
 import Locale from '../../helpers/localization';
-import {getShadow} from '../../helpers/shadow';
+import {cardShadow} from '../../helpers/shadow';
 import {default as RNDatePicker} from 'react-native-date-picker';
 import {Icons} from '../../assets/Icons';
 import {useSelector} from 'react-redux';
@@ -59,7 +59,7 @@ export const DatePicker = ({
     <>
       <TouchableOpacity
         onPress={() => setOpen(true)}
-        style={[styles.touchableOpacity, getShadow('white'), style]}>
+        style={[styles.touchableOpacity, cardShadow, style]}>
         <Text
           style={[styles.text, {fontSize: fontSizeRef, top: positionRef}]}
           localeKey={label}

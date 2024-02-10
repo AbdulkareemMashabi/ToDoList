@@ -2,7 +2,7 @@ import {useEffect, useRef} from 'react';
 import {Animated, TextInput, TouchableOpacity} from 'react-native';
 import Text from '../Text/Text';
 import Locale from '../../helpers/localization';
-import {getShadow} from '../../helpers/shadow';
+import {cardShadow} from '../../helpers/shadow';
 
 import styles from './TextField.style';
 
@@ -58,7 +58,7 @@ export const TextField = ({
       onPress={() => refsFocus.current.focus()}
       style={[
         styles.touchableOpacity,
-        !withoutShadow ? getShadow('white') : null,
+        !withoutShadow ? cardShadow : null,
         style,
       ]}>
       <Text

@@ -4,13 +4,13 @@ import Button from '../../Components/Button/Button';
 import {Icons} from '../../assets/Icons';
 import EmptyList from '../../Components/EmptyList/EmptyList';
 import {Images} from '../../assets/Images';
-import {pagesNames, showToast} from '../../helpers/utils';
+import {pagesNames} from '../../helpers/utils';
 import Skeleton from '../../Components/Skeleton/Skeleton';
 import {useDispatch, useSelector} from 'react-redux';
 import {deleteSpecificDocument, handleEnterFace} from './utils';
 import styles from './Dashboard.styles';
 import Task from '../../Components/Task/Task';
-import {getShadow} from '../../helpers/shadow';
+import {cardShadow} from '../../helpers/shadow';
 import Swipeable from '../../Components/Swipeable/Swipeable';
 import {getUserData} from '../../App/utils';
 import Container from '../../Components/Contianer/Container';
@@ -87,7 +87,7 @@ export const Dashboard = ({navigation}) => {
               </View>
             )}
           />
-          <View style={[styles.viewButton, getShadow('white')]}>
+          <View style={[styles.viewButton, cardShadow]}>
             <Button
               source={'taskDetails.addNewTask'}
               onPress={() => {

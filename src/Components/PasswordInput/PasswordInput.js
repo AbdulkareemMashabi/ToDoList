@@ -3,7 +3,7 @@ import {View} from 'react-native';
 import TextField from '../TextField/TextField';
 import Button from '../Button/Button';
 import {Icons} from '../../assets/Icons';
-import {getShadow} from '../../helpers/shadow';
+import {cardShadow} from '../../helpers/shadow';
 
 import styles from './PasswordInput.style';
 
@@ -16,7 +16,7 @@ export const PasswordInput = ({
 }) => {
   const [isHidden, setIsHidden] = useState(true);
   return (
-    <View style={[styles.root, getShadow('white'), style]}>
+    <View style={[styles.root, cardShadow, style]}>
       <TextField
         style={styles.textField}
         onValueChange={onValueChange}
