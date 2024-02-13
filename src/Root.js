@@ -30,7 +30,6 @@ export const Root = () => {
       if (value !== null) {
         Locale.setLanguage(value);
       } else {
-        Locale.setLanguage('ar');
         await AsyncStorage.setItem('language', 'ar');
         supportRTL();
       }
