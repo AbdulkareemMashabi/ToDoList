@@ -12,18 +12,16 @@ const ActionsSheet = ({children, visible, onClose}) => {
   }, [visible]);
 
   return (
-    <View>
-      <RNActionSheet
-        gestureEnabled
-        ref={actionSheetRef}
-        onClose={() => {
-          onClose();
-          Keyboard.dismiss();
-        }}
-        containerStyle={styles.container}>
-        {children}
-      </RNActionSheet>
-    </View>
+    <RNActionSheet
+      gestureEnabled
+      ref={actionSheetRef}
+      onClose={() => {
+        onClose();
+        Keyboard.dismiss();
+      }}
+      containerStyle={styles.container}>
+      {children}
+    </RNActionSheet>
   );
 };
 
