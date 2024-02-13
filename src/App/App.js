@@ -31,7 +31,7 @@ import {CreateNewTaskImages} from '../assets/CreateNewTaskImages';
 import {setBackgroundColor} from '../helpers/Redux/mainReducer';
 import TaskDetailsScreen from '../Screens/TaskDetailsScreen/TaskDetailsScreen';
 import LottieView from 'lottie-react-native';
-import {getUserData} from './utils';
+import {getRandomNumber, getUserData} from './utils';
 import PopUp from '../Components/PopUp/PopUp';
 
 import styles from './App.style';
@@ -51,24 +51,11 @@ export const App = () => {
     BackHandler.addEventListener('hardwareBackPress', () => !isLoading);
   }, []);
 
-  const getRandomNumber = () => {
-    let randomNumber = Math.floor(Math.random() * 4);
-    if (usedNumbers.current.length === 4) {
-      usedNumbers.current = [];
-    }
-    while (usedNumbers.current.includes(randomNumber)) {
-      randomNumber = Math.floor(Math.random() * 4);
-    }
-    usedNumbers.current.push(randomNumber);
-
-    return randomNumber;
-  };
-
   useEffect(() => {
     if (pagesUseWaveImage.includes(currentPage)) setImage(Images.waves);
     else if (currentPage === pagesNames.createNewTask) {
       const keys = Object.keys(CreateNewTaskImages);
-      const randomNumber = getRandomNumber();
+      const randomNumber = getRandomNumber(usedNumbers);
       const randomKey = keys[randomNumber];
 
       dispatch(setBackgroundColor(backgroundColors[randomKey]));
