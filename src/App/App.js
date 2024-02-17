@@ -1,8 +1,6 @@
 import 'react-native-gesture-handler';
 import React, {useEffect, useRef, useState} from 'react';
 import {NavigationContainer, DefaultTheme} from '@react-navigation/native';
-import Reactotron from 'reactotron-react-native';
-
 import {createStackNavigator} from '@react-navigation/stack';
 import Lottie from '../Screens/Lottie/Lottie';
 import {
@@ -181,7 +179,7 @@ export const App = () => {
         {isLoadingOverLay ? (
           <View style={styles.lottieView}>
             <LottieView
-              source={require('../assets/Lottie/loading.json')}
+              source={require('../assets/Lottie/loadingOverLay.json')}
               autoPlay
               loop
               style={styles.takingAllPage}

@@ -11,7 +11,7 @@ export default StyleSheet.create({
   },
   greyColor: {backgroundColor: '#e5e5e5'},
   image: {flex: 1},
-  takingAllPage: {width: '100%', height: 80},
+  takingAllPage: {width: '100%', flex: 1},
   lottieView: {
     backgroundColor: 'rgba(0,0,0,0.5)',
     ...StyleSheet.absoluteFillObject,
