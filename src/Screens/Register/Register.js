@@ -26,6 +26,9 @@ export const Register = ({navigation}) => {
     password: Yup.string()
       .min(6, Locale.t('register.passwordValidation'))
       .required(Locale.t('common.required')),
+    confirmPassword: Yup.string()
+      .oneOf([Yup.ref('password')], Locale.t('common.matchPassword'))
+      .required(Locale.t('common.required')),
   });
 
   return (
@@ -40,6 +43,11 @@ export const Register = ({navigation}) => {
             name: 'password',
             label: 'common.password',
             hint: 'register.passwordValidation',
+          },
+          {
+            type: 'PasswordInput',
+            name: 'confirmPassword',
+            label: 'common.confirmPassword',
           },
         ]}
         onSubmit={async values => {
