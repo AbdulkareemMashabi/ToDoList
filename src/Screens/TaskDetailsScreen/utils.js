@@ -1,4 +1,3 @@
-import reactotron from 'reactotron-react-native';
 import {isNil} from '../../helpers/utils';
 import moment from 'moment';
 
@@ -25,7 +24,7 @@ export const getFormFields = (formData, selectedIndex) => {
   ];
   if (formData?.subTasks?.length === selectedIndex) {
     const dataObject = formData?.mainTask?.date?.split('/');
-    const finalDataObject = new Date(
+    const maximumDate = new Date(
       moment(`${dataObject[2]}-${dataObject[1]}-${dataObject[0]}`).format(
         'YYYY-MM-DD',
       ),
@@ -34,7 +33,7 @@ export const getFormFields = (formData, selectedIndex) => {
       type: 'DatePicker',
       name: 'date',
       label: 'newTask.date',
-      maximumDate: finalDataObject,
+      maximumDate: maximumDate,
     });
   }
   formFields.push({
