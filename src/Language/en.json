@@ -19,6 +19,8 @@
   "common": {
     "userName": "Username",
     "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "matchPassword": "Passwords must match",
     "errorOccurred": "Error Occurred",
     "submit": "Submit",
     "register": "Register",
@@ -26,8 +28,9 @@
     "required": "This field is required",
     "emailValidation": "The Text entered should be an Email",
     "selectDate": "Select Date",
-    "confirm": "confirm",
-    "cancel": "cancel"
+    "confirm": "Confirm",
+    "cancel": "Cancel",
+    "done": "Done"
   },
   "register": {
     "register": "Register",
@@ -37,7 +40,7 @@
   "forgetPassword": {
     "forgetPassword": "Forget Password",
     "enterEmail": "Please enter email",
-    "receiveEmail": "Will receive an email with reset link",
+    "receiveEmail": "You will receive an email with reset link",
     "resetSuccessfully": "Reset Email has been sent to you successfully"
   },
   "APIErrorMessages": {

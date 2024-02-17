@@ -19,6 +19,8 @@
   "common": {
     "userName": "اسم المستخدم",
     "password": "كلمة المرور",
+    "confirmPassword": "تأكيد كلمة السر",
+    "matchPassword": "كلمتا السر غير متطابقتان",
     "errorOccurred": "حدث خطأ",
     "submit": "تأكيد",
     "register": "تسجيل",
@@ -27,7 +29,8 @@
     "emailValidation": "النص المدخل يجب أن يكون ايميل",
     "selectDate": "اختر التاريخ",
     "confirm": "تأكيد",
-    "cancel": "الغاء"
+    "cancel": "الغاء",
+    "done": "مكتمل"
   },
   "register": {
     "register": "تسجيل",
