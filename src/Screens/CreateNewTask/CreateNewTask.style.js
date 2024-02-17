@@ -1,13 +1,14 @@
 import {StyleSheet} from 'react-native';
 
 export default StyleSheet.create({
-  container: {
+  view: {
     width: '100%',
     backgroundColor: 'white',
-    position: 'absolute',
-    bottom: 0,
     borderTopLeftRadius: 16,
     borderTopRightRadius: 16,
     paddingHorizontal: 16,
+  },
+  container: {
+    justifyContent: 'flex-end',
   },
 });
