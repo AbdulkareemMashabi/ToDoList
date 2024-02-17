@@ -1,4 +1,4 @@
-import {Image, View} from 'react-native';
+import {FlatList, Image, View} from 'react-native';
 import styles from './Task.style';
 import Text from '../Text/Text';
 import {Icons} from '../../assets/Icons';
@@ -59,8 +59,11 @@ export const Task = ({data, id, userId}) => {
           </View>
         </View>
         {subTasks.length !== 0 ? <View style={styles.separator} /> : null}
-        {subTasks.map((item, index) => {
-          return (
+        <FlatList
+          scrollEnabled={false}
+          showsVerticalScrollIndicator={false}
+          data={subTasks || []}
+          renderItem={({item, index}) => (
             <View style={styles.subTaskParent} key={index}>
               {mainTask.status || item.status ? (
                 <Image source={Icons.check} />
@@ -98,8 +101,8 @@ export const Task = ({data, id, userId}) => {
                 ) : null}
               </View>
             </View>
-          );
-        })}
+          )}
+        />
       </View>
     </View>
   );
