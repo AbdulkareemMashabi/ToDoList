@@ -13,7 +13,6 @@ import {
   setIsLoading,
   setIsLoadingOverLay,
 } from '../../helpers/Redux/mainReducer';
-import Skeleton from '../../Components/Skeleton/Skeleton';
 import Button from '../../Components/Button/Button';
 import {getFormFields, getInitialValues} from './utils';
 import Text from '../../Components/Text/Text';
@@ -55,26 +54,34 @@ export const TaskDetailsScreen = ({navigation, route}) => {
     getData();
   }, []);
 
-  const footer = () => (
-    <Button
-      variant="addButton"
-      containerStyle={styles.addNewTask}
-      onPress={() => {
-        setSelectedIndex(formData?.subTasks?.length);
-        setOpenMainForm(true);
-      }}
-    />
-  );
+  const footer = () => {
+    if (formData?.mainTask?.status) return null;
+    return (
+      <Button
+        variant="addButton"
+        containerStyle={styles.addNewTask}
+        onPress={() => {
+          setSelectedIndex(formData?.subTasks?.length);
+          setOpenMainForm(true);
+        }}
+      />
+    );
+  };
 
-  return !initialLoading ? (
-    <Container>
+  return (
+    <Container isLoading={initialLoading}>
       <DoubleText
+        done={formData?.mainTask?.status}
         title={formData?.mainTask?.title}
         description={formData?.mainTask?.description}
         date={formData?.mainTask?.date}
-        editButtonPress={() => {
-          setOpenMainForm(true);
-        }}
+        editButtonPress={
+          !formData?.mainTask?.status
+            ? () => {
+                setOpenMainForm(true);
+              }
+            : null
+        }
       />
       {formData?.subTasks?.length > 0 ? (
         <>
@@ -95,30 +102,43 @@ export const TaskDetailsScreen = ({navigation, route}) => {
           return (
             <View key={index}>
               <DoubleText
+                done={item?.status}
                 title={item?.title}
                 description={item?.description}
                 date={item?.date}
-                editButtonPress={() => {
-                  setSelectedIndex(index);
-                  setOpenMainForm(true);
-                }}
-                deleteButtonPress={async () => {
-                  try {
-                    let finalValues = {};
-                    finalValues = {
-                      subTasks: formData?.subTasks.slice(),
-                    };
-                    finalValues.subTasks.splice(index, 1);
+                editButtonPress={
+                  !item?.status
+                    ? () => {
+                        setSelectedIndex(index);
+                        setOpenMainForm(true);
+                      }
+                    : null
+                }
+                deleteButtonPress={
+                  !item?.status
+                    ? async () => {
+                        try {
+                          let finalValues = {};
+                          finalValues = {
+                            subTasks: formData?.subTasks.slice(),
+                          };
+                          finalValues.subTasks.splice(index, 1);
 
-                    dispatch(setIsLoadingOverLay(true));
-                    await updateDocuments(userId, documentId, finalValues);
-                    setFormData({...formData, ...finalValues});
-                  } catch (e) {
-                    handleAPIErrors(e);
-                  } finally {
-                    dispatch(setIsLoadingOverLay(false));
-                  }
-                }}
+                          dispatch(setIsLoadingOverLay(true));
+                          await updateDocuments(
+                            userId,
+                            documentId,
+                            finalValues,
+                          );
+                          setFormData({...formData, ...finalValues});
+                        } catch (e) {
+                          handleAPIErrors(e);
+                        } finally {
+                          dispatch(setIsLoadingOverLay(false));
+                        }
+                      }
+                    : null
+                }
               />
             </View>
           );
@@ -162,8 +182,6 @@ export const TaskDetailsScreen = ({navigation, route}) => {
         />
       </ActionsSheet>
     </Container>
-  ) : (
-    <Skeleton />
   );
 };
 
