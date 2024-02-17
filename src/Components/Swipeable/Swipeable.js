@@ -8,10 +8,10 @@ const Swipeable = ({isSwipeableAtBegin, children, renderAction}) => {
   const swipeAtBegin = () => {
     setTimeout(() => {
       Locale.isRTL ? ref.current?.openLeft() : ref.current?.openRight();
-    }, 500);
+    }, 300);
     setTimeout(() => {
       ref.current?.close();
-    }, 1000);
+    }, 800);
   };
 
   useEffect(() => {
