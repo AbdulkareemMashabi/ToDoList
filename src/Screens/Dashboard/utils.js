@@ -13,44 +13,42 @@ export const handleEnterFace = (navigation, userId) => {
   navigation.setOptions({
     headerTitle: Locale.t('myWishesPage.myWishes'),
     headerRight: () => (
-      <View style={styles.viewContainer}>
-        <View style={styles.buttonsContainer}>
+      <View style={styles.buttonsContainer}>
+        <Button
+          source={Icons.language}
+          onPress={async () => {
+            try {
+              await AsyncStorage.setItem(
+                'language',
+                Locale.language === 'ar' ? 'en' : 'ar',
+              );
+              I18nManager.forceRTL(!Locale.isRTL);
+              I18nManager.allowRTL(!Locale.isRTL);
+              RNRestart.restart();
+            } catch (e) {
+              Alert.alert(
+                Locale.t('common.errorOccurred'),
+                Locale.t('myWishesPage.languageErrorChange'),
+              );
+            }
+          }}
+        />
+        {userId ? (
           <Button
-            source={Icons.language}
+            source={Icons.logOut}
             onPress={async () => {
-              try {
-                await AsyncStorage.setItem(
-                  'language',
-                  Locale.language === 'ar' ? 'en' : 'ar',
-                );
-                I18nManager.forceRTL(!Locale.isRTL);
-                I18nManager.allowRTL(!Locale.isRTL);
-                RNRestart.restart();
-              } catch (e) {
-                Alert.alert(
-                  Locale.t('common.errorOccurred'),
-                  Locale.t('myWishesPage.languageErrorChange'),
-                );
-              }
+              await AsyncStorage.setItem('userId', '');
+              RNRestart.restart();
             }}
           />
-          {userId ? (
-            <Button
-              source={Icons.logOut}
-              onPress={async () => {
-                await AsyncStorage.setItem('userId', '');
-                RNRestart.restart();
-              }}
-            />
-          ) : (
-            <Button
-              source={Icons.cloud}
-              onPress={() => {
-                navigation.push(pagesNames.login);
-              }}
-            />
-          )}
-        </View>
+        ) : (
+          <Button
+            source={Icons.cloud}
+            onPress={() => {
+              navigation.push(pagesNames.login);
+            }}
+          />
+        )}
       </View>
     ),
   });

@@ -13,12 +13,8 @@ export default StyleSheet.create({
   buttonsContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    flex: 1,
-    paddingHorizontal: 8,
-  },
-  viewContainer: {
-    flexDirection: 'row',
-    paddingHorizontal: 16,
+    width: '100%',
+    paddingHorizontal: 24,
   },
   separator: {
     marginVertical: 8,

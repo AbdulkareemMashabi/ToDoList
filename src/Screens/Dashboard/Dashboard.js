@@ -5,7 +5,6 @@ import {Icons} from '../../assets/Icons';
 import EmptyList from '../../Components/EmptyList/EmptyList';
 import {Images} from '../../assets/Images';
 import {pagesNames} from '../../helpers/utils';
-import Skeleton from '../../Components/Skeleton/Skeleton';
 import {useDispatch, useSelector} from 'react-redux';
 import {deleteSpecificDocument, handleEnterFace} from './utils';
 import styles from './Dashboard.styles';
@@ -25,16 +24,9 @@ export const Dashboard = ({navigation}) => {
   }, [userId]);
 
   const getJsx = () => {
-    if (isLoading)
-      return (
-        <View style={[styles.container, styles.skeleton]}>
-          <Skeleton />
-        </View>
-      );
-    let returnedJsx = [];
     if (userData.length > 0)
-      returnedJsx.push(
-        <View key={0} style={styles.container}>
+      return (
+        <>
           <FlatList
             refreshing={isLoading}
             onRefresh={() => {
@@ -95,11 +87,11 @@ export const Dashboard = ({navigation}) => {
               }}
             />
           </View>
-        </View>,
+        </>
       );
     else
-      returnedJsx.push(
-        <View key={1} style={styles.container}>
+      return (
+        <>
           <EmptyList
             image={Images.emptyListPic}
             title={'myWishesPage.emptyFormTitle'}
@@ -113,13 +105,15 @@ export const Dashboard = ({navigation}) => {
               else navigation.push(pagesNames.login);
             }}
           />
-        </View>,
+        </>
       );
-
-    return returnedJsx;
   };
 
-  return <Container noPadding>{getJsx()}</Container>;
+  return (
+    <Container isLoading={isLoading} noPadding SkeletonPadding>
+      {getJsx()}
+    </Container>
+  );
 };
 
 export default Dashboard;
