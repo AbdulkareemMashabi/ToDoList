@@ -19,7 +19,7 @@ export const Text = ({
   const getColor = () => {
     if (!color) return null;
     else {
-      isColorExist = styles?.[`${color}Color`];
+      const isColorExist = styles?.[`${color}Color`];
       if (isColorExist) return isColorExist;
       else return {color: color};
     }
