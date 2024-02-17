@@ -1,10 +1,13 @@
 import {StyleSheet} from 'react-native';
 
 export default StyleSheet.create({
-  mainField: {
+  mainFieldWithoutError: {
     marginVertical: 8,
   },
-  error: {marginTop: 8, marginBottom: 16},
+  mainFieldWithError: {
+    marginTop: 8,
+  },
+  error: {marginTop: 8, marginBottom: 8},
   view: {marginVertical: 16},
   button: {
     marginVertical: 16,

@@ -1,7 +1,6 @@
 import {useEffect, useState} from 'react';
 import {Formik} from 'formik';
 import TextField from '../TextField/TextField';
-import Text from '../Text/Text';
 import {Keyboard, View} from 'react-native';
 import PasswordInput from '../PasswordInput/PasswordInput';
 import Button from '../Button/Button';
@@ -50,15 +49,18 @@ export const Form = ({
         <>
           <View style={styles.view}>
             {fields.map((item, index) => {
+              const hasNotErrorAndHint =
+                (!touched?.[item.name] || !errors?.[item.name]) && !item?.hint;
+
               switch (item.type) {
                 case 'TextField':
                   return (
                     <View key={index}>
                       <TextField
                         style={
-                          !touched?.[item.name] || !errors?.[item.name]
-                            ? styles.mainField
-                            : null
+                          hasNotErrorAndHint
+                            ? styles.mainFieldWithoutError
+                            : styles.mainFieldWithError
                         }
                         label={item.label}
                         value={values[item.name]}
@@ -73,9 +75,9 @@ export const Form = ({
                     <View key={index}>
                       <PasswordInput
                         style={
-                          !touched?.[item.name] || !errors?.[item.name]
-                            ? styles.mainField
-                            : null
+                          hasNotErrorAndHint
+                            ? styles.mainFieldWithoutError
+                            : styles.mainFieldWithError
                         }
                         label={item.label}
                         value={values[item.name]}
@@ -91,9 +93,9 @@ export const Form = ({
                       <TextField
                         multiline
                         style={
-                          !touched?.[item.name] || !errors?.[item.name]
+                          hasNotErrorAndHint
                             ? styles.textArea
-                            : null
+                            : styles.mainFieldWithError
                         }
                         label={item.label}
                         value={values[item.name]}
@@ -108,9 +110,9 @@ export const Form = ({
                     <View key={index}>
                       <DatePicker
                         style={
-                          !touched?.[item.name] || !errors?.[item.name]
-                            ? styles.mainField
-                            : null
+                          hasNotErrorAndHint
+                            ? styles.mainFieldWithoutError
+                            : styles.mainFieldWithError
                         }
                         label={item.label}
                         value={values[item.name]}
