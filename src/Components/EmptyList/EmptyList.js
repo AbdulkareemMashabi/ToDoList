@@ -8,7 +8,7 @@ export const EmptyList = ({image, title, description}) => {
     <View style={styles.container}>
       <Image source={image} style={styles.image} />
       <Text style={styles.title} localeKey={title} />
-      <Text style={styles.description} localeKey={description} color={'grey'} />
+      <Text variant="bodySemibold" localeKey={description} color={'grey'} />
     </View>
   );
 };

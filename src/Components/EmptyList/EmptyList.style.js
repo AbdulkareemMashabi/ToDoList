@@ -2,14 +2,8 @@ import {StyleSheet} from 'react-native';
 
 export default StyleSheet.create({
   title: {
-    fontSize: 22,
-    fontWeight: '700',
     marginTop: 24,
     marginBottom: 16,
-  },
-  description: {
-    fontSize: 17,
-    fontWeight: '600',
   },
   image: {
     width: 267.66,
