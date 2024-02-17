@@ -10,6 +10,7 @@ export const DoubleText = ({
   date,
   editButtonPress,
   deleteButtonPress,
+  done,
 }) => {
   return (
     <View style={styles.container}>
@@ -21,6 +22,11 @@ export const DoubleText = ({
           style={styles.description}
         />
       </View>
+      {done ? (
+        <View style={styles.doneStyle}>
+          <Text localeKey={'common.done'} variant="captionSemibold" />
+        </View>
+      ) : null}
       <View style={styles.container}>
         <Text value={date} variant="bodyRegular" color={'grey'} />
         <View style={styles.buttonContainer}>
