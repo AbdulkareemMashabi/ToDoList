@@ -1,4 +1,4 @@
-import {View} from 'react-native';
+import {Image, View} from 'react-native';
 import Text from '../Text/Text';
 import styles from './DoubleText.style';
 import Button from '../Button/Button';
@@ -15,31 +15,31 @@ export const DoubleText = ({
   return (
     <View style={styles.container}>
       <View>
-        <Text value={title} />
+        <View style={styles.imageTextView}>
+          {done ? <Image source={Icons.check} style={styles.image} /> : null}
+          <Text value={title} />
+        </View>
         <Text
           value={description}
           variant="bodyRegular"
           style={styles.description}
         />
       </View>
-      {done ? (
-        <View style={styles.doneStyle}>
-          <Text localeKey={'common.done'} variant="captionSemibold" />
-        </View>
-      ) : null}
       <View style={styles.container}>
         <Text value={date} variant="bodyRegular" color={'grey'} />
-        <View style={styles.buttonContainer}>
-          {editButtonPress ? (
-            <Button source={Icons.edit} onPress={editButtonPress} />
-          ) : null}
-          {deleteButtonPress ? (
-            <Button
-              source={Icons.delete}
-              containerStyle={styles.button}
-              onPress={deleteButtonPress}
-            />
-          ) : null}
+        <View>
+          <View
+            style={[
+              styles.buttonContainer,
+              !editButtonPress ? styles.buttonContainerOneElement : null,
+            ]}>
+            {editButtonPress ? (
+              <Button source={Icons.edit} onPress={editButtonPress} />
+            ) : null}
+            {deleteButtonPress ? (
+              <Button source={Icons.delete} onPress={deleteButtonPress} />
+            ) : null}
+          </View>
         </View>
       </View>
     </View>

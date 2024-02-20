@@ -11,16 +11,19 @@ export default StyleSheet.create({
   description: {
     marginTop: 16,
   },
-  button: {
-    marginTop: 16,
-  },
   buttonContainer: {
     marginLeft: 16,
+    justifyContent: 'space-between',
+    flex: 1,
   },
-  doneStyle: {
-    backgroundColor: backgroundColors.green,
-    padding: 5,
-    borderRadius: 16,
-    ...getShadow('green'),
+  buttonContainerOneElement: {
+    justifyContent: 'center',
+  },
+  image: {
+    marginRight: 10,
+  },
+  imageTextView: {
+    flexDirection: 'row',
+    alignItems: 'center',
   },
 });
