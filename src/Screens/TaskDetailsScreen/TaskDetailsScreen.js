@@ -114,31 +114,23 @@ export const TaskDetailsScreen = ({navigation, route}) => {
                       }
                     : null
                 }
-                deleteButtonPress={
-                  !item?.status
-                    ? async () => {
-                        try {
-                          let finalValues = {};
-                          finalValues = {
-                            subTasks: formData?.subTasks.slice(),
-                          };
-                          finalValues.subTasks.splice(index, 1);
+                deleteButtonPress={async () => {
+                  try {
+                    let finalValues = {};
+                    finalValues = {
+                      subTasks: formData?.subTasks.slice(),
+                    };
+                    finalValues.subTasks.splice(index, 1);
 
-                          dispatch(setIsLoadingOverLay(true));
-                          await updateDocuments(
-                            userId,
-                            documentId,
-                            finalValues,
-                          );
-                          setFormData({...formData, ...finalValues});
-                        } catch (e) {
-                          handleAPIErrors(e);
-                        } finally {
-                          dispatch(setIsLoadingOverLay(false));
-                        }
-                      }
-                    : null
-                }
+                    dispatch(setIsLoadingOverLay(true));
+                    await updateDocuments(userId, documentId, finalValues);
+                    setFormData({...formData, ...finalValues});
+                  } catch (e) {
+                    handleAPIErrors(e);
+                  } finally {
+                    dispatch(setIsLoadingOverLay(false));
+                  }
+                }}
               />
             </View>
           );
