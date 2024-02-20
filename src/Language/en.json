@@ -55,7 +55,7 @@
     "description": "Description"
   },
   "taskDetails": {
-    "addNewTask": "Add New Task",
+    "addNewTask": "Add New Sub Task",
     "subTask": "Sub Tasks"
   }
 }
