@@ -10,7 +10,7 @@ export default StyleSheet.create({
     backgroundColor: 'transparent',
   },
   greyColor: {backgroundColor: '#e5e5e5'},
-  image: {flex: 1},
+  image: {flex: 1, backgroundColor: 'white'},
   takingAllPage: {width: '100%', flex: 1},
   lottieView: {
     backgroundColor: 'rgba(0,0,0,0.5)',
