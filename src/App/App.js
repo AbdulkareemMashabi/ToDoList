@@ -38,7 +38,7 @@ const Stack = createStackNavigator();
 
 export const App = () => {
   const [currentPage, setCurrentPage] = useState(pagesNames.lottie);
-  const [image, setImage] = useState(null);
+  const [image, setImage] = useState(Images.light);
   const {isLoading, isLoadingOverLay, userId} = useSelector(
     state => state.main,
   );
