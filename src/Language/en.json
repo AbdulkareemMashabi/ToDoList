@@ -6,7 +6,9 @@
     "languageErrorChange": "Language could not be change at mean time",
     "deletePopUpTitle": "Delete Task",
     "deletePopUpDescription": "Are you sure about deleting this task?",
-    "TaskDeletedSuccessfully": "Task Deleted Successfully"
+    "TaskDeletedSuccessfully": "Task Deleted Successfully",
+    "connectionTitle": "Internet Connection Is Required",
+    "connectionButton": "Ok"
   },
   "loginPage": {
     "loginTitle": "Login",
@@ -56,6 +58,8 @@
   },
   "taskDetails": {
     "addNewTask": "Add New Sub Task",
-    "subTask": "Sub Tasks"
+    "subTask": "Sub Tasks",
+    "newSub": "New Sub Task Title",
+    "Done": "Done"
   }
 }

@@ -6,7 +6,9 @@
     "languageErrorChange": "لا يمكن تغيير اللغة في الوقت الحالي",
     "deletePopUpTitle": "حذف مهمة",
     "deletePopUpDescription": "هل انت متأكد من حذف هذه المهمة؟",
-    "TaskDeletedSuccessfully": "المهمة حذفت بنجاح"
+    "TaskDeletedSuccessfully": "المهمة حذفت بنجاح",
+    "connectionTitle": "اتصال الانترنت مطلوب",
+    "connectionButton": "تمام"
   },
   "loginPage": {
     "loginTitle": "تسجيل دخول",
@@ -56,6 +58,8 @@
   },
   "taskDetails": {
     "addNewTask": "اضافة مهمة جانبية جديدة",
-    "subTask": "مهام جانبية"
+    "subTask": "مهام جانبية",
+    "newSub": "عنوان المهمة الفرعية الجديدة",
+    "Done": "تم"
   }
 }
