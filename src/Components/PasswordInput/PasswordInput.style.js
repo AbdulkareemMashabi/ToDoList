@@ -7,6 +7,7 @@ export default StyleSheet.create({
     alignItems: 'center',
     backgroundColor: 'white',
     borderRadius: 16,
+    paddingRight: 8,
   },
   textField: {flex: 1},
   button: {marginHorizontal: 6},
