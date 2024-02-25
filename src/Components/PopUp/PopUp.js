@@ -5,7 +5,8 @@ import styles from './PopUp.style';
 import Container from '../Contianer/Container';
 
 export const PopUp = ({navigation, route}) => {
-  const {title, description, confirmButton} = route.params;
+  const {title, description, confirmButton, withoutCancel, firstButtonTitle} =
+    route.params;
 
   const dismissPopUp = () => {
     navigation.pop();
@@ -15,25 +16,29 @@ export const PopUp = ({navigation, route}) => {
     <Container style={styles.container} noPadding>
       <View style={styles.modal}>
         <Text localeKey={title} textAlign={'center'} />
-        <Text
-          textAlign={'center'}
-          localeKey={description}
-          style={styles.spaceBetweenItems}
-        />
+        {description ? (
+          <Text
+            textAlign={'center'}
+            localeKey={description}
+            style={styles.spaceBetweenItems}
+          />
+        ) : null}
         <Button
-          source={'common.confirm'}
+          source={firstButtonTitle || 'common.confirm'}
           onPress={() => {
-            confirmButton?.(dismissPopUp);
+            confirmButton?.(dismissPopUp) || dismissPopUp();
           }}
           containerStyle={[styles.spaceBetweenItems, styles.redButton]}
         />
-        <Button
-          containerStyle={styles.spaceBetweenItems}
-          source={'common.cancel'}
-          onPress={() => {
-            navigation.pop();
-          }}
-        />
+        {!withoutCancel ? (
+          <Button
+            containerStyle={styles.spaceBetweenItems}
+            source={'common.cancel'}
+            onPress={() => {
+              navigation.pop();
+            }}
+          />
+        ) : null}
       </View>
     </Container>
   );

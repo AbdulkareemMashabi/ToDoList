@@ -13,6 +13,7 @@ import {cardShadow} from '../../helpers/shadow';
 import Swipeable from '../../Components/Swipeable/Swipeable';
 import {getUserData} from '../../App/utils';
 import Container from '../../Components/Contianer/Container';
+import NetInfo from '@react-native-community/netinfo';
 
 export const Dashboard = ({navigation}) => {
   const {userId} = useSelector(state => state.main);
@@ -22,6 +23,17 @@ export const Dashboard = ({navigation}) => {
   useEffect(() => {
     handleEnterFace(navigation, userId);
   }, [userId]);
+
+  useEffect(() => {
+    NetInfo.addEventListener(state => {
+      if (!state.isConnected)
+        navigation.navigate(pagesNames.popUp, {
+          title: 'myWishesPage.connectionTitle',
+          firstButtonTitle: 'myWishesPage.connectionButton',
+          withoutCancel: true,
+        });
+    });
+  }, []);
 
   const getJsx = () => {
     if (userData.length > 0)
