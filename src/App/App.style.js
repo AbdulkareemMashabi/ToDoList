@@ -18,4 +18,8 @@ export default StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  title: {
+    width: '60%',
+    alignItems: 'center',
+  },
 });

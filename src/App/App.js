@@ -89,6 +89,10 @@ export const App = () => {
                 headerTransparent: true,
                 headerLeftLabelVisible: false,
                 headerTintColor: 'black',
+                headerTitleContainerStyle:
+                  currentPage === pagesNames.taskDetailsScreen
+                    ? styles.title
+                    : null,
               }}>
               <Stack.Screen
                 name={pagesNames.lottie}
