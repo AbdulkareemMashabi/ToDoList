@@ -17,11 +17,10 @@ export default StyleSheet.create({
     borderRadius: 16,
     justifyContent: 'center',
   },
-  addButton: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-  },
   plusImage: {
     marginRight: 16,
+  },
+  disabled: {
+    backgroundColor: 'grey',
   },
 });

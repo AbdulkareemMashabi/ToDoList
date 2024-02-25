@@ -2,7 +2,6 @@ import LottieView from 'lottie-react-native';
 import {TouchableOpacity, Image, View} from 'react-native';
 import Text from '../Text/Text';
 import {getShadow} from '../../helpers/shadow';
-import {Icons} from '../../assets/Icons';
 
 import styles from './Button.style';
 
@@ -15,6 +14,7 @@ export const Button = ({
   variant = 'primary',
   shadowColor,
   withoutShadow,
+  disabled,
 }) => {
   const isIcon = typeof source === 'number';
 
@@ -28,25 +28,22 @@ export const Button = ({
           style={styles.loading}
         />
       );
-    else if (variant === 'addButton')
-      return (
-        <View style={styles.addButton}>
-          <Image source={Icons.plusCircle} style={styles.plusImage} />
-          <Text
-            localeKey={'taskDetails.addNewTask'}
-            variant="bodySemibold"
-            color={'blue'}
-          />
-        </View>
-      );
     else if (isIcon)
-      return <Image source={source} style={[contentStyle, styles.imageSize]} />;
+      return (
+        <Image
+          source={source}
+          style={[contentStyle, styles.imageSize]}
+          tintColor={disabled ? 'grey' : null}
+        />
+      );
     else if (variant === 'manualDraw') return null;
     else
       return (
         <Text
           textAlign={'center'}
-          color={variant === 'primary' ? 'white' : '#32ADE6'}
+          color={
+            disabled ? 'grey' : variant === 'primary' ? 'white' : '#32ADE6'
+          }
           variant="bodySemibold"
           style={contentStyle}
           localeKey={source}
@@ -55,15 +52,17 @@ export const Button = ({
   };
   return (
     <TouchableOpacity
+      activeOpacity={disabled ? 1 : 0.2}
       style={[
         !isIcon && variant === 'primary' ? styles.container : null,
         containerStyle,
+        variant === 'primary' && disabled ? styles.disabled : null,
         variant === 'primary' && !withoutShadow
           ? getShadow(shadowColor || 'blue')
           : null,
       ]}
       hitSlop={{top: 15, bottom: 15, left: 15, right: 15}}
-      onPress={onPress}>
+      onPress={!disabled ? onPress : null}>
       {contentRender()}
     </TouchableOpacity>
   );
