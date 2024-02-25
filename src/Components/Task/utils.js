@@ -5,6 +5,19 @@ import {getShadow} from '../../helpers/shadow';
 import moment from 'moment';
 
 export const getBackgroundColor = (date, status) => {
+  if (!date) {
+    if (!status)
+      return {
+        backgroundColor: backgroundColors.orange,
+        ...getShadow('orange'),
+      };
+    else
+      return {
+        backgroundColor: backgroundColors.green,
+        ...getShadow('green'),
+      };
+  }
+
   const days = getDateDifference(date);
   if (days >= 0 && !status) {
     return {
@@ -25,6 +38,17 @@ export const getBackgroundColor = (date, status) => {
 };
 
 export const getBorderColor = (date, status) => {
+  if (!date) {
+    if (!status)
+      return {
+        borderColor: backgroundColors.orange,
+      };
+    else
+      return {
+        borderColor: backgroundColors.green,
+      };
+  }
+
   const days = getDateDifference(date);
   if (days >= 0 && !status)
     return {
@@ -40,7 +64,18 @@ export const getBorderColor = (date, status) => {
     };
 };
 
-const getDateDifference = date => {
+export const getBorderColorSubTask = status => {
+  if (!status)
+    return {
+      borderColor: backgroundColors.orange,
+    };
+  else
+    return {
+      borderColor: backgroundColors.green,
+    };
+};
+
+export const getDateDifference = date => {
   const startDate = new Date();
   startDate.setHours(0, 0, 0, 0);
   const dataObject = date.split('/');

@@ -4,8 +4,15 @@ import Text from '../Text/Text';
 import {Icons} from '../../assets/Icons';
 import Button from '../Button/Button';
 import {useState} from 'react';
-import {getBackgroundColor, getBorderColor, updateStatus} from './utils';
+import {
+  getBackgroundColor,
+  getBorderColor,
+  getBorderColorSubTask,
+  getDateDifference,
+  updateStatus,
+} from './utils';
 import {useDispatch} from 'react-redux';
+import {backgroundColors} from '../../helpers/utils';
 
 export const Task = ({data, id, userId}) => {
   const [tasks, setTasks] = useState(data);
@@ -53,9 +60,7 @@ export const Task = ({data, id, userId}) => {
               ellipsizeMode={'tail'}
               isLineThrough={mainTask.status}
             />
-            {mainTask?.date ? (
-              <Text value={mainTask?.date} variant="subHead" />
-            ) : null}
+            <Text value={mainTask?.date} variant="subHead" />
           </View>
         </View>
         {subTasks.length !== 0 ? <View style={styles.separator} /> : null}
@@ -84,7 +89,9 @@ export const Task = ({data, id, userId}) => {
                     styles.subTaskCircle,
                     mainTask.status
                       ? mainTaskBorderColor
-                      : getBorderColor(item?.date, item?.status),
+                      : mainTask?.date && getDateDifference(mainTask?.date) < 0
+                      ? {borderColor: backgroundColors.red}
+                      : getBorderColorSubTask(item?.status),
                   ]}
                   variant="manualDraw"
                 />
@@ -94,11 +101,8 @@ export const Task = ({data, id, userId}) => {
                   value={item.title}
                   numberOfLines={1}
                   ellipsizeMode={'tail'}
-                  isLineThrough={item?.status}
+                  isLineThrough={mainTask.status || item.status}
                 />
-                {item?.date ? (
-                  <Text value={item?.date} variant="subHead" />
-                ) : null}
               </View>
             </View>
           )}
