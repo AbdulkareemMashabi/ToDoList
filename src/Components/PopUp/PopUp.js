@@ -16,13 +16,12 @@ export const PopUp = ({navigation, route}) => {
     <Container style={styles.container} noPadding>
       <View style={styles.modal}>
         <Text localeKey={title} textAlign={'center'} />
-        {description ? (
-          <Text
-            textAlign={'center'}
-            localeKey={description}
-            style={styles.spaceBetweenItems}
-          />
-        ) : null}
+
+        <Text
+          textAlign={'center'}
+          localeKey={description}
+          style={styles.spaceBetweenItems}
+        />
         <Button
           source={firstButtonTitle || 'common.confirm'}
           onPress={() => {
