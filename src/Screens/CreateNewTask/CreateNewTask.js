@@ -22,7 +22,6 @@ export const CreateNewTask = ({navigation}) => {
 
   const validation = Yup.object().shape({
     title: Yup.string().required(Locale.t('common.required')),
-    date: Yup.string().required(Locale.t('common.required')),
   });
 
   return (
