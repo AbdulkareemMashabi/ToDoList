@@ -22,6 +22,7 @@ export const TextField = ({
 
   useEffect(() => {
     if (value) onFocus();
+    else onBlur();
   }, [value]);
 
   const onFocus = () => {
