@@ -9,14 +9,13 @@ import ActionsSheet from '../../Components/ActionsSheet/ActionsSheet';
 import Form from '../../Components/Form/Form';
 import * as Yup from 'yup';
 import Locale from '../../helpers/localization';
-import {
-  setIsLoading,
-  setIsLoadingOverLay,
-} from '../../helpers/Redux/mainReducer';
-import Button from '../../Components/Button/Button';
+import {setIsLoadingOverLay} from '../../helpers/Redux/mainReducer';
 import {getFormFields, getInitialValues} from './utils';
 import Text from '../../Components/Text/Text';
 import Container from '../../Components/Contianer/Container';
+import SubTask from '../../Components/SubTask/SubTask';
+import TextField from '../../Components/TextField/TextField';
+import Button from '../../Components/Button/Button';
 
 export const TaskDetailsScreen = ({navigation, route}) => {
   const {userId} = useSelector(state => state.main);
@@ -25,11 +24,12 @@ export const TaskDetailsScreen = ({navigation, route}) => {
   const [openMainForm, setOpenMainForm] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(null);
   const [initialLoading, setInitialLoading] = useState(false);
+  const [newSubTask, setNewSubTask] = useState('');
+  const [enableDoneButton, setEnableDonButton] = useState(false);
   const dispatch = useDispatch();
 
   const validation = Yup.object().shape({
     title: Yup.string().required(Locale.t('common.required')),
-    date: Yup.string().required(Locale.t('common.required')),
   });
 
   const getData = async () => {
@@ -47,8 +47,27 @@ export const TaskDetailsScreen = ({navigation, route}) => {
   useEffect(() => {
     navigation.setOptions({
       headerTitle: formData?.mainTask?.title,
+      headerRight: () => (
+        <Button
+          disabled={!enableDoneButton}
+          source={'taskDetails.Done'}
+          variant="secondary"
+          containerStyle={styles.doneButton}
+          onPress={async () => {
+            try {
+              dispatch(setIsLoadingOverLay(true));
+              await updateDocuments(userId, documentId, formData);
+              setEnableDonButton(false);
+            } catch (e) {
+              handleAPIErrors(e);
+            } finally {
+              dispatch(setIsLoadingOverLay(false));
+            }
+          }}
+        />
+      ),
     });
-  }, [formData?.mainTask?.title]);
+  }, [enableDoneButton, formData]);
 
   useEffect(() => {
     getData();
@@ -57,13 +76,25 @@ export const TaskDetailsScreen = ({navigation, route}) => {
   const footer = () => {
     if (formData?.mainTask?.status) return null;
     return (
-      <Button
-        variant="addButton"
-        containerStyle={styles.addNewTask}
-        onPress={() => {
-          setSelectedIndex(formData?.subTasks?.length);
-          setOpenMainForm(true);
+      <TextField
+        withoutShadow
+        style={styles.textField}
+        label={'taskDetails.newSub'}
+        onBlurField={() => {
+          if (newSubTask) {
+            let finalValues = {};
+            finalValues = {subTasks: formData?.subTasks.slice()};
+            finalValues.subTasks.push({
+              title: newSubTask,
+              status: false,
+            });
+            setFormData({...formData, ...finalValues});
+            setEnableDonButton(true);
+            setNewSubTask('');
+          }
         }}
+        onValueChange={setNewSubTask}
+        value={newSubTask}
       />
     );
   };
@@ -101,35 +132,18 @@ export const TaskDetailsScreen = ({navigation, route}) => {
         renderItem={({item, index}) => {
           return (
             <View key={index}>
-              <DoubleText
+              <SubTask
+                text={item?.title}
                 done={item?.status}
-                title={item?.title}
-                description={item?.description}
-                date={item?.date}
-                editButtonPress={
-                  !item?.status
-                    ? () => {
-                        setSelectedIndex(index);
-                        setOpenMainForm(true);
-                      }
-                    : null
-                }
-                deleteButtonPress={async () => {
-                  try {
-                    let finalValues = {};
-                    finalValues = {
-                      subTasks: formData?.subTasks.slice(),
-                    };
-                    finalValues.subTasks.splice(index, 1);
+                deleteButtonPress={() => {
+                  let finalValues = {};
+                  finalValues = {
+                    subTasks: formData?.subTasks.slice(),
+                  };
+                  finalValues.subTasks.splice(index, 1);
 
-                    dispatch(setIsLoadingOverLay(true));
-                    await updateDocuments(userId, documentId, finalValues);
-                    setFormData({...formData, ...finalValues});
-                  } catch (e) {
-                    handleAPIErrors(e);
-                  } finally {
-                    dispatch(setIsLoadingOverLay(false));
-                  }
+                  setFormData({...formData, ...finalValues});
+                  setEnableDonButton(true);
                 }}
               />
             </View>
@@ -145,31 +159,23 @@ export const TaskDetailsScreen = ({navigation, route}) => {
         }}>
         <Form
           initialValues={getInitialValues(formData, selectedIndex)}
-          fields={getFormFields(formData, selectedIndex)}
+          fields={getFormFields(selectedIndex)}
           validationSchema={validation}
-          onSubmit={async values => {
-            try {
-              let finalValues = {};
-              if (!isNil(selectedIndex)) {
-                finalValues = {subTasks: formData?.subTasks.slice()};
-                finalValues.subTasks[selectedIndex] = {
-                  ...values,
-                  status: false,
-                };
-              } else {
-                finalValues = {mainTask: {...values, status: false}};
-              }
-
-              dispatch(setIsLoading(true));
-              await updateDocuments(userId, documentId, finalValues);
-              setFormData({...formData, ...finalValues});
-              setOpenMainForm(false);
-              setSelectedIndex(null);
-            } catch (e) {
-              handleAPIErrors(e);
-            } finally {
-              dispatch(setIsLoading(false));
+          onSubmit={values => {
+            let finalValues = {};
+            if (!isNil(selectedIndex)) {
+              finalValues = {subTasks: formData?.subTasks.slice()};
+              finalValues.subTasks[selectedIndex] = {
+                ...values,
+                status: false,
+              };
+            } else {
+              finalValues = {mainTask: {...values, status: false}};
             }
+            setFormData({...formData, ...finalValues});
+            setEnableDonButton(true);
+            setOpenMainForm(false);
+            setSelectedIndex(null);
           }}
         />
       </ActionsSheet>

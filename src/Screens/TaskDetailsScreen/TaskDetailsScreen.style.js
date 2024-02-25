@@ -8,12 +8,19 @@ export default StyleSheet.create({
     marginVertical: 16,
   },
   flatListSeparator: {
-    marginVertical: 24,
+    marginVertical: 8,
   },
   addNewTask: {
     marginTop: 32,
   },
   subTaskHeader: {
     marginBottom: 16,
+  },
+  textField: {
+    marginTop: 24,
+    backgroundColor: '#DADCE2',
+  },
+  doneButton: {
+    marginRight: 16,
   },
 });
