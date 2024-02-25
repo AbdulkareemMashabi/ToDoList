@@ -25,6 +25,8 @@ export const Text = ({
     }
   };
 
+  if (isNil(value) && isNil(localeKey)) return null;
+
   return (
     <Animated.Text
       numberOfLines={numberOfLines}
