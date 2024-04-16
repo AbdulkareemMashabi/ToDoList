@@ -25,7 +25,7 @@ export const CreateNewTask = ({navigation}) => {
   });
 
   return (
-    <Container style={styles.container} noPadding>
+    <Container noPadding>
       <View style={[styles.view, getShadow(backgroundColor)]}>
         <Form
           validationSchema={validation}

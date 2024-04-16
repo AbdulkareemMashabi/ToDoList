@@ -7,8 +7,7 @@ export default StyleSheet.create({
     borderTopLeftRadius: 16,
     borderTopRightRadius: 16,
     paddingHorizontal: 16,
-  },
-  container: {
-    justifyContent: 'flex-end',
+    position: 'absolute',
+    bottom: 0,
   },
 });
