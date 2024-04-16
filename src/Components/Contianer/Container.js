@@ -1,4 +1,4 @@
-import {ScrollView, View} from 'react-native';
+import {KeyboardAvoidingView, Platform, ScrollView, View} from 'react-native';
 import styles from './Container.style';
 import Skeleton from '../Skeleton/Skeleton';
 
@@ -10,6 +10,8 @@ export const Container = ({
   isLoading,
   SkeletonPadding,
 }) => {
+  const behavior = Platform.OS === 'ios' ? 'padding' : 'height';
+
   if (isLoading)
     return (
       <View
@@ -22,16 +24,19 @@ export const Container = ({
       </View>
     );
 
-  return scrollable ? (
-    <ScrollView
+  const renderContent = () => {
+    if (scrollable)
+      return <ScrollView style={styles.flex_1}>{children}</ScrollView>;
+    else return <View style={styles.flex_1}>{children}</View>;
+  };
+
+  return (
+    <KeyboardAvoidingView
+      behavior={behavior}
+      keyboardVerticalOffset={50}
       style={[styles.container, noPadding ? styles.noPadding : null, style]}>
-      {children}
-    </ScrollView>
-  ) : (
-    <View
-      style={[styles.container, noPadding ? styles.noPadding : null, style]}>
-      {children}
-    </View>
+      {renderContent()}
+    </KeyboardAvoidingView>
   );
 };
 

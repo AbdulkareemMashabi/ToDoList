@@ -9,4 +9,7 @@ export default StyleSheet.create({
   noPadding: {
     padding: 0,
   },
+  flex_1: {
+    flex: 1,
+  },
 });
