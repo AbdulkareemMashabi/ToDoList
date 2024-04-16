@@ -89,7 +89,7 @@ export const TaskDetailsScreen = ({navigation, route}) => {
     }
   };
 
-  const deleteTask = () => {
+  const deleteTask = index => {
     let finalValues = {};
     finalValues = {
       subTasks: formData?.subTasks.slice(),
@@ -167,7 +167,7 @@ export const TaskDetailsScreen = ({navigation, route}) => {
               <SubTask
                 text={item?.title}
                 done={item?.status}
-                deleteButtonPress={deleteTask}
+                deleteButtonPress={() => deleteTask(index)}
               />
             </View>
           );

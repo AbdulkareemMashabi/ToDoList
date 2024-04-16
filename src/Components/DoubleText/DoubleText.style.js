@@ -17,13 +17,13 @@ export default StyleSheet.create({
     alignItems: 'center',
   },
   date: {
-    marginRight: 10,
+    alignSelf: 'center',
   },
   subContainer: {
     alignItems: 'flex-end',
     justifyContent: 'space-between',
     height: 60,
-    flex: 1,
+    flex: 1.1,
     marginLeft: 16,
   },
   oneItem: {

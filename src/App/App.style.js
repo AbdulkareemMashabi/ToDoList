@@ -19,7 +19,7 @@ export default StyleSheet.create({
     alignItems: 'center',
   },
   title: {
-    width: '60%',
+    width: '50%',
     alignItems: 'center',
   },
 });
