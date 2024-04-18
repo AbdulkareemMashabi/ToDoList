@@ -13,7 +13,7 @@ import {setIsLoading, setUserId} from '../../helpers/Redux/mainReducer';
 import Container from '../../Components/Contianer/Container';
 import styles from './Login.style';
 
-export const Login = ({navigation}) => {
+export const Login = ({navigation, route}) => {
   const dispatch = useDispatch();
   useEffect(() => {
     navigation.setOptions({
@@ -55,7 +55,8 @@ export const Login = ({navigation}) => {
             dispatch(setUserId(userId));
             showToast('loginPage.loginSuccessfully');
             dispatch(setIsLoading(false));
-            navigation.navigate(pagesNames.dashboard);
+            if (route?.params?.routing) route.params.routing();
+            else navigation.navigate(pagesNames.dashboard);
           } catch (e) {
             handleAPIErrors(e);
             dispatch(setIsLoading(false));

@@ -114,7 +114,13 @@ export const Dashboard = ({navigation}) => {
             source={Icons.plus}
             onPress={() => {
               if (userId) navigation.push(pagesNames.createNewTask);
-              else navigation.push(pagesNames.login);
+              else
+                navigation.push(pagesNames.login, {
+                  routing: () => {
+                    navigation.goBack();
+                    navigation.push(pagesNames.createNewTask);
+                  },
+                });
             }}
           />
         </>
