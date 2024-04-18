@@ -17,9 +17,9 @@ export const Root = () => {
     getUserId();
   }, []);
 
-  const supportRTL = () => {
-    I18nManager.forceRTL(true);
-    I18nManager.allowRTL(true);
+  const initialRTL = isRTL => {
+    I18nManager.forceRTL(isRTL);
+    I18nManager.allowRTL(isRTL);
     RNRestart.restart();
   };
 
@@ -29,9 +29,10 @@ export const Root = () => {
       const value = await AsyncStorage.getItem('language');
       if (value !== null) {
         Locale.setLanguage(value);
+        if (Locale.isRTL !== I18nManager.isRTL) initialRTL(Locale.isRTL);
       } else {
         await AsyncStorage.setItem('language', 'ar');
-        supportRTL();
+        initialRTL(true);
       }
       setStartApp(true);
     } catch (e) {

@@ -9,7 +9,7 @@ export const PopUp = ({navigation, route}) => {
     route.params;
 
   const dismissPopUp = () => {
-    navigation.pop();
+    navigation.goBack();
   };
 
   return (

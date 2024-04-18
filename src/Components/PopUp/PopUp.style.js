@@ -1,4 +1,4 @@
-import {StyleSheet} from 'react-native';
+import {Dimensions, StyleSheet} from 'react-native';
 
 export default StyleSheet.create({
   spaceBetweenItems: {
@@ -9,6 +9,10 @@ export default StyleSheet.create({
     borderRadius: 16,
     padding: 16,
     marginHorizontal: 16,
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    top: Dimensions.get('window').height / 4,
   },
   redButton: {
     backgroundColor: 'red',
