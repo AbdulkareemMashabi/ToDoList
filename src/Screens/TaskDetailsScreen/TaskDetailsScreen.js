@@ -159,6 +159,7 @@ export const TaskDetailsScreen = ({navigation, route}) => {
       <FlatList
         showsVerticalScrollIndicator={false}
         ListFooterComponent={footer()}
+        removeClippedSubviews={false}
         ItemSeparatorComponent={<View style={styles.flatListSeparator} />}
         data={formData?.subTasks || []}
         renderItem={({item, index}) => {
