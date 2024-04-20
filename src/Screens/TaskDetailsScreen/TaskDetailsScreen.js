@@ -32,6 +32,14 @@ export const TaskDetailsScreen = ({navigation, route}) => {
     title: Yup.string().required(Locale.t('common.required')),
   });
 
+  const goBackLogic = e => {
+    e.preventDefault();
+    const goBack = () => {
+      navigation.dispatch(e.data.action);
+    };
+    submit(goBack);
+  };
+
   useEffect(() => {
     navigation.setOptions({
       headerTitle: formData?.mainTask?.title,
@@ -45,6 +53,15 @@ export const TaskDetailsScreen = ({navigation, route}) => {
         />
       ),
     });
+
+    const unsubscribeBeforeRemove = navigation.addListener(
+      'beforeRemove',
+      goBackLogic,
+    );
+
+    return () => {
+      unsubscribeBeforeRemove();
+    };
   }, [enableDoneButton, formData]);
 
   useEffect(() => {
@@ -63,16 +80,19 @@ export const TaskDetailsScreen = ({navigation, route}) => {
     }
   };
 
-  const submit = async () => {
-    try {
-      dispatch(setIsLoadingOverLay(true));
-      await updateDocuments(userId, documentId, formData);
-      setEnableDonButton(false);
-    } catch (e) {
-      handleAPIErrors(e);
-    } finally {
-      dispatch(setIsLoadingOverLay(false));
-    }
+  const submit = async goBack => {
+    if (enableDoneButton)
+      try {
+        dispatch(setIsLoadingOverLay(true));
+        await updateDocuments(userId, documentId, formData);
+        setEnableDonButton(false);
+      } catch (e) {
+        handleAPIErrors(e);
+      } finally {
+        dispatch(setIsLoadingOverLay(false));
+        goBack?.();
+      }
+    else goBack?.();
   };
 
   const textFieldBlur = () => {
@@ -168,7 +188,9 @@ export const TaskDetailsScreen = ({navigation, route}) => {
               <SubTask
                 text={item?.title}
                 done={item?.status}
-                deleteButtonPress={() => deleteTask(index)}
+                deleteButtonPress={
+                  !formData?.mainTask?.status ? () => deleteTask(index) : null
+                }
               />
             </View>
           );

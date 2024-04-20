@@ -8,6 +8,7 @@ import {handleAPIErrors, pagesNames, showToast} from '../../helpers/utils';
 import styles from './Dashboard.styles';
 import {deleteDocument} from '../../helpers/firebase';
 import {setIsLoadingOverLay} from '../../helpers/Redux/mainReducer';
+import {store} from '../../helpers/Redux/store';
 
 export const handleEnterFace = (navigation, userId) => {
   navigation.setOptions({
@@ -18,13 +19,16 @@ export const handleEnterFace = (navigation, userId) => {
           source={Icons.language}
           onPress={async () => {
             try {
+              store.dispatch(setIsLoadingOverLay(true));
               await AsyncStorage.setItem(
                 'language',
                 Locale.language === 'ar' ? 'en' : 'ar',
               );
               I18nManager.forceRTL(!Locale.isRTL);
               I18nManager.allowRTL(!Locale.isRTL);
-              RNRestart.restart();
+              setTimeout(() => {
+                RNRestart.restart();
+              }, 300);
             } catch (e) {
               Alert.alert(
                 Locale.t('common.errorOccurred'),

@@ -17,10 +17,12 @@ export const Root = () => {
     getUserId();
   }, []);
 
-  const initialRTL = isRTL => {
-    I18nManager.forceRTL(isRTL);
-    I18nManager.allowRTL(isRTL);
-    RNRestart.restart();
+  const initialRTL = () => {
+    I18nManager.forceRTL(true);
+    I18nManager.allowRTL(true);
+    setTimeout(() => {
+      RNRestart.restart();
+    }, 300);
   };
 
   const getUserLanguage = async () => {
@@ -29,12 +31,11 @@ export const Root = () => {
       const value = await AsyncStorage.getItem('language');
       if (value !== null) {
         Locale.setLanguage(value);
-        if (Locale.isRTL !== I18nManager.isRTL) initialRTL(Locale.isRTL);
+        setStartApp(true);
       } else {
         await AsyncStorage.setItem('language', 'ar');
-        initialRTL(true);
+        initialRTL();
       }
-      setStartApp(true);
     } catch (e) {
       Alert.alert(
         Locale.t('common.errorOccurred'),
