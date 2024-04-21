@@ -33,7 +33,7 @@ export const TextField = ({
         useNativeDriver: false,
       }).start(),
       Animated.timing(positionRef, {
-        toValue: 2,
+        toValue: 0,
         duration: 400,
         useNativeDriver: false,
       }).start(),
