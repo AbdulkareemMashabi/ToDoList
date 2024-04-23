@@ -14,9 +14,18 @@ export const Button = ({
   variant = 'primary',
   shadowColor,
   withoutShadow,
+  textColor,
   disabled,
+  containerColor,
 }) => {
   const isIcon = typeof source === 'number';
+
+  const getTextColor = () => {
+    if (textColor) return textColor;
+    else if (disabled) return 'grey';
+    else if (variant === 'primary') return 'white';
+    else return '#32ADE6';
+  };
 
   const contentRender = () => {
     if (isLoading)
@@ -41,9 +50,7 @@ export const Button = ({
       return (
         <Text
           textAlign={'center'}
-          color={
-            disabled ? 'grey' : variant === 'primary' ? 'white' : '#32ADE6'
-          }
+          color={getTextColor()}
           variant="bodySemibold"
           style={contentStyle}
           localeKey={source}
@@ -58,8 +65,9 @@ export const Button = ({
         containerStyle,
         variant === 'primary' && disabled ? styles.disabled : null,
         variant === 'primary' && !withoutShadow
-          ? getShadow(shadowColor || 'blue')
+          ? getShadow(shadowColor || containerColor || 'blue')
           : null,
+        containerColor ? {backgroundColor: containerColor} : null,
       ]}
       hitSlop={{top: 15, bottom: 15, left: 15, right: 15}}
       onPress={!disabled ? onPress : null}>
