@@ -33,7 +33,7 @@
     "confirm": "تأكيد",
     "cancel": "الغاء",
     "done": "مكتمل",
-    "deleteAccount":"حذف الحساب"
+    "deleteAccount": "حذف حساب"
   },
   "register": {
     "register": "تسجيل",
@@ -65,7 +65,7 @@
   },
   "accountDeletion": {
     "accountDeletion": "حذف حساب",
-    "message":"ادخل ايميلك وكلمة السر لحذف حسابك",
-    "successfulDeletion":"تم حذف الحساب بنجاح"
+    "message": "ادخل ايميلك وكلمة السر لحذف حسابك",
+    "successfulDeletion": "تم حذف الحساب بنجاح"
   }
 }
