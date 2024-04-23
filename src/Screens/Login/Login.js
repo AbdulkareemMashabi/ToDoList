@@ -18,6 +18,17 @@ export const Login = ({navigation, route}) => {
   useEffect(() => {
     navigation.setOptions({
       headerTitle: Locale.t('loginPage.loginTitle'),
+      headerRight: () => (
+        <Button
+          containerStyle={styles.deleteButton}
+          source={'common.deleteAccount'}
+          variant="secondary"
+          textColor={'red'}
+          onPress={() => {
+            navigation.push(pagesNames.deleteAccount);
+          }}
+        />
+      ),
     });
   }, []);
 
