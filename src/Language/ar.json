@@ -32,7 +32,8 @@
     "selectDate": "اختر التاريخ",
     "confirm": "تأكيد",
     "cancel": "الغاء",
-    "done": "مكتمل"
+    "done": "مكتمل",
+    "deleteAccount":"حذف الحساب"
   },
   "register": {
     "register": "تسجيل",
@@ -61,5 +62,10 @@
     "subTask": "مهام جانبية",
     "newSub": "عنوان المهمة الفرعية الجديدة",
     "Done": "تم"
+  },
+  "accountDeletion": {
+    "accountDeletion": "حذف حساب",
+    "message":"ادخل ايميلك وكلمة السر لحذف حسابك",
+    "successfulDeletion":"تم حذف الحساب بنجاح"
   }
 }

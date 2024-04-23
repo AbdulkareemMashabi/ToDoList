@@ -32,7 +32,8 @@
     "selectDate": "Select Date",
     "confirm": "Confirm",
     "cancel": "Cancel",
-    "done": "Done"
+    "done": "Done",
+    "deleteAccount":"Delete Account"
   },
   "register": {
     "register": "Register",
@@ -61,5 +62,10 @@
     "subTask": "Sub Tasks",
     "newSub": "New Sub Task Title",
     "Done": "Done"
+  },
+  "accountDeletion": {
+    "accountDeletion": "Account Deletion",
+    "message":"Enter your Email and Password to Delete your Account",
+    "successfulDeletion":"The Account is deleted successfully"
   }
 }
