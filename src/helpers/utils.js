@@ -13,9 +13,15 @@ export const pagesNames = {
   createNewTask: 'CreateNewTask',
   taskDetailsScreen: 'TaskDetailsScreen',
   popUp: 'PopUp',
+  deleteAccount: 'deleteAccount',
 };
 
-export const pagesUseWaveImage = ['Login', 'Register', 'ForgetPassword'];
+export const pagesUseWaveImage = [
+  pagesNames.login,
+  pagesNames.register,
+  pagesNames.forgetPassword,
+  pagesNames.deleteAccount,
+];
 
 const errorMessages = {
   'email-already-in-use': 'APIErrorMessages.emailUsed',

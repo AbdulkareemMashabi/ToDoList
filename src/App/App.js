@@ -31,6 +31,7 @@ import TaskDetailsScreen from '../Screens/TaskDetailsScreen/TaskDetailsScreen';
 import LottieView from 'lottie-react-native';
 import {getRandomNumber, getUserData} from './utils';
 import PopUp from '../Components/PopUp/PopUp';
+import AccountDeletion from '../Screens/AccountDeletion/AccountDeletion';
 
 import styles from './App.style';
 
@@ -144,6 +145,15 @@ export const App = () => {
                 listeners={{
                   focus: () => {
                     setCurrentPage(pagesNames.taskDetailsScreen);
+                  },
+                }}
+              />
+              <Stack.Screen
+                name={pagesNames.deleteAccount}
+                component={AccountDeletion}
+                listeners={{
+                  focus: () => {
+                    setCurrentPage(pagesNames.deleteAccount);
                   },
                 }}
               />
