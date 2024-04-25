@@ -9,8 +9,6 @@ import {useDispatch} from 'react-redux';
 import {setIsLoading} from '../../helpers/Redux/mainReducer';
 import {auth} from '../../helpers/firebase';
 import Container from '../../Components/Contianer/Container';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import RNRestart from 'react-native-restart';
 
 export const AccountDeletion = ({navigation}) => {
   const dispatch = useDispatch();
@@ -48,14 +46,11 @@ export const AccountDeletion = ({navigation}) => {
             const _auth = getAuth();
             const user = _auth.currentUser;
             await deleteUser(user);
-            await AsyncStorage.setItem('userId', '');
             showToast('accountDeletion.successfulDeletion');
-
-            setTimeout(() => {
-              RNRestart.restart();
-            }, 3000);
+            navigation.goBack();
           } catch (e) {
             handleAPIErrors(e);
+          } finally {
             dispatch(setIsLoading(false));
           }
         }}
