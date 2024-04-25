@@ -49,6 +49,7 @@
   "APIErrorMessages": {
     "weakPassword": "Weak Password",
     "emailUsed": "This Email is already used",
+    "invalidUser":"The email or password is incorrect",
     "generalError": "System Error, please try again later"
   },
   "newTask": {
