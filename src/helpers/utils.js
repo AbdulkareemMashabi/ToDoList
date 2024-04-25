@@ -26,6 +26,7 @@ export const pagesUseWaveImage = [
 const errorMessages = {
   'email-already-in-use': 'APIErrorMessages.emailUsed',
   'weak-password': 'APIErrorMessages.weakPassword',
+  'invalid-credential': 'APIErrorMessages.invalidUser',
 };
 
 export const backgroundColors = {
