@@ -33,7 +33,7 @@ export const Container = ({
   return (
     <KeyboardAvoidingView
       behavior={behavior}
-      keyboardVerticalOffset={30}
+      keyboardVerticalOffset={50}
       style={[styles.container, noPadding ? styles.noPadding : null, style]}>
       {renderContent()}
     </KeyboardAvoidingView>
