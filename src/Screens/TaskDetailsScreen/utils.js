@@ -1,21 +1,10 @@
-import {isNil} from '../../helpers/utils';
-
-export const getInitialValues = (formData, selectedIndex) => {
-  if (formData?.subTasks?.length === selectedIndex) return null;
-  const isSubTasks = !isNil(selectedIndex);
+export const getInitialValues = formData => {
+  const {title, description, date} = formData?.mainTask || {};
   let getInitialValue = {
-    title: isSubTasks
-      ? formData?.subTasks[selectedIndex]?.title
-      : formData?.mainTask?.title,
+    title: title,
+    description: description,
+    date: date,
   };
-
-  if (!isSubTasks) {
-    getInitialValue = {
-      ...getInitialValue,
-      description: formData?.mainTask?.description,
-      date: formData?.mainTask?.date,
-    };
-  }
 
   return getInitialValue;
 };
@@ -23,17 +12,17 @@ export const getInitialValues = (formData, selectedIndex) => {
 export const getFormFields = () => {
   const formFields = [
     {type: 'TextField', name: 'title', label: 'newTask.title'},
+    {
+      type: 'DatePicker',
+      name: 'date',
+      label: 'newTask.date',
+    },
+    {
+      type: 'TextArea',
+      name: 'description',
+      label: 'newTask.description',
+    },
   ];
-  formFields.push({
-    type: 'DatePicker',
-    name: 'date',
-    label: 'newTask.date',
-  });
-  formFields.push({
-    type: 'TextArea',
-    name: 'description',
-    label: 'newTask.description',
-  });
 
   return formFields;
 };

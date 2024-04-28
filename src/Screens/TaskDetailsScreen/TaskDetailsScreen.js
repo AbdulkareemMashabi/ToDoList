@@ -1,6 +1,6 @@
 import {useEffect, useState} from 'react';
 import {FlatList, View} from 'react-native';
-import {handleAPIErrors, isNil} from '../../helpers/utils';
+import {handleAPIErrors} from '../../helpers/utils';
 import {getSpecificDocument, updateDocuments} from '../../helpers/firebase';
 import {useDispatch, useSelector} from 'react-redux';
 import DoubleText from '../../Components/DoubleText/DoubleText';
@@ -22,7 +22,6 @@ export const TaskDetailsScreen = ({navigation, route}) => {
   const {documentId} = route.params;
   const [formData, setFormData] = useState(null);
   const [openMainForm, setOpenMainForm] = useState(false);
-  const [selectedIndex, setSelectedIndex] = useState(null);
   const [initialLoading, setInitialLoading] = useState(false);
   const [newSubTask, setNewSubTask] = useState('');
   const [enableDoneButton, setEnableDonButton] = useState(false);
@@ -121,20 +120,10 @@ export const TaskDetailsScreen = ({navigation, route}) => {
   };
 
   const submitSheet = values => {
-    let finalValues = {};
-    if (!isNil(selectedIndex)) {
-      finalValues = {subTasks: formData?.subTasks.slice()};
-      finalValues.subTasks[selectedIndex] = {
-        ...values,
-        status: false,
-      };
-    } else {
-      finalValues = {mainTask: {...values, status: false}};
-    }
+    const finalValues = {mainTask: {...values, status: false}};
     setFormData({...formData, ...finalValues});
     setEnableDonButton(true);
     setOpenMainForm(false);
-    setSelectedIndex(null);
   };
 
   const footer = () => {
@@ -201,10 +190,9 @@ export const TaskDetailsScreen = ({navigation, route}) => {
         visible={openMainForm}
         onClose={() => {
           setOpenMainForm(false);
-          setSelectedIndex(null);
         }}>
         <Form
-          initialValues={getInitialValues(formData, selectedIndex)}
+          initialValues={getInitialValues(formData)}
           fields={getFormFields()}
           validationSchema={validation}
           onSubmit={v => submitSheet(v)}
