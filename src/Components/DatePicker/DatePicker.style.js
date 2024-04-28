@@ -19,4 +19,5 @@ export default StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
+  image: {position: 'absolute', right: 10},
 });

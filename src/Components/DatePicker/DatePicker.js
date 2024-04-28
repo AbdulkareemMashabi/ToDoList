@@ -71,7 +71,11 @@ export const DatePicker = ({
           value={value || ''}
           variant="bodySemibold"
         />
-        <Image source={Icons.calendar} tintColor={backgroundColor} />
+        <Image
+          source={Icons.calendar}
+          tintColor={backgroundColor}
+          style={styles.image}
+        />
       </TouchableOpacity>
       <RNDatePicker
         modal
