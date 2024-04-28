@@ -9,6 +9,7 @@ import {
   getBorderColor,
   getBorderColorSubTask,
   getDateDifference,
+  getRandomColor,
   updateStatus,
 } from './utils';
 import {useDispatch} from 'react-redux';
@@ -28,7 +29,7 @@ export const Task = ({data, id, userId}) => {
 
   return (
     <View style={[styles.container]}>
-      <View style={[styles.leftBlock, {...mainTaskBackgroundColor}]} />
+      <View style={[styles.leftBlock, {backgroundColor: getRandomColor()}]} />
       <View
         style={[
           styles.taskSubTasksParent,
