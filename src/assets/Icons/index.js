@@ -14,6 +14,7 @@ const Icons = {
   check: require('./check.png'),
   info: require('./info.png'),
   trash: require('./trash.png'),
+  accountDeletion: require('./accountDeletion.png'),
 };
 
 export {Icons};

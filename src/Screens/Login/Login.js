@@ -12,6 +12,7 @@ import {useDispatch} from 'react-redux';
 import {setIsLoading, setUserId} from '../../helpers/Redux/mainReducer';
 import Container from '../../Components/Contianer/Container';
 import styles from './Login.style';
+import {Icons} from '../../assets/Icons';
 
 export const Login = ({navigation, route}) => {
   const dispatch = useDispatch();
@@ -21,9 +22,8 @@ export const Login = ({navigation, route}) => {
       headerRight: () => (
         <Button
           containerStyle={styles.deleteButton}
-          source={'common.deleteAccount'}
+          source={Icons.accountDeletion}
           variant="secondary"
-          textColor={'red'}
           onPress={() => {
             navigation.push(pagesNames.deleteAccount);
           }}
