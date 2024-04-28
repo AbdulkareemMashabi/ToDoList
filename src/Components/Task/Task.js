@@ -60,9 +60,7 @@ export const Task = ({data, id, userId}) => {
               ellipsizeMode={'tail'}
               isLineThrough={mainTask.status}
             />
-            {mainTask?.date ? (
-              <Text value={mainTask?.date} variant="subHead" />
-            ) : null}
+            <Text value={mainTask?.date} variant="subHead" />
           </View>
         </View>
         {subTasks.length !== 0 ? <View style={styles.separator} /> : null}
