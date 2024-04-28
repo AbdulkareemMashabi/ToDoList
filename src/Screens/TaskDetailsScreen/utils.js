@@ -20,22 +20,20 @@ export const getInitialValues = (formData, selectedIndex) => {
   return getInitialValue;
 };
 
-export const getFormFields = selectedIndex => {
+export const getFormFields = () => {
   const formFields = [
     {type: 'TextField', name: 'title', label: 'newTask.title'},
   ];
-  if (isNil(selectedIndex)) {
-    formFields.push({
-      type: 'DatePicker',
-      name: 'date',
-      label: 'newTask.date',
-    });
-    formFields.push({
-      type: 'TextArea',
-      name: 'description',
-      label: 'newTask.description',
-    });
-  }
+  formFields.push({
+    type: 'DatePicker',
+    name: 'date',
+    label: 'newTask.date',
+  });
+  formFields.push({
+    type: 'TextArea',
+    name: 'description',
+    label: 'newTask.description',
+  });
 
   return formFields;
 };

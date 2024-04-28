@@ -205,7 +205,7 @@ export const TaskDetailsScreen = ({navigation, route}) => {
         }}>
         <Form
           initialValues={getInitialValues(formData, selectedIndex)}
-          fields={getFormFields(selectedIndex)}
+          fields={getFormFields()}
           validationSchema={validation}
           onSubmit={v => submitSheet(v)}
         />
