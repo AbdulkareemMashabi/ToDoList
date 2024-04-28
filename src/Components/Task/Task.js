@@ -14,6 +14,7 @@ import {
 } from './utils';
 import {useDispatch} from 'react-redux';
 import {backgroundColors} from '../../helpers/utils';
+import {getShadow} from '../../helpers/shadow';
 
 export const Task = ({data, id, userId}) => {
   const [tasks, setTasks] = useState(data);
@@ -27,9 +28,16 @@ export const Task = ({data, id, userId}) => {
   );
   const mainTaskBorderColor = getBorderColor(mainTask.date, mainTask.status);
 
+  const color = getRandomColor();
+
   return (
     <View style={[styles.container]}>
-      <View style={[styles.leftBlock, {backgroundColor: getRandomColor()}]} />
+      <View
+        style={[
+          styles.leftBlock,
+          {backgroundColor: color, ...getShadow(color)},
+        ]}
+      />
       <View
         style={[
           styles.taskSubTasksParent,
