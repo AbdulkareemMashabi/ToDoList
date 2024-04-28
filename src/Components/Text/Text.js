@@ -25,7 +25,7 @@ export const Text = ({
     }
   };
 
-  if (isNil(value) && isNil(localeKey)) return null;
+  if (!value && !localeKey) return null;
 
   return (
     <Animated.Text
