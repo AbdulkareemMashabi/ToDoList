@@ -1,5 +1,5 @@
 import {useEffect} from 'react';
-import {View, FlatList} from 'react-native';
+import {View, FlatList, AppState} from 'react-native';
 import Button from '../../Components/Button/Button';
 import {Icons} from '../../assets/Icons';
 import EmptyList from '../../Components/EmptyList/EmptyList';
@@ -26,7 +26,7 @@ export const Dashboard = ({navigation}) => {
 
   useEffect(() => {
     NetInfo.addEventListener(state => {
-      if (!state.isConnected)
+      if (!state.isConnected && AppState.currentState === 'active')
         navigation.navigate(pagesNames.popUp, {
           title: 'myWishesPage.connectionTitle',
           firstButtonTitle: 'myWishesPage.connectionButton',
