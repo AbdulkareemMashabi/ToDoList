@@ -33,7 +33,7 @@
     "confirm": "Confirm",
     "cancel": "Cancel",
     "done": "Done",
-    "deleteAccount":"Delete Account"
+    "deleteAccount": "Delete Account"
   },
   "register": {
     "register": "Register",
@@ -49,14 +49,14 @@
   "APIErrorMessages": {
     "weakPassword": "Weak Password",
     "emailUsed": "This Email is already used",
-    "invalidUser":"The email or password is incorrect",
+    "invalidUser": "The email or password is incorrect",
     "generalError": "System Error, please try again later"
   },
   "newTask": {
     "newTaskTitle": "New Task",
     "title": "Title",
-    "date": "Date",
-    "description": "Description"
+    "date": "Date (Optional)",
+    "description": "Description (Optional)"
   },
   "taskDetails": {
     "addNewTask": "Add New Sub Task",
@@ -66,7 +66,7 @@
   },
   "accountDeletion": {
     "accountDeletion": "Account Deletion",
-    "message":"Enter your Email and Password to Delete your Account",
-    "successfulDeletion":"The Account is deleted successfully"
+    "message": "Enter your Email and Password to Delete your Account",
+    "successfulDeletion": "The Account is deleted successfully"
   }
 }

@@ -49,14 +49,14 @@
   "APIErrorMessages": {
     "weakPassword": "كلمة سر ضعيفة",
     "emailUsed": "هذا الايميل مستخدم مسبقا",
-    "invalidUser":"الايميل او كلمة السر غير صحيحين",
+    "invalidUser": "الايميل او كلمة السر غير صحيحين",
     "generalError": "حدث خطأ بالنظام الرجاء المحاولة في وقت لاحق"
   },
   "newTask": {
     "newTaskTitle": "مهمة جديدة",
     "title": "العنوان",
-    "date": "التاريخ",
-    "description": "وصف"
+    "date": "التاريخ (اختياري)",
+    "description": "وصف (اختياري)"
   },
   "taskDetails": {
     "addNewTask": "اضافة مهمة جانبية جديدة",
