@@ -73,11 +73,11 @@ export const Task = ({data, id, userId, onPress}) => {
                 <Button
                   onPress={() => {
                     updateStatus({
-                      mainTask: mainTask,
+                      mainTask,
                       selectedIndex: index,
-                      dispatch: dispatch,
+                      dispatch,
                       documentId: id,
-                      subTasks: subTasks,
+                      subTasks,
                       userId,
                       setTasks,
                     });
