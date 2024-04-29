@@ -3,34 +3,6 @@ import {updateDocuments} from '../../helpers/firebase';
 import {backgroundColors, handleAPIErrors, isNil} from '../../helpers/utils';
 import moment from 'moment';
 
-export const getBackgroundColor = (date, status) => {
-  if (!date) {
-    if (!status)
-      return {
-        backgroundColor: backgroundColors.orange,
-      };
-    else
-      return {
-        backgroundColor: backgroundColors.green,
-      };
-  }
-
-  const days = getDateDifference(date);
-  if (days >= 0 && !status) {
-    return {
-      backgroundColor: backgroundColors.orange,
-    };
-  } else if (days < 0 && !status) {
-    return {
-      backgroundColor: backgroundColors.red,
-    };
-  } else {
-    return {
-      backgroundColor: backgroundColors.green,
-    };
-  }
-};
-
 export const getBorderColor = (date, status) => {
   if (!date) {
     if (!status)

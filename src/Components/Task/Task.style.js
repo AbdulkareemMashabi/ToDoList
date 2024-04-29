@@ -12,6 +12,8 @@ export default StyleSheet.create({
     paddingHorizontal: 8,
     borderTopRightRadius: 16,
     borderBottomRightRadius: 16,
+    elevation: 3,
+    backgroundColor: 'white',
   },
   mainTaskParent: {
     flexDirection: 'row',

@@ -5,7 +5,6 @@ import {Icons} from '../../assets/Icons';
 import Button from '../Button/Button';
 import {useRef, useState} from 'react';
 import {
-  getBackgroundColor,
   getBorderColor,
   getBorderColorSubTask,
   getDateDifference,
@@ -22,10 +21,6 @@ export const Task = ({data, id, userId, onPress}) => {
 
   const dispatch = useDispatch();
 
-  const mainTaskBackgroundColor = getBackgroundColor(
-    mainTask.date,
-    mainTask.status,
-  );
   const mainTaskBorderColor = getBorderColor(mainTask.date, mainTask.status);
 
   const color = useRef(getRandomColor());
@@ -35,11 +30,7 @@ export const Task = ({data, id, userId, onPress}) => {
       style={[styles.container, {...getShadow(color.current)}]}
       onPress={onPress}>
       <View style={[styles.leftBlock, {backgroundColor: color.current}]} />
-      <View
-        style={[
-          styles.taskSubTasksParent,
-          {...mainTaskBackgroundColor, backgroundColor: 'white'},
-        ]}>
+      <View style={styles.taskSubTasksParent}>
         <View style={styles.mainTaskParent}>
           {mainTask.status ? (
             <Image source={Icons.check} />
