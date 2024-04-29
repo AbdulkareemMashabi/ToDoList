@@ -3,7 +3,7 @@ import styles from './Task.style';
 import Text from '../Text/Text';
 import {Icons} from '../../assets/Icons';
 import Button from '../Button/Button';
-import {useState} from 'react';
+import {useRef, useState} from 'react';
 import {
   getBackgroundColor,
   getBorderColor,
@@ -28,13 +28,13 @@ export const Task = ({data, id, userId, onPress}) => {
   );
   const mainTaskBorderColor = getBorderColor(mainTask.date, mainTask.status);
 
-  const color = getRandomColor();
+  const color = useRef(getRandomColor());
 
   return (
     <TouchableOpacity
-      style={[styles.container, {...getShadow(color)}]}
+      style={[styles.container, {...getShadow(color.current)}]}
       onPress={onPress}>
-      <View style={[styles.leftBlock, {backgroundColor: color}]} />
+      <View style={[styles.leftBlock, {backgroundColor: color.current}]} />
       <View
         style={[
           styles.taskSubTasksParent,
