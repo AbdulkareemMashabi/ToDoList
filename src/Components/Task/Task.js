@@ -30,8 +30,6 @@ export const Task = ({data, id, userId, onPress}) => {
 
   const color = getRandomColor();
 
-  console.log(color);
-
   return (
     <TouchableOpacity
       style={[styles.container, {...getShadow(color)}]}
