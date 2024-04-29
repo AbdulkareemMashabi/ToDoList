@@ -1,4 +1,4 @@
-import {FlatList, Image, View} from 'react-native';
+import {FlatList, Image, TouchableOpacity, View} from 'react-native';
 import styles from './Task.style';
 import Text from '../Text/Text';
 import {Icons} from '../../assets/Icons';
@@ -16,7 +16,7 @@ import {useDispatch} from 'react-redux';
 import {backgroundColors} from '../../helpers/utils';
 import {getShadow} from '../../helpers/shadow';
 
-export const Task = ({data, id, userId}) => {
+export const Task = ({data, id, userId, onPress}) => {
   const [tasks, setTasks] = useState(data);
   const {mainTask, subTasks} = tasks || {};
 
@@ -30,14 +30,13 @@ export const Task = ({data, id, userId}) => {
 
   const color = getRandomColor();
 
+  console.log(color);
+
   return (
-    <View style={[styles.container]}>
-      <View
-        style={[
-          styles.leftBlock,
-          {backgroundColor: color, ...getShadow(color)},
-        ]}
-      />
+    <TouchableOpacity
+      style={[styles.container, {...getShadow(color)}]}
+      onPress={onPress}>
+      <View style={[styles.leftBlock, {backgroundColor: color}]} />
       <View
         style={[
           styles.taskSubTasksParent,
@@ -117,7 +116,7 @@ export const Task = ({data, id, userId}) => {
           )}
         />
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 

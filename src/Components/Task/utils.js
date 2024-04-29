@@ -1,7 +1,6 @@
 import {setIsLoadingOverLay} from '../../helpers/Redux/mainReducer';
 import {updateDocuments} from '../../helpers/firebase';
 import {backgroundColors, handleAPIErrors, isNil} from '../../helpers/utils';
-import {getShadow} from '../../helpers/shadow';
 import moment from 'moment';
 
 export const getBackgroundColor = (date, status) => {
@@ -9,12 +8,10 @@ export const getBackgroundColor = (date, status) => {
     if (!status)
       return {
         backgroundColor: backgroundColors.orange,
-        ...getShadow('orange'),
       };
     else
       return {
         backgroundColor: backgroundColors.green,
-        ...getShadow('green'),
       };
   }
 
@@ -22,17 +19,14 @@ export const getBackgroundColor = (date, status) => {
   if (days >= 0 && !status) {
     return {
       backgroundColor: backgroundColors.orange,
-      ...getShadow('orange'),
     };
   } else if (days < 0 && !status) {
     return {
       backgroundColor: backgroundColors.red,
-      ...getShadow('red'),
     };
   } else {
     return {
       backgroundColor: backgroundColors.green,
-      ...getShadow('green'),
     };
   }
 };

@@ -49,47 +49,56 @@ export const Dashboard = ({navigation}) => {
             showsVerticalScrollIndicator={false}
             ItemSeparatorComponent={<View style={styles.separator} />}
             data={userData}
-            renderItem={({item, index}) => (
-              <View key={index}>
-                <Swipeable
-                  isSwipeableAtBegin={index === 0}
-                  renderAction={() => (
-                    <View style={styles.buttonsTaskContainer}>
-                      <Button
-                        containerStyle={[styles.button, styles.infoButton]}
-                        source={Icons.info}
-                        withoutShadow
-                        onPress={() => {
-                          navigation.navigate(pagesNames.taskDetailsScreen, {
-                            documentId: item.id,
-                          });
-                        }}
-                      />
-                      <Button
-                        containerStyle={[styles.button, styles.deleteButton]}
-                        source={Icons.trash}
-                        withoutShadow
-                        onPress={() => {
-                          navigation.navigate(pagesNames.popUp, {
-                            title: 'myWishesPage.deletePopUpTitle',
-                            description: 'myWishesPage.deletePopUpDescription',
-                            confirmButton: dismissPopUp => {
-                              deleteSpecificDocument(
-                                userId,
-                                item.id,
-                                dispatch,
-                                dismissPopUp,
-                              );
-                            },
-                          });
-                        }}
-                      />
-                    </View>
-                  )}>
-                  <Task id={item.id} data={item.data} userId={userId} />
-                </Swipeable>
-              </View>
-            )}
+            renderItem={({item, index}) => {
+              const onPress = () => {
+                navigation.navigate(pagesNames.taskDetailsScreen, {
+                  documentId: item.id,
+                });
+              };
+              return (
+                <View key={index}>
+                  <Swipeable
+                    isSwipeableAtBegin={index === 0}
+                    renderAction={() => (
+                      <View style={styles.buttonsTaskContainer}>
+                        <Button
+                          containerStyle={[styles.button, styles.infoButton]}
+                          source={Icons.info}
+                          withoutShadow
+                          onPress={onPress}
+                        />
+                        <Button
+                          containerStyle={[styles.button, styles.deleteButton]}
+                          source={Icons.trash}
+                          withoutShadow
+                          onPress={() => {
+                            navigation.navigate(pagesNames.popUp, {
+                              title: 'myWishesPage.deletePopUpTitle',
+                              description:
+                                'myWishesPage.deletePopUpDescription',
+                              confirmButton: dismissPopUp => {
+                                deleteSpecificDocument(
+                                  userId,
+                                  item.id,
+                                  dispatch,
+                                  dismissPopUp,
+                                );
+                              },
+                            });
+                          }}
+                        />
+                      </View>
+                    )}>
+                    <Task
+                      id={item.id}
+                      data={item.data}
+                      userId={userId}
+                      onPress={onPress}
+                    />
+                  </Swipeable>
+                </View>
+              );
+            }}
           />
           <View style={[styles.viewButton, cardShadow]}>
             <Button
