@@ -45,7 +45,10 @@ export const CreateNewTask = ({navigation}) => {
           onSubmit={async values => {
             try {
               dispatch(setIsLoading(true));
-              const docId = await addUserData(userId, values);
+              const docId = await addUserData(userId, {
+                ...values,
+                color: backgroundColor,
+              });
               dispatch(setIsLoading(false));
               navigation.replace(pagesNames.taskDetailsScreen, {
                 documentId: docId,

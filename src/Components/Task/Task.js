@@ -27,9 +27,17 @@ export const Task = ({data, id, userId, onPress}) => {
 
   return (
     <TouchableOpacity
-      style={[styles.container, {...getShadow(color.current)}]}
+      style={[
+        styles.container,
+        {...getShadow(mainTask?.color || color.current)},
+      ]}
       onPress={onPress}>
-      <View style={[styles.leftBlock, {backgroundColor: color.current}]} />
+      <View
+        style={[
+          styles.leftBlock,
+          {backgroundColor: mainTask?.color || color.current},
+        ]}
+      />
       <View style={styles.taskSubTasksParent}>
         <View style={styles.mainTaskParent}>
           {mainTask.status ? (
