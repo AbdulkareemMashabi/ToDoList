@@ -1,5 +1,5 @@
 import LottieView from 'lottie-react-native';
-import {TouchableOpacity, Image, View} from 'react-native';
+import {TouchableOpacity, Image, View, Platform, Keyboard} from 'react-native';
 import Text from '../Text/Text';
 import {getShadow} from '../../helpers/shadow';
 
@@ -17,8 +17,19 @@ export const Button = ({
   textColor,
   disabled,
   containerColor,
+  withoutKeyBoardDismes,
 }) => {
   const isIcon = typeof source === 'number';
+
+  const _onPress = () => {
+    if (Platform.OS === 'ios' || withoutKeyBoardDismes) onPress();
+    else if (!withoutKeyBoardDismes) {
+      Keyboard.dismiss();
+      setTimeout(() => {
+        onPress();
+      }, 50);
+    }
+  };
 
   const getTextColor = () => {
     if (textColor) return textColor;
@@ -70,7 +81,7 @@ export const Button = ({
         containerColor ? {backgroundColor: containerColor} : null,
       ]}
       hitSlop={{top: 15, bottom: 15, left: 15, right: 15}}
-      onPress={!disabled ? onPress : null}>
+      onPress={!disabled ? _onPress : null}>
       {contentRender()}
     </TouchableOpacity>
   );
