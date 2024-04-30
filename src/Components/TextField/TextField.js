@@ -29,12 +29,12 @@ export const TextField = ({
     Animated.parallel([
       Animated.timing(fontSizeRef, {
         toValue: 15,
-        duration: 400,
+        duration: 600,
         useNativeDriver: false,
       }).start(),
       Animated.timing(positionRef, {
         toValue: 0,
-        duration: 400,
+        duration: 600,
         useNativeDriver: false,
       }).start(),
     ]);
@@ -44,12 +44,12 @@ export const TextField = ({
       Animated.parallel([
         Animated.timing(fontSizeRef, {
           toValue: 17,
-          duration: 400,
+          duration: 600,
           useNativeDriver: false,
         }).start(),
         Animated.timing(positionRef, {
           toValue: 16,
-          duration: 400,
+          duration: 600,
           useNativeDriver: false,
         }).start(),
       ]);
