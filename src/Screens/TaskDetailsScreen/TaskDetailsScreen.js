@@ -33,10 +33,7 @@ export const TaskDetailsScreen = ({navigation, route}) => {
 
   const goBackLogic = e => {
     e.preventDefault();
-    const goBack = () => {
-      navigation.dispatch(e.data.action);
-    };
-    submit(goBack);
+    submit();
   };
 
   useEffect(() => {
@@ -79,7 +76,7 @@ export const TaskDetailsScreen = ({navigation, route}) => {
     }
   };
 
-  const submit = async goBack => {
+  const submit = async () => {
     if (enableDoneButton)
       try {
         dispatch(setIsLoadingOverLay(true));
@@ -89,9 +86,9 @@ export const TaskDetailsScreen = ({navigation, route}) => {
         handleAPIErrors(e);
       } finally {
         dispatch(setIsLoadingOverLay(false));
-        goBack?.();
+        navigation.goBack();
       }
-    else goBack?.();
+    else navigation.goBack();
   };
 
   const textFieldBlur = () => {
