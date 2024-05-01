@@ -61,6 +61,7 @@ export const updateStatus = async ({
   documentId,
   userId,
   setTasks,
+  color,
 }) => {
   try {
     let finalValues = {};
@@ -89,6 +90,12 @@ export const updateStatus = async ({
         finalValues.setTasks = subTasks.map(item => ({...item, status: true}));
     }
 
+    if (!mainTask?.color)
+      finalValues.mainTask = {
+        ...(finalValues?.mainTask || mainTask),
+        color: color,
+      };
+
     dispatch(setIsLoadingOverLay(true));
     await updateDocuments(userId, documentId, finalValues);
     setTasks({mainTask, subTasks, ...finalValues});
@@ -100,10 +107,6 @@ export const updateStatus = async ({
 };
 
 export const getRandomColor = () => {
-  var letters = '0123456789ABCDEF';
-  var color = '#';
-  for (var i = 0; i < 6; i++) {
-    color += letters[Math.floor(Math.random() * 16)];
-  }
-  return color;
+  const colors = ['#32ADE6', '#FF3B30', '#34C759', '#FF9500'];
+  return colors[Math.floor(Math.random() * colors.length)];
 };

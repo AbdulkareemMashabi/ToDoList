@@ -23,21 +23,13 @@ export const Task = ({data, id, userId, onPress}) => {
 
   const mainTaskBorderColor = getBorderColor(mainTask.date, mainTask.status);
 
-  const color = useRef(getRandomColor());
+  const color = mainTask?.color || useRef(getRandomColor()).current;
 
   return (
     <TouchableOpacity
-      style={[
-        styles.container,
-        {...getShadow(mainTask?.color || color.current)},
-      ]}
+      style={[styles.container, {...getShadow(color)}]}
       onPress={onPress}>
-      <View
-        style={[
-          styles.leftBlock,
-          {backgroundColor: mainTask?.color || color.current},
-        ]}
-      />
+      <View style={[styles.leftBlock, {backgroundColor: color}]} />
       <View style={styles.taskSubTasksParent}>
         <View style={styles.mainTaskParent}>
           {mainTask.status ? (
@@ -54,6 +46,7 @@ export const Task = ({data, id, userId, onPress}) => {
                   subTasks: subTasks,
                   userId,
                   setTasks,
+                  color,
                 });
               }}
             />
@@ -88,6 +81,7 @@ export const Task = ({data, id, userId, onPress}) => {
                       subTasks,
                       userId,
                       setTasks,
+                      color,
                     });
                   }}
                   containerStyle={[
