@@ -1,23 +1,45 @@
-import {useEffect} from 'react';
+import {useEffect, useRef, useState} from 'react';
 import Locale from '../../helpers/localization';
 import Form from '../../Components/Form/Form';
 import * as Yup from 'yup';
 import {getShadow} from '../../helpers/shadow';
 import {useDispatch, useSelector} from 'react-redux';
-import {setIsLoading} from '../../helpers/Redux/mainReducer';
-import {handleAPIErrors, pagesNames} from '../../helpers/utils';
+import {
+  setBackgroundColor,
+  setIsLoading,
+} from '../../helpers/Redux/mainReducer';
+import {
+  backgroundColors,
+  handleAPIErrors,
+  pagesNames,
+} from '../../helpers/utils';
 import {addUserData} from '../../helpers/firebase';
 import Container from '../../Components/Contianer/Container';
 import styles from './CreateNewTask.style';
 import {View} from 'react-native';
+import {CreateNewTaskImages} from '../../assets/CreateNewTaskImages';
+import {getRandomNumber} from './utils';
 
 export const CreateNewTask = ({navigation}) => {
   const {userId, backgroundColor} = useSelector(state => state.main);
+  const [image, setImage] = useState(null);
+  const usedNumbers = useRef([]);
+
   const dispatch = useDispatch();
   useEffect(() => {
     navigation.setOptions({
       headerTitle: Locale.t('newTask.newTaskTitle'),
     });
+    const keys = Object.keys(CreateNewTaskImages);
+    const randomNumber = getRandomNumber(usedNumbers);
+    const randomKey = keys[randomNumber];
+
+    dispatch(setBackgroundColor(backgroundColors[randomKey]));
+    setImage(CreateNewTaskImages[randomKey]);
+
+    return () => {
+      dispatch(setBackgroundColor(null));
+    };
   }, []);
 
   const validation = Yup.object().shape({
@@ -25,7 +47,7 @@ export const CreateNewTask = ({navigation}) => {
   });
 
   return (
-    <Container noPadding>
+    <Container backgroundImage={image}>
       <View style={[styles.view, getShadow(backgroundColor)]}>
         <Form
           validationSchema={validation}
