@@ -22,10 +22,7 @@ const Swipeable = ({isSwipeableAtBegin, children, renderAction}) => {
     <RNSwipeable
       ref={ref}
       renderRightActions={!Locale.isRTL ? renderAction : undefined}
-      renderLeftActions={Locale.isRTL ? renderAction : undefined}
-      containerStyle={{
-        paddingVertical: 8,
-      }}>
+      renderLeftActions={Locale.isRTL ? renderAction : undefined}>
       {children}
     </RNSwipeable>
   );
