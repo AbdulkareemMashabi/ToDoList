@@ -1,7 +1,7 @@
 import {StyleSheet} from 'react-native';
 
 export default StyleSheet.create({
-  container: {flexDirection: 'row', marginHorizontal: 16},
+  container: {flexDirection: 'row', padding: 6},
   leftBlock: {
     width: 20,
     borderTopLeftRadius: 16,
