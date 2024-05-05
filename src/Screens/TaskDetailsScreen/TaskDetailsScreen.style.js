@@ -21,6 +21,6 @@ export default StyleSheet.create({
     backgroundColor: '#DADCE2',
   },
   doneButton: {
-    marginRight: 16,
+    marginLeft: 16,
   },
 });

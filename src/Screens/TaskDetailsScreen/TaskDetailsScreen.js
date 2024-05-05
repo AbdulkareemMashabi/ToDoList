@@ -1,5 +1,5 @@
 import {useEffect, useState} from 'react';
-import {FlatList, View} from 'react-native';
+import {FlatList, Platform, View} from 'react-native';
 import {handleAPIErrors} from '../../helpers/utils';
 import {getSpecificDocument, updateDocuments} from '../../helpers/firebase';
 import {useDispatch, useSelector} from 'react-redux';
@@ -16,6 +16,8 @@ import Container from '../../Components/Contianer/Container';
 import SubTask from '../../Components/SubTask/SubTask';
 import TextField from '../../Components/TextField/TextField';
 import Button from '../../Components/Button/Button';
+import {getUserData} from '../../App/utils';
+import {Icons} from '../../assets/Icons';
 
 export const TaskDetailsScreen = ({navigation, route}) => {
   const {userId} = useSelector(state => state.main);
@@ -31,11 +33,6 @@ export const TaskDetailsScreen = ({navigation, route}) => {
     title: Yup.string().required(Locale.t('common.required')),
   });
 
-  const goBackLogic = e => {
-    e.preventDefault();
-    submit();
-  };
-
   useEffect(() => {
     navigation.setOptions({
       headerTitle: formData?.mainTask?.title,
@@ -48,16 +45,13 @@ export const TaskDetailsScreen = ({navigation, route}) => {
           onPress={submit}
         />
       ),
+      headerLeft: () => (
+        <Button
+          source={Platform.OS === 'ios' ? Icons.backButton : Icons.arrow}
+          onPress={submit}
+        />
+      ),
     });
-
-    const unsubscribeBeforeRemove = navigation.addListener(
-      'beforeRemove',
-      goBackLogic,
-    );
-
-    return () => {
-      unsubscribeBeforeRemove();
-    };
   }, [enableDoneButton, formData]);
 
   useEffect(() => {
@@ -81,12 +75,13 @@ export const TaskDetailsScreen = ({navigation, route}) => {
       try {
         dispatch(setIsLoadingOverLay(true));
         await updateDocuments(userId, documentId, formData);
-        setEnableDonButton(false);
-      } catch (e) {
-        handleAPIErrors(e);
-      } finally {
         dispatch(setIsLoadingOverLay(false));
         navigation.goBack();
+        getUserData(userId, dispatch);
+      } catch (e) {
+        handleAPIErrors(e);
+        setEnableDonButton(false);
+        dispatch(setIsLoadingOverLay(false));
       }
     else navigation.goBack();
   };
