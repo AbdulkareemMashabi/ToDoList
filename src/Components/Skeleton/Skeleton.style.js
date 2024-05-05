@@ -24,4 +24,7 @@ export default StyleSheet.create({
     flex: 1,
     height: 16,
   },
+  padding_16: {
+    paddingHorizontal: 16,
+  },
 });
