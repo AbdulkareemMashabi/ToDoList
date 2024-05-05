@@ -9,6 +9,7 @@ import {useDispatch} from 'react-redux';
 import {setIsLoading} from '../../helpers/Redux/mainReducer';
 import {auth} from '../../helpers/firebase';
 import Container from '../../Components/Contianer/Container';
+import {Images} from '../../assets/Images';
 
 export const ForgetPassword = ({navigation}) => {
   const dispatch = useDispatch();
@@ -25,7 +26,7 @@ export const ForgetPassword = ({navigation}) => {
   });
 
   return (
-    <Container>
+    <Container backgroundImage={Images.waves}>
       <Text localeKey={'forgetPassword.enterEmail'} />
       <Text
         variant={'bodySemibold'}

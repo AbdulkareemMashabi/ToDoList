@@ -13,6 +13,7 @@ import {setIsLoading, setUserId} from '../../helpers/Redux/mainReducer';
 import Container from '../../Components/Contianer/Container';
 import styles from './Login.style';
 import {Icons} from '../../assets/Icons';
+import {Images} from '../../assets/Images';
 
 export const Login = ({navigation, route}) => {
   const dispatch = useDispatch();
@@ -40,7 +41,7 @@ export const Login = ({navigation, route}) => {
   });
 
   return (
-    <Container>
+    <Container backgroundImage={Images.waves}>
       <Text localeKey={'loginPage.title'} />
       <Text
         variant={'bodySemibold'}

@@ -10,6 +10,7 @@ import {setIsLoading, setUserId} from '../../helpers/Redux/mainReducer';
 import {handleAPIErrors, pagesNames, showToast} from '../../helpers/utils';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Container from '../../Components/Contianer/Container';
+import {Images} from '../../assets/Images';
 
 export const Register = ({navigation}) => {
   const dispatch = useDispatch();
@@ -32,7 +33,7 @@ export const Register = ({navigation}) => {
   });
 
   return (
-    <Container>
+    <Container backgroundImage={Images.waves}>
       <Text localeKey={'register.register'} />
       <Form
         validationSchema={validation}
