@@ -5,7 +5,7 @@ import styles from './Lottie.style';
 
 export const Lottie = ({navigation}) => {
   return (
-    <Container>
+    <Container backgroundColor={'#e5e5e5'}>
       <LottieView
         source={require('../../assets/Lottie/splash.json')}
         autoPlay
