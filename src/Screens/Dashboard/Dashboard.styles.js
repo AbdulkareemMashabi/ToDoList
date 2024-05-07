@@ -1,4 +1,4 @@
-import {StyleSheet} from 'react-native';
+import {Dimensions, StyleSheet} from 'react-native';
 
 export default StyleSheet.create({
   container: {flex: 1},
@@ -9,23 +9,15 @@ export default StyleSheet.create({
     borderRadius: 16,
     justifyContent: 'center',
     margin: 16,
+    marginBottom: 64,
   },
   buttonsContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    width: '100%',
-    paddingHorizontal: 24,
+    width: Dimensions.get('window').width / 4,
   },
   separator: {
-    marginVertical: 8,
-  },
-  viewButton: {
-    height: '15%',
-    justifyContent: 'center',
-    backgroundColor: 'white',
-    borderTopLeftRadius: 16,
-    borderTopRightRadius: 16,
-    paddingHorizontal: 16,
+    marginVertical: 4,
   },
   deleteButton: {
     backgroundColor: 'rgba(255,236,236,0.25)',
@@ -37,10 +29,11 @@ export default StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
-  skeleton: {
-    paddingHorizontal: 16,
+  flex_1: {
+    flexGrow: 1,
+    justifyContent: 'center',
   },
-  flatListHeader: {
-    height: 16,
+  flatList: {
+    flexGrow: 1,
   },
 });
