@@ -8,7 +8,8 @@
     "deletePopUpDescription": "هل انت متأكد من حذف هذه المهمة؟",
     "TaskDeletedSuccessfully": "المهمة حذفت بنجاح",
     "connectionTitle": "اتصال الانترنت مطلوب",
-    "connectionButton": "تمام"
+    "connectionButton": "تمام",
+    "logOut":"هل أنت متأكد أنك تريد تسجيل الخروج؟"
   },
   "loginPage": {
     "loginTitle": "تسجيل دخول",

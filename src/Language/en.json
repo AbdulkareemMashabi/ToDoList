@@ -8,7 +8,8 @@
     "deletePopUpDescription": "Are you sure about deleting this task?",
     "TaskDeletedSuccessfully": "Task Deleted Successfully",
     "connectionTitle": "Internet Connection Is Required",
-    "connectionButton": "Ok"
+    "connectionButton": "Ok",
+    "logOut":"Are you sure you want to logout?"
   },
   "loginPage": {
     "loginTitle": "Login",
