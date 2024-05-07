@@ -6,8 +6,11 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import RNRestart from 'react-native-restart';
 import {handleAPIErrors, pagesNames, showToast} from '../../helpers/utils';
 import styles from './Dashboard.styles';
-import {deleteDocument} from '../../helpers/firebase';
-import {setIsLoadingOverLay} from '../../helpers/Redux/mainReducer';
+import {deleteDocument, getAllDocuments} from '../../helpers/firebase';
+import {
+  setIsLoadingOverLay,
+  setUserData,
+} from '../../helpers/Redux/mainReducer';
 import {store} from '../../helpers/Redux/store';
 
 export const handleEnterFace = (navigation, userId) => {
@@ -41,8 +44,13 @@ export const handleEnterFace = (navigation, userId) => {
           <Button
             source={Icons.logOut}
             onPress={async () => {
-              await AsyncStorage.setItem('userId', '');
-              RNRestart.restart();
+              navigation.navigate(pagesNames.popUp, {
+                title: 'myWishesPage.logOut',
+                confirmButton: async () => {
+                  await AsyncStorage.setItem('userId', '');
+                  RNRestart.restart();
+                },
+              });
             }}
           />
         ) : (
@@ -61,18 +69,33 @@ export const handleEnterFace = (navigation, userId) => {
 export const deleteSpecificDocument = async (
   userId,
   documentId,
-  dispatch,
   dismissPopUp,
 ) => {
   try {
-    dispatch(setIsLoadingOverLay(true));
+    store.dispatch(setIsLoadingOverLay(true));
     await deleteDocument(userId, documentId);
-    dispatch(setIsLoadingOverLay(false));
+    store.dispatch(setIsLoadingOverLay(false));
     showToast('myWishesPage.TaskDeletedSuccessfully');
   } catch (e) {
     handleAPIErrors(e);
-    dispatch(setIsLoadingOverLay(false));
+    store.dispatch(setIsLoadingOverLay(false));
   } finally {
     dismissPopUp?.();
+  }
+};
+
+export const getUserData = async (userId, setLoading) => {
+  try {
+    setLoading(true);
+    const documents = await getAllDocuments(userId);
+    const reShapeDocuments = [];
+    documents.forEach(doc => {
+      reShapeDocuments.push({id: doc.id, data: doc.data()});
+    });
+    store.dispatch(setUserData(reShapeDocuments));
+  } catch (e) {
+    handleAPIErrors(e);
+  } finally {
+    setLoading(false);
   }
 };
