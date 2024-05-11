@@ -2,8 +2,6 @@ import {StyleSheet} from 'react-native';
 
 export default StyleSheet.create({
   imageSize: {
-    width: 24,
-    height: 24,
     alignSelf: 'center',
   },
   loading: {width: '100%', height: 30},
@@ -22,5 +20,11 @@ export default StyleSheet.create({
   },
   disabled: {
     backgroundColor: 'grey',
+  },
+  icon: {marginRight: 8},
+  iconWithTextView: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });

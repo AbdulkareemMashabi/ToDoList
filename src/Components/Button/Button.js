@@ -18,6 +18,8 @@ export const Button = ({
   disabled,
   containerColor,
   withoutKeyBoardDismes,
+  boldText,
+  icon,
 }) => {
   const isIcon = typeof source === 'number';
 
@@ -56,6 +58,20 @@ export const Button = ({
           tintColor={disabled ? 'grey' : null}
         />
       );
+    else if (variant === 'iconWithText')
+      return (
+        <View style={styles.iconWithTextView}>
+          <Image source={icon} style={styles.icon} tintColor={getTextColor()} />
+          <Text
+            style={contentStyle}
+            textAlign={'center'}
+            variant="bodySemibold"
+            localeKey={source}
+            bold={boldText}
+            color={getTextColor()}
+          />
+        </View>
+      );
     else if (variant === 'manualDraw') return null;
     else
       return (
@@ -65,6 +81,7 @@ export const Button = ({
           variant="bodySemibold"
           style={contentStyle}
           localeKey={source}
+          bold={boldText}
         />
       );
   };
