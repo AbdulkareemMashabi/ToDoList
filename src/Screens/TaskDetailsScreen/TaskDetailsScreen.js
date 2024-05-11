@@ -183,12 +183,14 @@ export const TaskDetailsScreen = ({navigation, route}) => {
         onClose={() => {
           setOpenMainForm(false);
         }}>
-        <Form
-          initialValues={getInitialValues(formData)}
-          fields={getFormFields()}
-          validationSchema={validation}
-          onSubmit={v => submitSheet(v)}
-        />
+        {openMainForm ? (
+          <Form
+            initialValues={getInitialValues(formData)}
+            fields={getFormFields()}
+            validationSchema={validation}
+            onSubmit={v => submitSheet(v)}
+          />
+        ) : null}
       </ActionsSheet>
     </Container>
   );
