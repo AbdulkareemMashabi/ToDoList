@@ -15,6 +15,7 @@ export const Text = ({
   ellipsizeMode,
   textAlign,
   isLineThrough,
+  bold,
 }) => {
   const getColor = () => {
     if (!color) return null;
@@ -38,6 +39,7 @@ export const Text = ({
         {textAlign: textAlign || 'left'},
         isLineThrough ? {textDecorationLine: 'line-through'} : null,
         style,
+        bold ? styles.boldStyle : null,
       ]}>
       {!isNil(value) ? value : Locale.t(localeKey, localeProps)}
     </Animated.Text>

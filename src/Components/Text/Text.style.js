@@ -11,4 +11,5 @@ export default StyleSheet.create({
   blueColor: {color: '#32ADE6'},
   whiteColor: {color: 'white'},
   blackColor: {color: 'black'},
+  boldStyle: {fontWeight: 'bold'},
 });
