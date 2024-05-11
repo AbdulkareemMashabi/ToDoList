@@ -34,7 +34,8 @@
     "confirm": "تأكيد",
     "cancel": "الغاء",
     "done": "مكتمل",
-    "deleteAccount": "حذف حساب"
+    "deleteAccount": "حذف حساب",
+    "guestLogin":"الدخول كضيف"
   },
   "register": {
     "register": "تسجيل",

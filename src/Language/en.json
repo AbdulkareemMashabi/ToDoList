@@ -34,7 +34,8 @@
     "confirm": "Confirm",
     "cancel": "Cancel",
     "done": "Done",
-    "deleteAccount": "Delete Account"
+    "deleteAccount": "Delete Account",
+    "guestLogin":"Guest Login"
   },
   "register": {
     "register": "Register",
