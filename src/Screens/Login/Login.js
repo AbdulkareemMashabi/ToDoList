@@ -14,6 +14,7 @@ import Container from '../../Components/Contianer/Container';
 import styles from './Login.style';
 import {Icons} from '../../assets/Icons';
 import {Images} from '../../assets/Images';
+import {getUniqueId} from 'react-native-device-info';
 
 export const Login = ({navigation, route}) => {
   const dispatch = useDispatch();
@@ -39,6 +40,11 @@ export const Login = ({navigation, route}) => {
       .required(Locale.t('common.required')),
     password: Yup.string().required(Locale.t('common.required')),
   });
+
+  const routing = () => {
+    if (route?.params?.routing) route.params.routing();
+    else navigation.navigate(pagesNames.dashboard);
+  };
 
   return (
     <Container backgroundImage={Images.waves}>
@@ -67,8 +73,7 @@ export const Login = ({navigation, route}) => {
             dispatch(setUserId(userId));
             showToast('loginPage.loginSuccessfully');
             dispatch(setIsLoading(false));
-            if (route?.params?.routing) route.params.routing();
-            else navigation.navigate(pagesNames.dashboard);
+            routing();
           } catch (e) {
             handleAPIErrors(e);
             dispatch(setIsLoading(false));
@@ -91,6 +96,20 @@ export const Login = ({navigation, route}) => {
         variant="secondary"
         onPress={() => {
           navigation.push(pagesNames.register);
+        }}
+      />
+      <Button
+        boldText
+        source={'common.guestLogin'}
+        icon={Icons.userLogo}
+        containerStyle={styles.guest}
+        variant="iconWithText"
+        onPress={async () => {
+          const deviceId = await getUniqueId();
+          await AsyncStorage.setItem('userId', deviceId);
+          dispatch(setUserId(deviceId));
+          showToast('loginPage.loginSuccessfully');
+          routing();
         }}
       />
     </Container>
