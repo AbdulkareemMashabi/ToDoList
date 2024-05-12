@@ -78,6 +78,7 @@ export const DatePicker = ({
         />
       </TouchableOpacity>
       <RNDatePicker
+        theme="light"
         confirmText={Locale.t('common.confirm')}
         cancelText={Locale.t('common.cancel')}
         modal
