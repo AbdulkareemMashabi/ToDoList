@@ -3,13 +3,12 @@ import {Dimensions, StyleSheet} from 'react-native';
 export default StyleSheet.create({
   container: {flex: 1},
   button: {
-    width: 64,
-    height: 64,
+    width: 56,
+    height: 56,
     backgroundColor: '#32ADE6',
     borderRadius: 16,
     justifyContent: 'center',
-    margin: 16,
-    marginBottom: 64,
+    marginHorizontal: 8,
   },
   buttonsContainer: {
     flexDirection: 'row',
