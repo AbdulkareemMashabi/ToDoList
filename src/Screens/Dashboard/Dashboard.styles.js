@@ -16,7 +16,7 @@ export default StyleSheet.create({
     width: Dimensions.get('window').width / 4,
   },
   separator: {
-    marginVertical: 4,
+    marginVertical: 8,
   },
   deleteButton: {
     backgroundColor: 'rgba(255,236,236,0.25)',
