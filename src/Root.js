@@ -8,13 +8,20 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import RNRestart from 'react-native-restart';
 import {useDispatch} from 'react-redux';
 import {setUserId} from './helpers/Redux/mainReducer';
+import BootSplash from 'react-native-bootsplash';
 
 export const Root = () => {
   const [startApp, setStartApp] = useState(false);
   const dispatch = useDispatch();
   useEffect(() => {
-    getUserLanguage();
-    getUserId();
+    const init = async () => {
+      getUserLanguage();
+      getUserId();
+    };
+
+    init().finally(async () => {
+      await BootSplash.hide({fade: true});
+    });
   }, []);
 
   const initialRTL = () => {
@@ -32,6 +39,7 @@ export const Root = () => {
       if (value !== null) {
         Locale.setLanguage(value);
         setStartApp(true);
+        BootSplash;
       } else {
         await AsyncStorage.setItem('language', 'ar');
         initialRTL();

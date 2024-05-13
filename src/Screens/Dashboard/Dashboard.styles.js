@@ -35,4 +35,7 @@ export default StyleSheet.create({
   flatList: {
     flexGrow: 1,
   },
+  plusButton: {
+    marginBottom: 64,
+  },
 });

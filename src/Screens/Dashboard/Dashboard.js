@@ -66,7 +66,7 @@ export const Dashboard = ({navigation}) => {
               description={'myWishesPage.emptyFormTDescription'}
             />
             <Button
-              containerStyle={styles.button}
+              containerStyle={[styles.button, styles.plusButton]}
               source={Icons.plus}
               onPress={() => {
                 if (userId) navigation.push(pagesNames.createNewTask);
