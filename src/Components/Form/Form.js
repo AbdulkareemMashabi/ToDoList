@@ -92,11 +92,12 @@ export const Form = ({
                     <View key={index}>
                       <TextField
                         multiline
-                        style={
-                          hasNotErrorAndHint
-                            ? styles.textArea
-                            : styles.mainFieldWithError
-                        }
+                        style={[
+                          styles.textArea,
+                          !hasNotErrorAndHint
+                            ? styles.mainFieldWithError
+                            : null,
+                        ]}
                         label={item.label}
                         value={values[item.name]}
                         onValueChange={handleChange(item.name)}

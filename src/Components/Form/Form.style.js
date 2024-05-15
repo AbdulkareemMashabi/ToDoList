@@ -15,5 +15,7 @@ export default StyleSheet.create({
   textArea: {
     height: 112,
     marginVertical: 8,
+    paddingTop: 20,
+    justifyContent: undefined,
   },
 });
