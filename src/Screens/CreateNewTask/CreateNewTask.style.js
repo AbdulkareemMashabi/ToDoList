@@ -8,6 +8,7 @@ export default StyleSheet.create({
     borderTopLeftRadius: 16,
     borderTopRightRadius: 16,
     padding: 16,
+    paddingBottom: 32,
     position: 'absolute',
     bottom: 0,
   },
