@@ -25,8 +25,10 @@ export default StyleSheet.create({
     backgroundColor: 'white',
     borderTopLeftRadius: 16,
     borderTopRightRadius: 16,
-    padding: 16,
-    paddingVertical: 32,
+    paddingHorizontal: 16,
+    paddingTop: 32,
+    paddingBottom: 42,
+    marginTop: 10,
   },
   renderContent: {
     paddingHorizontal: 16,
