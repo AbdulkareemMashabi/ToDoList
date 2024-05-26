@@ -1,6 +1,10 @@
 import {useEffect, useState} from 'react';
 import {FlatList, Platform, View} from 'react-native';
-import {handleAPIErrors} from '../../helpers/utils';
+import {
+  handleAPIErrors,
+  setInCalendar,
+  setTaskToCalendar,
+} from '../../helpers/utils';
 import {getSpecificDocument, updateDocuments} from '../../helpers/firebase';
 import {useDispatch, useSelector} from 'react-redux';
 import DoubleText from '../../Components/DoubleText/DoubleText';
@@ -16,17 +20,19 @@ import Container from '../../Components/Contianer/Container';
 import SubTask from '../../Components/SubTask/SubTask';
 import TextField from '../../Components/TextField/TextField';
 import Button from '../../Components/Button/Button';
-import {getUserData} from '../../App/utils';
 import {Icons} from '../../assets/Icons';
+import OneLineToggle from '../../Components/OneLineToggle/OneLineToggle';
 
 export const TaskDetailsScreen = ({navigation, route}) => {
   const {userId} = useSelector(state => state.main);
-  const {documentId} = route.params;
+  const {documentId, refreshing} = route.params;
   const [formData, setFormData] = useState(null);
   const [openMainForm, setOpenMainForm] = useState(false);
   const [initialLoading, setInitialLoading] = useState(false);
   const [newSubTask, setNewSubTask] = useState('');
   const [enableDoneButton, setEnableDonButton] = useState(false);
+  const [calendar, setCalendar] = useState(false);
+  const [isCalendarAvail, setIsCalendarAvail] = useState(false);
   const dispatch = useDispatch();
 
   const validation = Yup.object().shape({
@@ -42,13 +48,14 @@ export const TaskDetailsScreen = ({navigation, route}) => {
           source={'taskDetails.Done'}
           variant="secondary"
           containerStyle={styles.doneButton}
-          onPress={submit}
+          onPress={setCalendarFun}
         />
       ),
       headerLeft: () => (
         <Button
+          flipRTL
           source={Platform.OS === 'ios' ? Icons.backButton : Icons.arrow}
-          onPress={submit}
+          onPress={setCalendarFun}
         />
       ),
     });
@@ -62,6 +69,9 @@ export const TaskDetailsScreen = ({navigation, route}) => {
     try {
       setInitialLoading(true);
       const document = await getSpecificDocument(userId, documentId);
+      const {date, calendarId} = document?.mainTask || {};
+      setIsCalendarAvail(date);
+      setCalendar(calendarId);
       setFormData(document);
     } catch (e) {
       handleAPIErrors(e);
@@ -70,20 +80,32 @@ export const TaskDetailsScreen = ({navigation, route}) => {
     }
   };
 
-  const submit = async () => {
+  const setCalendarFun = () => {
+    if (calendar && enableDoneButton) {
+      setInCalendar(formData.mainTask, submit);
+    } else submit();
+  };
+
+  const submit = async (_, calendarId) => {
     if (enableDoneButton)
       try {
         dispatch(setIsLoadingOverLay(true));
-        await updateDocuments(userId, documentId, formData);
+        await updateDocuments(userId, documentId, {
+          ...formData,
+          mainTask: {...formData.mainTask, calendarId: calendarId},
+        });
         dispatch(setIsLoadingOverLay(false));
         navigation.goBack();
-        getUserData(userId, dispatch);
+        refreshing();
       } catch (e) {
         handleAPIErrors(e);
         setEnableDonButton(false);
         dispatch(setIsLoadingOverLay(false));
       }
-    else navigation.goBack();
+    else {
+      refreshing();
+      navigation.goBack();
+    }
   };
 
   const textFieldBlur = () => {
@@ -111,8 +133,13 @@ export const TaskDetailsScreen = ({navigation, route}) => {
     setEnableDonButton(true);
   };
 
-  const submitSheet = values => {
-    const finalValues = {mainTask: {...values, status: false}};
+  const onSubmit = values => {
+    const finalValues = {
+      mainTask: {
+        ...values,
+        status: false,
+      },
+    };
     setFormData({...formData, ...finalValues});
     setEnableDonButton(true);
     setOpenMainForm(false);
@@ -183,14 +210,32 @@ export const TaskDetailsScreen = ({navigation, route}) => {
         onClose={() => {
           setOpenMainForm(false);
         }}>
-        {openMainForm ? (
-          <Form
-            initialValues={getInitialValues(formData)}
-            fields={getFormFields()}
-            validationSchema={validation}
-            onSubmit={v => submitSheet(v)}
-          />
-        ) : null}
+        <Form
+          renderFooter={
+            isCalendarAvail ? (
+              <OneLineToggle
+                disabled={calendar}
+                style={styles.toggle}
+                value={calendar}
+                leftText={'common.setTaskInCalendar'}
+                onValueChange={v => {
+                  setCalendar(v);
+                }}
+              />
+            ) : null
+          }
+          initialValues={getInitialValues(formData)}
+          fields={getFormFields(setIsCalendarAvail)}
+          validationSchema={validation}
+          onSubmit={values =>
+            setTaskToCalendar({
+              values,
+              calendar,
+              mainTask: formData?.mainTask,
+              onSubmit,
+            })
+          }
+        />
       </ActionsSheet>
     </Container>
   );

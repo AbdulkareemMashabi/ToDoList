@@ -9,20 +9,19 @@ export const getInitialValues = formData => {
   return getInitialValue;
 };
 
-export const getFormFields = () => {
-  const formFields = [
-    {type: 'TextField', name: 'title', label: 'newTask.title'},
-    {
-      type: 'DatePicker',
-      name: 'date',
-      label: 'newTask.date',
+export const getFormFields = setIsCalendarAvail => [
+  {type: 'TextField', name: 'title', label: 'newTask.title'},
+  {
+    type: 'DatePicker',
+    name: 'date',
+    label: 'newTask.date',
+    onValueChange: v => {
+      setIsCalendarAvail(!!v);
     },
-    {
-      type: 'TextArea',
-      name: 'description',
-      label: 'newTask.description',
-    },
-  ];
-
-  return formFields;
-};
+  },
+  {
+    type: 'TextArea',
+    name: 'description',
+    label: 'newTask.description',
+  },
+];

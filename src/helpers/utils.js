@@ -106,7 +106,7 @@ export const setTaskToCalendar = async ({
           )
         ) {
           if (mainTask) onSubmit(values);
-          else setInCalendar(values, onSubmit, mainTask);
+          else setInCalendar(values, onSubmit);
         } else {
           onSubmit(values);
         }
@@ -115,7 +115,7 @@ export const setTaskToCalendar = async ({
       case RESULT_PERMISSION.AUTHORIZED:
       case RESULT_PERMISSION.RESTRICTED:
         if (mainTask) onSubmit(values);
-        else setInCalendar(values, onSubmit, mainTask);
+        else setInCalendar(values, onSubmit);
         break;
 
       default:
@@ -135,11 +135,10 @@ export const setTaskToCalendar = async ({
   } else onSubmit(values);
 };
 
-export const setInCalendar = async (values, onSubmit, mainTask) => {
+export const setInCalendar = async (values, onSubmit) => {
   try {
     const arrDate = values.date.split('/');
     const endDate = new Date(`${arrDate[2]}-${arrDate[1]}-${arrDate[0]}`);
-    const {calendarId} = mainTask || {};
 
     const body = {
       title: values.title,
@@ -147,8 +146,6 @@ export const setInCalendar = async (values, onSubmit, mainTask) => {
       endDate: endDate.toISOString(),
       notes: values?.description || '',
     };
-
-    if (calendarId) body.calendarId = calendarId;
 
     if (checkIfSelectedIsTodayDate(endDate))
       body.startDate = new Date(Date.now() - 864e5).toISOString(); // set to yesterday date

@@ -23,4 +23,7 @@ export default StyleSheet.create({
   doneButton: {
     marginLeft: 16,
   },
+  toggle: {
+    marginBottom: 16,
+  },
 });
