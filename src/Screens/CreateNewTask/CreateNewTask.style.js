@@ -12,4 +12,7 @@ export default StyleSheet.create({
     position: 'absolute',
     bottom: 0,
   },
+  toggle: {
+    marginBottom: 16,
+  },
 });
