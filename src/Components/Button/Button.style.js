@@ -27,4 +27,7 @@ export default StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  flipRTL: {
+    transform: [{scaleX: -1}],
+  },
 });

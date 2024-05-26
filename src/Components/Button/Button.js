@@ -20,6 +20,7 @@ export const Button = ({
   withoutKeyBoardDismes,
   boldText,
   icon,
+  flipRTL,
 }) => {
   const isIcon = typeof source === 'number';
 
@@ -89,6 +90,7 @@ export const Button = ({
     <TouchableOpacity
       activeOpacity={disabled ? 1 : 0.2}
       style={[
+        flipRTL ? styles.flipRTL : null,
         !isIcon && variant === 'primary' ? styles.container : null,
         containerStyle,
         variant === 'primary' && disabled ? styles.disabled : null,
