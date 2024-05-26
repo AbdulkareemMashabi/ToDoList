@@ -35,7 +35,13 @@
     "cancel": "الغاء",
     "done": "مكتمل",
     "deleteAccount": "حذف حساب",
-    "guestLogin":"الدخول كضيف"
+    "guestLogin":"الدخول كضيف",
+    "setTaskInCalendar":"إضافة المهمة الى التقويم",
+    "accessDenied":"تم رفض الوصول الى التقويم",
+    "accessDeniedButton":"اذهب الى الاعدادات",
+    "openSettings": "اذهب للاعدادات",
+    "addedSuccessfully":"تم اضافة المهمة الى التقويم بنجاح",
+    "editedSuccessfully":"تم تعديل المهمة بنجاح"
   },
   "register": {
     "register": "تسجيل",

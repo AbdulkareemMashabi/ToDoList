@@ -35,7 +35,13 @@
     "cancel": "Cancel",
     "done": "Done",
     "deleteAccount": "Delete Account",
-    "guestLogin":"Guest Login"
+    "guestLogin":"Guest Login",
+    "setTaskInCalendar":"Add The Task To The Calendar",
+    "accessDenied":"Access to Calendar is Denied",
+    "accessDeniedButton":"Go to Settings",
+    "openSettings": "Go to Settings",
+    "addedSuccessfully":"Task Added to Calendar Successfully",
+    "editedSuccessfully":"Task Edited to Calendar Successfully"
   },
   "register": {
     "register": "Register",

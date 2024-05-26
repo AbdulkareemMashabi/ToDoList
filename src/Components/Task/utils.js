@@ -107,6 +107,6 @@ export const updateStatus = async ({
 };
 
 export const getRandomColor = () => {
-  const colors = ['#32ADE6', '#FF3B30', '#34C759', '#FF9500'];
+  const colors = Object.values(backgroundColors);
   return colors[Math.floor(Math.random() * colors.length)];
 };
