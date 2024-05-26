@@ -136,22 +136,25 @@ export const setTaskToCalendar = async ({
   } else onSubmit(values);
 };
 
-export const setInCalendar = async (values, onSubmit) => {
+export const setInCalendar = async (values, onSubmit, isFromDetailsScreen) => {
   try {
-    const arrDate = values.date.split('/');
+    const {calendarId, title, description, date} = values || {};
+    const arrDate = date.split('/');
     const endDate = new Date(`${arrDate[2]}-${arrDate[1]}-${arrDate[0]}`);
 
     const body = {
-      title: values.title,
+      title: title,
       startDate: new Date().toISOString(),
       endDate: endDate.toISOString(),
-      notes: values?.description || '',
+      notes: description || '',
     };
 
     if (checkIfSelectedIsTodayDate(endDate))
       body.startDate = new Date(Date.now() - 864e5).toISOString(); // set to yesterday date
 
-    await RNCalendarEvents.removeEvent(calendarId);
+    if (isFromDetailsScreen && calendarId)
+      await RNCalendarEvents.removeEvent(calendarId);
+
     const setToCalendar = await RNCalendarEvents.saveEvent(values.title, body);
 
     if (setToCalendar) {

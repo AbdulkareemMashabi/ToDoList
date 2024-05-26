@@ -82,7 +82,7 @@ export const TaskDetailsScreen = ({navigation, route}) => {
 
   const setCalendarFun = () => {
     if (calendar && enableDoneButton) {
-      setInCalendar(formData.mainTask, submit);
+      setInCalendar(formData.mainTask, submit, true);
     } else submit();
   };
 
@@ -137,6 +137,7 @@ export const TaskDetailsScreen = ({navigation, route}) => {
     const finalValues = {
       mainTask: {
         ...values,
+        calendarId: formData?.mainTask?.calendarId,
         status: false,
       },
     };
