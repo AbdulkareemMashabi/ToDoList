@@ -12,6 +12,7 @@ import {
   setUserData,
 } from '../../helpers/Redux/mainReducer';
 import {store} from '../../helpers/Redux/store';
+import RNCalendarEvents from 'react-native-calendar-events';
 
 export const handleEnterFace = (navigation, userId) => {
   navigation.setOptions({
@@ -68,19 +69,26 @@ export const handleEnterFace = (navigation, userId) => {
 
 export const deleteSpecificDocument = async (
   userId,
-  documentId,
-  dismissPopUp,
+  item,
+  closePopUp,
+  refreshing,
 ) => {
   try {
+    const {id, data} = item;
+    const {mainTask} = data;
     store.dispatch(setIsLoadingOverLay(true));
-    await deleteDocument(userId, documentId);
+    await deleteDocument(userId, id);
     store.dispatch(setIsLoadingOverLay(false));
+    if (mainTask?.calendarId) {
+      await RNCalendarEvents.removeEvent(mainTask.calendarId);
+    }
     showToast('myWishesPage.TaskDeletedSuccessfully');
+    refreshing();
   } catch (e) {
     handleAPIErrors(e);
     store.dispatch(setIsLoadingOverLay(false));
   } finally {
-    dismissPopUp?.();
+    closePopUp?.();
   }
 };
 

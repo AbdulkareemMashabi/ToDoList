@@ -24,9 +24,13 @@ export const Dashboard = ({navigation}) => {
   }, [userId]);
 
   useEffect(() => {
-    if (userId) getUserData(userId, setLoading);
+    if (userId) refreshing();
     else setLoading(false);
   }, [userId]);
+
+  const refreshing = () => {
+    getUserData(userId, setLoading);
+  };
 
   useEffect(() => {
     NetInfo.addEventListener(state => {
@@ -47,7 +51,9 @@ export const Dashboard = ({navigation}) => {
           ? {
               source: 'taskDetails.addNewTask',
               onPress: () => {
-                navigation.push(pagesNames.createNewTask);
+                navigation.push(pagesNames.createNewTask, {
+                  refreshing,
+                });
               },
             }
           : null
@@ -56,7 +62,7 @@ export const Dashboard = ({navigation}) => {
         contentContainerStyle={styles.flatList}
         refreshing={loading}
         onRefresh={() => {
-          getUserData(userId, setLoading);
+          refreshing();
         }}
         ListEmptyComponent={
           <View style={styles.flex_1}>
@@ -69,11 +75,14 @@ export const Dashboard = ({navigation}) => {
               containerStyle={[styles.button, styles.plusButton]}
               source={Icons.plus}
               onPress={() => {
-                if (userId) navigation.push(pagesNames.createNewTask);
+                if (userId)
+                  navigation.push(pagesNames.createNewTask, {refreshing});
                 else
                   navigation.push(pagesNames.login, {
                     routing: () => {
-                      navigation.replace(pagesNames.createNewTask);
+                      navigation.replace(pagesNames.createNewTask, {
+                        refreshing,
+                      });
                     },
                   });
               }}
@@ -87,6 +96,7 @@ export const Dashboard = ({navigation}) => {
           const onPress = () => {
             navigation.navigate(pagesNames.taskDetailsScreen, {
               documentId: item.id,
+              refreshing,
             });
           };
           return (
@@ -112,8 +122,9 @@ export const Dashboard = ({navigation}) => {
                           confirmButton: dismissPopUp => {
                             deleteSpecificDocument(
                               userId,
-                              item.id,
+                              item,
                               dismissPopUp,
+                              refreshing,
                             );
                           },
                         });

@@ -15,6 +15,7 @@ export const pagesNames = {
   forgetPassword: 'ForgetPassword',
   createNewTask: 'CreateNewTask',
   taskDetailsScreen: 'TaskDetailsScreen',
+  popUp: 'PopUp',
   deleteAccount: 'deleteAccount',
 };
 
