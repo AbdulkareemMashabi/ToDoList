@@ -13,6 +13,7 @@ export const PasswordInput = ({
   label,
   onBlurField,
   style,
+  getValueOnChange,
 }) => {
   const [isHidden, setIsHidden] = useState(true);
   return (
@@ -25,6 +26,7 @@ export const PasswordInput = ({
         secure={isHidden}
         withoutShadow
         onBlurField={onBlurField}
+        getValueOnChange={getValueOnChange}
       />
       <Button
         withoutKeyBoardDismes

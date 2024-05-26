@@ -8,6 +8,7 @@ import styles from './TextField.style';
 
 export const TextField = ({
   onValueChange,
+  getValueOnChange,
   value,
   label,
   secure,
@@ -21,9 +22,8 @@ export const TextField = ({
   const refsFocus = useRef(null);
 
   useEffect(() => {
-    if (value) onFocus();
-    else onBlur();
-  }, [value]);
+    if (!!value) onFocus();
+  }, []);
 
   const onFocus = () => {
     Animated.parallel([
@@ -78,7 +78,10 @@ export const TextField = ({
           onBlurField(e);
         }}
         value={value}
-        onChangeText={onValueChange}
+        onChangeText={text => {
+          onValueChange(text);
+          getValueOnChange?.(text);
+        }}
         secureTextEntry={secure}
       />
     </TouchableOpacity>

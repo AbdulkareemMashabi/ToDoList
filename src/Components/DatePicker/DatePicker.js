@@ -12,6 +12,7 @@ import styles from './DatePicker.style';
 
 export const DatePicker = ({
   onValueChange,
+  getValueOnChange,
   value,
   label,
   style,
@@ -96,6 +97,7 @@ export const DatePicker = ({
 
           const fullDate = `${day}/${month}/${year}`;
           onValueChange(fullDate);
+          getValueOnChange?.(fullDate);
           setOpen(false);
         }}
         onCancel={() => {
