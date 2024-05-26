@@ -1,8 +1,11 @@
-import {Alert, Image, View} from 'react-native';
+import {Alert, Image, Linking, Platform, View} from 'react-native';
 import Locale from './localization';
 import {Icons} from '../assets/Icons';
 import Text from '../Components/Text/Text';
 import Toast from 'react-native-toast-message';
+import RNCalendarEvents from 'react-native-calendar-events';
+import AndroidOpenSettings from 'react-native-android-open-settings';
+import {store} from './Redux/store';
 
 export const pagesNames = {
   lottie: 'Lottie',
@@ -12,7 +15,6 @@ export const pagesNames = {
   forgetPassword: 'ForgetPassword',
   createNewTask: 'CreateNewTask',
   taskDetailsScreen: 'TaskDetailsScreen',
-  popUp: 'PopUp',
   deleteAccount: 'deleteAccount',
 };
 
@@ -35,6 +37,13 @@ export const backgroundColors = {
   green: '#34C759',
   orange: '#FF9500',
 };
+
+export const RESULT_PERMISSION = Object.freeze({
+  DENIED: 'denied',
+  RESTRICTED: 'restricted',
+  AUTHORIZED: 'authorized',
+  UNDETERMINED: 'undetermined',
+});
 
 export const shadowColors = {
   ...backgroundColors,
@@ -77,4 +86,91 @@ export const showToast = text => {
 
 export const isNil = value => {
   return value === null || value === undefined;
+};
+
+export const setTaskToCalendar = async ({
+  values,
+  calendar,
+  onSubmit,
+  mainTask,
+}) => {
+  if (calendar) {
+    const permissionResult = await RNCalendarEvents.checkPermissions();
+
+    switch (permissionResult) {
+      case RESULT_PERMISSION.UNDETERMINED:
+        const requestedPermission = await RNCalendarEvents.requestPermissions();
+        if (
+          [RESULT_PERMISSION.AUTHORIZED, RESULT_PERMISSION.RESTRICTED].includes(
+            requestedPermission,
+          )
+        ) {
+          if (mainTask) onSubmit(values);
+          else setInCalendar(values, onSubmit, mainTask);
+        } else {
+          onSubmit(values);
+        }
+        break;
+
+      case RESULT_PERMISSION.AUTHORIZED:
+      case RESULT_PERMISSION.RESTRICTED:
+        if (mainTask) onSubmit(values);
+        else setInCalendar(values, onSubmit, mainTask);
+        break;
+
+      default:
+        Alert.alert(null, Locale.t('common.accessDenied'), [
+          {
+            text: Locale.t('common.openSettings'),
+            onPress: () => {
+              Platform.OS === 'ios'
+                ? Linking.openURL('app-settings:')
+                : AndroidOpenSettings.locationSourceSettings();
+            },
+          },
+        ]);
+
+        break;
+    }
+  } else onSubmit(values);
+};
+
+export const setInCalendar = async (values, onSubmit, mainTask) => {
+  try {
+    const arrDate = values.date.split('/');
+    const endDate = new Date(`${arrDate[2]}-${arrDate[1]}-${arrDate[0]}`);
+    const {calendarId} = mainTask || {};
+
+    const body = {
+      title: values.title,
+      startDate: new Date().toISOString(),
+      endDate: endDate.toISOString(),
+      notes: values?.description || '',
+    };
+
+    if (calendarId) body.calendarId = calendarId;
+
+    if (checkIfSelectedIsTodayDate(endDate))
+      body.startDate = new Date(Date.now() - 864e5).toISOString(); // set to yesterday date
+
+    await RNCalendarEvents.removeEvent(calendarId);
+    const setToCalendar = await RNCalendarEvents.saveEvent(values.title, body);
+
+    if (setToCalendar) {
+      showToast(
+        `common.${calendarId ? 'editedSuccessfully' : 'addedSuccessfully'}`,
+      );
+      onSubmit(values, setToCalendar);
+    }
+  } catch (e) {
+    handleAPIErrors(e);
+  }
+};
+
+export const checkIfSelectedIsTodayDate = date => {
+  return new Date().toDateString() === date.toDateString();
+};
+
+export const dispatch = v => {
+  store.dispatch(v);
 };
