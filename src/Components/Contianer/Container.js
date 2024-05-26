@@ -10,9 +10,7 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import styles from './Container.style';
 import Skeleton from '../Skeleton/Skeleton';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
-import Toast from 'react-native-toast-message';
 import LottieView from 'lottie-react-native';
-import {toastConfig} from '../../helpers/utils';
 import {useSelector} from 'react-redux';
 import {Images} from '../../assets/Images';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
@@ -70,7 +68,6 @@ export const Container = ({
             {renderFooter && renderFooterContent()}
           </KeyboardAvoidingView>
         </GestureHandlerRootView>
-        <Toast config={toastConfig} />
         {isLoadingOverLay ? (
           <View style={styles.lottieView}>
             <LottieView
