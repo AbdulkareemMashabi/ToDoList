@@ -13,9 +13,10 @@ import CreateNewTask from '../Screens/CreateNewTask/CreateNewTask';
 import TaskDetailsScreen from '../Screens/TaskDetailsScreen/TaskDetailsScreen';
 import AccountDeletion from '../Screens/AccountDeletion/AccountDeletion';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import Toast from 'react-native-toast-message';
+import PopUp from '../Components/PopUp/PopUp';
 
 import styles from './App.style';
-import Toast from 'react-native-toast-message';
 
 const Stack = createNativeStackNavigator();
 
