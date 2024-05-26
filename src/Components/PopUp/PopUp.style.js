@@ -2,7 +2,7 @@ import {Dimensions, StyleSheet} from 'react-native';
 
 export default StyleSheet.create({
   spaceBetweenItems: {
-    marginVertical: 8,
+    marginVertical: 12,
   },
   modal: {
     backgroundColor: 'white',
