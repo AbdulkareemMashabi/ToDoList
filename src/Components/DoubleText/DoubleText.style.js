@@ -5,6 +5,7 @@ export default StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+    marginTop: 8,
   },
   description: {
     marginTop: 16,
