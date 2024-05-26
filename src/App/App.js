@@ -90,7 +90,6 @@ export const App = () => {
             options={{
               presentation: 'transparentModal',
               headerShown: false,
-              animation: 'none',
             }}
           />
           <Stack.Screen
