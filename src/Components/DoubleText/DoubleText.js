@@ -45,7 +45,10 @@ export const DoubleText = ({
           <Button
             source={Icons.edit}
             onPress={editButtonPress}
-            containerStyle={styles.alignCenter}
+            containerStyle={[
+              styles.alignCenter,
+              !description ? styles.editButton : null,
+            ]}
           />
         ) : null}
       </View>

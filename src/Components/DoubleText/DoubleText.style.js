@@ -41,4 +41,7 @@ export default StyleSheet.create({
   alignCenter: {
     alignSelf: 'center',
   },
+  editButton: {
+    marginTop: 10,
+  },
 });
