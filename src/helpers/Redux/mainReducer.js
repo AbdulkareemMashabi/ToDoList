@@ -5,6 +5,7 @@ const initialState = {
   isLoadingOverLay: false,
   userId: null,
   backgroundColor: null,
+  createNewTaskBackgrounds: [],
   userData: {},
 };
 
@@ -27,6 +28,12 @@ export const mainReducer = createSlice({
     setUserData: (state, action) => {
       state.userData = action.payload;
     },
+    setCreateNewTaskBackgrounds: (state, action) => {
+      state.createNewTaskBackgrounds.push(action.payload);
+    },
+    resetCreateNewTaskBackgrounds: state => {
+      state.createNewTaskBackgrounds = [];
+    },
   },
 });
 
@@ -36,6 +43,8 @@ export const {
   setUserId,
   setBackgroundColor,
   setUserData,
+  setCreateNewTaskBackgrounds,
+  resetCreateNewTaskBackgrounds,
 } = mainReducer.actions;
 
 export default mainReducer.reducer;
