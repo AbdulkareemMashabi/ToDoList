@@ -12,8 +12,8 @@ import {DatePicker} from '../DatePicker/DatePicker';
 export const Form = ({
   validationSchema,
   onSubmit,
-  initialValues,
-  fields,
+  initialValues = {},
+  fields = [],
   buttonLocaleKey,
   renderFooter,
 }) => {
@@ -22,7 +22,7 @@ export const Form = ({
 
   useEffect(() => {
     let initialFieldsValues = {};
-    fields.map(item => {
+    fields?.map(item => {
       if (!initialValues?.[item.name]) initialFieldsValues[item.name] = '';
     });
     setAdditionalInitialValues(initialFieldsValues);
@@ -48,7 +48,7 @@ export const Form = ({
       }) => (
         <>
           <View style={styles.view}>
-            {fields.map((item, index) => {
+            {fields?.map((item, index) => {
               const hasNotErrorAndHint =
                 (!touched?.[item.name] || !errors?.[item.name]) && !item?.hint;
 
@@ -66,6 +66,7 @@ export const Form = ({
                         value={values[item.name]}
                         onValueChange={handleChange(item.name)}
                         onBlurField={handleBlur(item.name)}
+                        getValueOnChange={item?.onValueChange}
                       />
                       {getErrorAndHint(touched, errors, item)}
                     </View>
@@ -83,6 +84,7 @@ export const Form = ({
                         value={values[item.name]}
                         onValueChange={handleChange(item.name)}
                         onBlurField={handleBlur(item.name)}
+                        getValueOnChange={item?.onValueChange}
                       />
                       {getErrorAndHint(touched, errors, item)}
                     </View>
@@ -102,6 +104,7 @@ export const Form = ({
                         value={values[item.name]}
                         onValueChange={handleChange(item.name)}
                         onBlurField={handleBlur(item.name)}
+                        getValueOnChange={item?.onValueChange}
                       />
                       {getErrorAndHint(touched, errors, item)}
                     </View>
@@ -120,6 +123,7 @@ export const Form = ({
                         maximumDate={item?.maximumDate}
                         minimumDate={item?.minimumDate}
                         onValueChange={handleChange(item.name)}
+                        getValueOnChange={item?.onValueChange}
                       />
                       {getErrorAndHint(touched, errors, item)}
                     </View>
@@ -137,7 +141,7 @@ export const Form = ({
             ]}
             onPress={v => {
               let touchFields = {};
-              fields.map(item => {
+              fields?.map(item => {
                 touchFields[item.name] = true;
               });
               setTouched(touchFields);
