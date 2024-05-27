@@ -92,7 +92,10 @@ export const TaskDetailsScreen = ({navigation, route}) => {
         dispatch(setIsLoadingOverLay(true));
         await updateDocuments(userId, documentId, {
           ...formData,
-          mainTask: {...formData.mainTask, calendarId: calendarId},
+          mainTask: {
+            ...formData.mainTask,
+            calendarId: calendarId ? calendarId : null,
+          },
         });
         dispatch(setIsLoadingOverLay(false));
         navigation.goBack();
