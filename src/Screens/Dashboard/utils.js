@@ -74,9 +74,9 @@ export const deleteSpecificDocument = async (
   refreshing,
 ) => {
   try {
+    store.dispatch(setIsLoadingOverLay(true));
     const {id, data} = item;
     const {mainTask} = data;
-    store.dispatch(setIsLoadingOverLay(true));
     await deleteDocument(userId, id);
     store.dispatch(setIsLoadingOverLay(false));
     if (mainTask?.calendarId) {

@@ -51,14 +51,14 @@ export const CreateNewTask = ({navigation, route}) => {
   });
 
   const onSubmit = async (values, calendarId) => {
-    const body = {
-      ...values,
-      color: backgroundColor,
-    };
-    if (calendarId) body.calendarId = calendarId;
-
     try {
       dispatch(setIsLoading(true));
+      const body = {
+        ...values,
+        color: backgroundColor,
+      };
+      if (calendarId) body.calendarId = calendarId;
+
       const docId = await addUserData(userId, body);
       dispatch(setIsLoading(false));
       navigation.replace(pagesNames.taskDetailsScreen, {
