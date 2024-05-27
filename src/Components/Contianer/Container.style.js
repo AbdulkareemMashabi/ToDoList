@@ -28,10 +28,9 @@ export default StyleSheet.create({
     paddingHorizontal: 16,
     paddingTop: 32,
     paddingBottom: 42,
-    marginTop: 10,
   },
   renderContent: {
-    paddingHorizontal: 16,
+    padding: 16,
     flex: 1,
   },
 });

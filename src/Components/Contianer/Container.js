@@ -65,8 +65,8 @@ export const Container = ({
             keyboardVerticalOffset={50}
             style={[styles.container, style]}>
             {renderContent()}
-            {renderFooter && renderFooterContent()}
           </KeyboardAvoidingView>
+          {renderFooter && renderFooterContent()}
         </GestureHandlerRootView>
         {isLoadingOverLay ? (
           <View style={styles.lottieView}>
