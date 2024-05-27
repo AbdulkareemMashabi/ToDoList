@@ -97,8 +97,10 @@ export const updateStatus = async ({
         color: color,
       };
 
+    const body = {mainTask, subTasks, ...finalValues};
+
     await updateDocuments(userId, documentId, finalValues);
-    setTasks({mainTask, subTasks, ...finalValues});
+    setTasks(body);
     dispatch(setIsLoadingOverLay(false));
   } catch (e) {
     handleAPIErrors(e);
