@@ -9,7 +9,11 @@ import {signInWithEmailAndPassword} from 'firebase/auth';
 import {auth} from '../../helpers/firebase';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useDispatch} from 'react-redux';
-import {setIsLoading, setUserId} from '../../helpers/Redux/mainReducer';
+import {
+  setIsLoading,
+  setIsLoadingOverLay,
+  setUserId,
+} from '../../helpers/Redux/mainReducer';
 import Container from '../../Components/Contianer/Container';
 import styles from './Login.style';
 import {Icons} from '../../assets/Icons';
@@ -105,9 +109,11 @@ export const Login = ({navigation, route}) => {
         containerStyle={styles.guest}
         variant="iconWithText"
         onPress={async () => {
+          dispatch(setIsLoadingOverLay(true));
           const deviceId = await getUniqueId();
           await AsyncStorage.setItem('userId', deviceId);
           dispatch(setUserId(deviceId));
+          dispatch(setIsLoadingOverLay(false));
           showToast('loginPage.loginSuccessfully');
           routing();
         }}
