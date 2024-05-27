@@ -25,6 +25,10 @@ export const TextField = ({
     if (!!value) onFocus();
   }, []);
 
+  useEffect(() => {
+    if (!value) onBlur();
+  }, [value]);
+
   const onFocus = () => {
     Animated.parallel([
       Animated.timing(fontSizeRef, {
@@ -74,8 +78,8 @@ export const TextField = ({
         ref={refsFocus}
         onFocus={onFocus}
         onBlur={e => {
-          onBlur();
           onBlurField(e);
+          onBlur();
         }}
         value={value}
         onChangeText={text => {
