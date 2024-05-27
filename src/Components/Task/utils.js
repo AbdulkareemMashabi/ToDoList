@@ -64,6 +64,7 @@ export const updateStatus = async ({
   color,
 }) => {
   try {
+    dispatch(setIsLoadingOverLay(true));
     let finalValues = {};
     if (!isNil(selectedIndex)) {
       let newSubTasks = subTasks.slice();
@@ -96,7 +97,6 @@ export const updateStatus = async ({
         color: color,
       };
 
-    dispatch(setIsLoadingOverLay(true));
     await updateDocuments(userId, documentId, finalValues);
     setTasks({mainTask, subTasks, ...finalValues});
     dispatch(setIsLoadingOverLay(false));
