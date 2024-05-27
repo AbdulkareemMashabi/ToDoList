@@ -103,7 +103,6 @@ export const updateStatus = async ({
     setTasks(body);
   } catch (e) {
     handleAPIErrors(e);
-    dispatch(setIsLoadingOverLay(false));
   } finally {
     dispatch(setIsLoadingOverLay(false));
   }
