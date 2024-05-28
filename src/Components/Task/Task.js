@@ -3,7 +3,7 @@ import styles from './Task.style';
 import Text from '../Text/Text';
 import {Icons} from '../../assets/Icons';
 import Button from '../Button/Button';
-import {useRef, useState} from 'react';
+import {useCallback, useRef, useState} from 'react';
 import {
   getBorderColor,
   getBorderColorSubTask,
@@ -11,19 +11,37 @@ import {
   getRandomColor,
   updateStatus,
 } from './utils';
-import {useDispatch} from 'react-redux';
 import {backgroundColors} from '../../helpers/utils';
 import {getShadow} from '../../helpers/shadow';
 
-export const Task = ({data, id, userId, onPress}) => {
+export const Task = ({data, id, onPress}) => {
   const [tasks, setTasks] = useState(data);
   const {mainTask, subTasks} = tasks || {};
-
-  const dispatch = useDispatch();
 
   const mainTaskBorderColor = getBorderColor(mainTask.date, mainTask.status);
 
   const color = mainTask?.color || useRef(getRandomColor()).current;
+
+  const setMainTaskData = useCallback(async () => {
+    const newData = await updateStatus({
+      mainTask,
+      documentId: id,
+      subTasks,
+      color,
+    });
+    if (newData) setTasks(newData);
+  }, [mainTask, subTasks]);
+
+  const setSubTaskData = useCallback(async () => {
+    const newData = await updateStatus({
+      mainTask,
+      selectedIndex: index,
+      documentId: id,
+      subTasks,
+      color,
+    });
+    if (newData) setTasks(newData);
+  }, [mainTask, subTasks]);
 
   return (
     <TouchableOpacity
@@ -38,17 +56,7 @@ export const Task = ({data, id, userId, onPress}) => {
             <Button
               containerStyle={[styles.mainTaskCircle, mainTaskBorderColor]}
               variant="manualDraw"
-              onPress={() => {
-                updateStatus({
-                  mainTask: mainTask,
-                  dispatch: dispatch,
-                  documentId: id,
-                  subTasks: subTasks,
-                  userId,
-                  setTasks,
-                  color,
-                });
-              }}
+              onPress={setMainTaskData}
             />
           )}
           <View style={styles.mainTaskTitleDate}>
@@ -72,18 +80,7 @@ export const Task = ({data, id, userId, onPress}) => {
                 <Image source={Icons.check} />
               ) : (
                 <Button
-                  onPress={() => {
-                    updateStatus({
-                      mainTask,
-                      selectedIndex: index,
-                      dispatch,
-                      documentId: id,
-                      subTasks,
-                      userId,
-                      setTasks,
-                      color,
-                    });
-                  }}
+                  onPress={setSubTaskData}
                   containerStyle={[
                     styles.subTaskCircle,
                     mainTask.status
