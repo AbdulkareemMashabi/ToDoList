@@ -82,7 +82,7 @@ export const TaskDetailsScreen = ({navigation, route}) => {
 
   const setCalendarFun = () => {
     if (calendar && enableDoneButton) {
-      setInCalendar(formData.mainTask, submit, true);
+      setInCalendar(formData?.mainTask, submit, true);
     } else submit();
   };
 
@@ -102,7 +102,6 @@ export const TaskDetailsScreen = ({navigation, route}) => {
         refreshing();
       } catch (e) {
         handleAPIErrors(e);
-        setEnableDonButton(false);
         dispatch(setIsLoadingOverLay(false));
       }
     else {
@@ -208,6 +207,7 @@ export const TaskDetailsScreen = ({navigation, route}) => {
           );
         }}
       />
+      <View style={styles.footerView} />
 
       <ActionsSheet
         visible={openMainForm}
@@ -218,7 +218,7 @@ export const TaskDetailsScreen = ({navigation, route}) => {
           renderFooter={
             isCalendarAvail ? (
               <OneLineToggle
-                disabled={calendar}
+                disabled={formData?.mainTask?.calendarId}
                 style={styles.toggle}
                 value={calendar}
                 leftText={'common.setTaskInCalendar'}

@@ -26,4 +26,7 @@ export default StyleSheet.create({
   toggle: {
     marginBottom: 16,
   },
+  footerView: {
+    height: 24,
+  },
 });
