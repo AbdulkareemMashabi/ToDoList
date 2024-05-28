@@ -69,7 +69,7 @@ export const Task = ({data, id, onPress}) => {
             <Text value={mainTask?.date} variant="subHead" />
           </View>
         </View>
-        {subTasks.length !== 0 ? <View style={styles.separator} /> : null}
+        {subTasks?.length !== 0 ? <View style={styles.separator} /> : null}
         <FlatList
           scrollEnabled={false}
           showsVerticalScrollIndicator={false}

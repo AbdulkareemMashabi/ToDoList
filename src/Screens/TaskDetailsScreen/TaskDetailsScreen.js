@@ -86,7 +86,7 @@ export const TaskDetailsScreen = ({navigation, route}) => {
     } else submit();
   };
 
-  const submit = async (_, calendarId) => {
+  const submit = async (_, calendarId, showToast) => {
     if (enableDoneButton)
       try {
         dispatch(setIsLoadingOverLay(true));
@@ -97,6 +97,7 @@ export const TaskDetailsScreen = ({navigation, route}) => {
             calendarId: calendarId ? calendarId : null,
           },
         });
+        if (calendarId) showToast?.();
         dispatch(setIsLoadingOverLay(false));
         navigation.goBack();
         refreshing();

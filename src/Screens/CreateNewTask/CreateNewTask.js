@@ -50,7 +50,7 @@ export const CreateNewTask = ({navigation, route}) => {
     title: Yup.string().required(Locale.t('common.required')),
   });
 
-  const onSubmit = async (values, calendarId) => {
+  const onSubmit = async (values, calendarId, showToast) => {
     try {
       dispatch(setIsLoading(true));
       const body = {
@@ -60,6 +60,7 @@ export const CreateNewTask = ({navigation, route}) => {
       if (calendarId) body.calendarId = calendarId;
 
       const docId = await addUserData(userId, body);
+      showToast?.();
       dispatch(setIsLoading(false));
       navigation.replace(pagesNames.taskDetailsScreen, {
         documentId: docId,

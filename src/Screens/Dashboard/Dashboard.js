@@ -47,7 +47,7 @@ export const Dashboard = ({navigation}) => {
     <Container
       isLoading={loading}
       renderFooter={
-        userData.length
+        userData?.length
           ? {
               source: 'taskDetails.addNewTask',
               onPress: () => {

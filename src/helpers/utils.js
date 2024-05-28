@@ -160,10 +160,11 @@ export const setInCalendar = async (values, onSubmit, isFromDetailsScreen) => {
     const setToCalendar = await RNCalendarEvents.saveEvent(values.title, body);
 
     if (setToCalendar) {
-      showToast(
-        `common.${calendarId ? 'editedSuccessfully' : 'addedSuccessfully'}`,
-      );
-      onSubmit(values, setToCalendar);
+      onSubmit(values, setToCalendar, () => {
+        showToast(
+          `common.${calendarId ? 'editedSuccessfully' : 'addedSuccessfully'}`,
+        );
+      });
     }
   } catch (e) {
     handleAPIErrors(e);

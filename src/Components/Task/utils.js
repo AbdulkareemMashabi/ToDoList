@@ -80,7 +80,7 @@ export const updateStatus = async ({
         subTasks: newSubTasks,
       };
       let allSubTasksDone = true;
-      for (let i = 0; i < finalValues.subTasks.length; i++) {
+      for (let i = 0; i < finalValues?.subTasks?.length; i++) {
         if (!finalValues.subTasks[i].status) {
           allSubTasksDone = false;
           break;
