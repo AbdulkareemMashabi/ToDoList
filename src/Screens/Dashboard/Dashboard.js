@@ -132,12 +132,7 @@ export const Dashboard = ({navigation}) => {
                     />
                   </View>
                 )}>
-                <Task
-                  id={item.id}
-                  data={item.data}
-                  userId={userId}
-                  onPress={onPress}
-                />
+                <Task id={item.id} data={item.data} onPress={onPress} />
               </Swipeable>
             </View>
           );
