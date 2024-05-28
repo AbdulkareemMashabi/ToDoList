@@ -1,4 +1,4 @@
-import {useEffect, useRef} from 'react';
+import {useEffect, useRef, useState} from 'react';
 import {Animated, TextInput, TouchableOpacity} from 'react-native';
 import Text from '../Text/Text';
 import Locale from '../../helpers/localization';
@@ -19,17 +19,19 @@ export const TextField = ({
 }) => {
   const fontSizeRef = useRef(new Animated.Value(17)).current;
   const positionRef = useRef(new Animated.Value(16)).current;
+  const [isInFocus, setIsInFocus] = useState(false);
   const refsFocus = useRef(null);
 
   useEffect(() => {
-    if (!!value) onFocus();
-  }, []);
-
-  useEffect(() => {
     if (!value) onBlur();
+    else if (!!value && !isInFocus) onFocus();
   }, [value]);
 
-  const onFocus = () => {
+  const onFocus = async () => {
+    setIsInFocus(true);
+    setTimeout(() => {
+      setIsInFocus(false);
+    }, 600);
     Animated.parallel([
       Animated.timing(fontSizeRef, {
         toValue: 15,
