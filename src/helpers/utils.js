@@ -140,7 +140,9 @@ export const setInCalendar = async (values, onSubmit, isFromDetailsScreen) => {
   try {
     const {calendarId, title, description, date} = values || {};
     const arrDate = date.split('/');
-    const endDate = new Date(`${arrDate[2]}-${arrDate[1]}-${arrDate[0]}`);
+    const endDate = new Date(
+      `${arrDate[2]}-${arrDate[1]}-${arrDate[0]}T18:00:00.000Z`,
+    );
 
     const body = {
       title: title,
