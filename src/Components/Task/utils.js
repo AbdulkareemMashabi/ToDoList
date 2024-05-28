@@ -1,6 +1,12 @@
 import {setIsLoadingOverLay} from '../../helpers/Redux/mainReducer';
+import {store} from '../../helpers/Redux/store';
 import {updateDocuments} from '../../helpers/firebase';
-import {backgroundColors, handleAPIErrors, isNil} from '../../helpers/utils';
+import {
+  backgroundColors,
+  dispatch,
+  handleAPIErrors,
+  isNil,
+} from '../../helpers/utils';
 import moment from 'moment';
 
 export const getBorderColor = (date, status) => {
@@ -56,15 +62,13 @@ export const getDateDifference = date => {
 export const updateStatus = async ({
   mainTask,
   selectedIndex,
-  dispatch,
   subTasks,
   documentId,
-  userId,
-  setTasks,
   color,
 }) => {
   try {
     dispatch(setIsLoadingOverLay(true));
+    const {userId} = store.getState().main;
     let finalValues = {};
     if (!isNil(selectedIndex)) {
       let newSubTasks = subTasks.slice();
@@ -100,10 +104,10 @@ export const updateStatus = async ({
     const body = {mainTask, subTasks, ...finalValues};
 
     await updateDocuments(userId, documentId, finalValues);
-    setTasks(body);
+    dispatch(setIsLoadingOverLay(false));
+    return body;
   } catch (e) {
     handleAPIErrors(e);
-  } finally {
     dispatch(setIsLoadingOverLay(false));
   }
 };
