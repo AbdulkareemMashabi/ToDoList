@@ -65,6 +65,7 @@ export const updateStatus = async ({
   subTasks,
   documentId,
   color,
+  setTasks,
 }) => {
   try {
     dispatch(setIsLoadingOverLay(true));
@@ -91,7 +92,7 @@ export const updateStatus = async ({
       finalValues = {
         mainTask: {...mainTask, status: true},
       };
-      if (subTasks)
+      if (subTasks.length)
         finalValues.setTasks = subTasks.map(item => ({...item, status: true}));
     }
 
@@ -101,11 +102,9 @@ export const updateStatus = async ({
         color: color,
       };
 
-    const body = {mainTask, subTasks, ...finalValues};
-
     await updateDocuments(userId, documentId, finalValues);
+    setTasks({mainTask, subTasks, ...finalValues});
     dispatch(setIsLoadingOverLay(false));
-    return body;
   } catch (e) {
     handleAPIErrors(e);
     dispatch(setIsLoadingOverLay(false));

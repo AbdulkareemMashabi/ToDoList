@@ -16,32 +16,31 @@ import {getShadow} from '../../helpers/shadow';
 
 export const Task = ({data, id, onPress}) => {
   const [tasks, setTasks] = useState(data);
+  const color = mainTask?.color || useRef(getRandomColor()).current;
   const {mainTask, subTasks} = tasks || {};
 
-  const mainTaskBorderColor = getBorderColor(mainTask.date, mainTask.status);
-
-  const color = mainTask?.color || useRef(getRandomColor()).current;
-
-  const setMainTaskData = useCallback(async () => {
-    const newData = await updateStatus({
+  const setMainTaskData = () => {
+    updateStatus({
       mainTask,
       documentId: id,
       subTasks,
       color,
+      setTasks,
     });
-    if (newData) setTasks(newData);
-  }, [mainTask, subTasks]);
+  };
 
-  const setSubTaskData = useCallback(async () => {
-    const newData = await updateStatus({
+  const setSubTaskData = () => {
+    updateStatus({
       mainTask,
       selectedIndex: index,
       documentId: id,
       subTasks,
       color,
+      setTasks,
     });
-    if (newData) setTasks(newData);
-  }, [mainTask, subTasks]);
+  };
+
+  const mainTaskBorderColor = getBorderColor(mainTask.date, mainTask.status);
 
   return (
     <TouchableOpacity
