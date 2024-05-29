@@ -1,6 +1,7 @@
 import {useEffect, useState} from 'react';
 import {FlatList, Platform, View} from 'react-native';
 import {
+  RESULT_PERMISSION,
   handleAPIErrors,
   setInCalendar,
   setTaskToCalendar,
@@ -22,6 +23,7 @@ import TextField from '../../Components/TextField/TextField';
 import Button from '../../Components/Button/Button';
 import {Icons} from '../../assets/Icons';
 import OneLineToggle from '../../Components/OneLineToggle/OneLineToggle';
+import RNCalendarEvents from 'react-native-calendar-events';
 
 export const TaskDetailsScreen = ({navigation, route}) => {
   const {userId} = useSelector(state => state.main);
@@ -59,7 +61,7 @@ export const TaskDetailsScreen = ({navigation, route}) => {
         />
       ),
     });
-  }, [enableDoneButton, formData]);
+  }, [enableDoneButton, formData, setCalendarFun, calendar]);
 
   useEffect(() => {
     getData();
@@ -136,7 +138,7 @@ export const TaskDetailsScreen = ({navigation, route}) => {
     setEnableDonButton(true);
   };
 
-  const onSubmit = values => {
+  const onSubmit = async values => {
     const finalValues = {
       mainTask: {
         ...values,
@@ -147,6 +149,15 @@ export const TaskDetailsScreen = ({navigation, route}) => {
     setFormData({...formData, ...finalValues});
     setEnableDonButton(true);
     setOpenMainForm(false);
+    if (calendar) {
+      const permissionResult = await RNCalendarEvents.checkPermissions();
+      if (
+        ![RESULT_PERMISSION.AUTHORIZED, RESULT_PERMISSION.RESTRICTED].includes(
+          permissionResult,
+        )
+      )
+        setCalendar(false);
+    }
   };
 
   const footer = () => {

@@ -29,7 +29,7 @@ export const Dashboard = ({navigation}) => {
   }, [userId]);
 
   const refreshing = () => {
-    getUserData(userId, setLoading);
+    getUserData(setLoading);
   };
 
   useEffect(() => {

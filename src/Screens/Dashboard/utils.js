@@ -92,9 +92,10 @@ export const deleteSpecificDocument = async (
   }
 };
 
-export const getUserData = async (userId, setLoading) => {
+export const getUserData = async setLoading => {
   try {
     setLoading(true);
+    const {userId} = store.getState().main;
     const documents = await getAllDocuments(userId);
     const reShapeDocuments = [];
     documents.forEach(doc => {
