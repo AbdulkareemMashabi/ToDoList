@@ -13,11 +13,6 @@ import {Images} from '../../assets/Images';
 
 export const ForgetPassword = ({navigation}) => {
   const dispatch = useDispatch();
-  useEffect(() => {
-    navigation.setOptions({
-      headerTitle: Locale.t('forgetPassword.forgetPassword'),
-    });
-  }, []);
 
   const validation = Yup.object().shape({
     email: Yup.string()

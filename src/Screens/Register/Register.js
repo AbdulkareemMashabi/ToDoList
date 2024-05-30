@@ -14,11 +14,6 @@ import {Images} from '../../assets/Images';
 
 export const Register = ({navigation}) => {
   const dispatch = useDispatch();
-  useEffect(() => {
-    navigation.setOptions({
-      headerTitle: Locale.t('register.register'),
-    });
-  }, []);
 
   const validation = Yup.object().shape({
     email: Yup.string()

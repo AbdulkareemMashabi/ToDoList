@@ -13,11 +13,6 @@ import {Images} from '../../assets/Images';
 
 export const AccountDeletion = ({navigation}) => {
   const dispatch = useDispatch();
-  useEffect(() => {
-    navigation.setOptions({
-      headerTitle: Locale.t('accountDeletion.accountDeletion'),
-    });
-  }, []);
 
   const validation = Yup.object().shape({
     email: Yup.string()

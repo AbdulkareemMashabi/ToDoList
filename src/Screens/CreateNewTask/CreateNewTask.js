@@ -20,10 +20,8 @@ import Container from '../../Components/Contianer/Container';
 import styles from './CreateNewTask.style';
 import {View} from 'react-native';
 import {setImageBackground} from './utils';
-import OneLineToggle from '../../Components/OneLineToggle/OneLineToggle';
-import {CreateNewTaskImages} from '../../assets/CreateNewTaskImages';
 
-export const CreateNewTask = ({navigation, route}) => {
+export const CreateNewTask = ({route}) => {
   const {userId, backgroundColor, createNewTaskBackgrounds} = useSelector(
     state => state.main,
   );
@@ -34,10 +32,6 @@ export const CreateNewTask = ({navigation, route}) => {
 
   const dispatch = useDispatch();
   useEffect(() => {
-    navigation.setOptions({
-      headerTitle: Locale.t('newTask.newTaskTitle'),
-    });
-
     setImageBackground(setImage);
 
     return () => {

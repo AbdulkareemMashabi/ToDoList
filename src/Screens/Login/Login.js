@@ -24,7 +24,6 @@ export const Login = ({navigation, route}) => {
   const dispatch = useDispatch();
   useEffect(() => {
     navigation.setOptions({
-      headerTitle: Locale.t('loginPage.loginTitle'),
       headerRight: () => (
         <Button
           containerStyle={styles.deleteButton}

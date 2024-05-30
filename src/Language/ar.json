@@ -49,7 +49,7 @@
     "registeredSuccessfully": "لقد تم تسجيلك بنجاح"
   },
   "forgetPassword": {
-    "forgetPassword": "نسيت كلمة المرور",
+    "forgetPassword": "نسيان كلمة المرور",
     "enterEmail": "لو سمحت أدخل ايميلك",
     "receiveEmail": "سوف تتلقى رسالة مع رابط لاعادة كلمة السر",
     "resetSuccessfully": "ايميل اعادة كلمة السر ارسل اليك بنجاح"
@@ -76,5 +76,16 @@
     "accountDeletion": "حذف حساب",
     "message": "ادخل ايميلك وكلمة السر لحذف حسابك",
     "successfulDeletion": "تم حذف الحساب بنجاح"
+  },
+  "pagesNames":{ 
+    "Lottie":"لوتي",
+    "dashboard": "أمنياتي",
+    "login": "تسجيل دخول",
+    "register": "تسجيل",
+    "forgetPassword": "نسيان كلمة المرور",
+    "createNewTask": "مهمة جديدة",
+    "taskDetailsScreen": "تفاصيل المهمة",
+    "popUp": "صفحة منبثقة",
+    "deleteAccount": "حذف حساب"
   }
 }

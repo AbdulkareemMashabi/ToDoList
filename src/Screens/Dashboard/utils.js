@@ -16,7 +16,6 @@ import RNCalendarEvents from 'react-native-calendar-events';
 
 export const handleEnterFace = (navigation, userId) => {
   navigation.setOptions({
-    headerTitle: Locale.t('myWishesPage.myWishes'),
     headerRight: () => (
       <View style={styles.buttonsContainer}>
         <Button

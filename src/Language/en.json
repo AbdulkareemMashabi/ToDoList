@@ -76,5 +76,16 @@
     "accountDeletion": "Account Deletion",
     "message": "Enter your Email and Password to Delete your Account",
     "successfulDeletion": "The Account is deleted successfully"
+  },
+  "pagesNames":{
+    "Lottie":"Lottie",
+    "dashboard": "My Wishes",
+    "login": "Login",
+    "register": "Register",
+    "forgetPassword": "Forget Password",
+    "createNewTask": "New Task",
+    "taskDetailsScreen": "Task Details",
+    "popUp": "PopUp",
+    "deleteAccount": "Account Deletion"
   }
 }
