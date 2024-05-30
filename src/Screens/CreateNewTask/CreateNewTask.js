@@ -10,6 +10,7 @@ import {
   setIsLoading,
 } from '../../helpers/Redux/mainReducer';
 import {
+  backgroundColors,
   handleAPIErrors,
   pagesNames,
   setTaskToCalendar,
@@ -20,6 +21,7 @@ import styles from './CreateNewTask.style';
 import {View} from 'react-native';
 import {setImageBackground} from './utils';
 import OneLineToggle from '../../Components/OneLineToggle/OneLineToggle';
+import {CreateNewTaskImages} from '../../assets/CreateNewTaskImages';
 
 export const CreateNewTask = ({navigation, route}) => {
   const {userId, backgroundColor, createNewTaskBackgrounds} = useSelector(
@@ -55,7 +57,7 @@ export const CreateNewTask = ({navigation, route}) => {
       dispatch(setIsLoading(true));
       const body = {
         ...values,
-        color: backgroundColor,
+        color: backgroundColor || backgroundColors.blue,
       };
       if (calendarId) body.calendarId = calendarId;
 
@@ -73,7 +75,7 @@ export const CreateNewTask = ({navigation, route}) => {
   };
 
   return (
-    <Container backgroundImage={image}>
+    <Container backgroundImage={image || CreateNewTaskImages.blue}>
       <View style={[styles.view, getShadow(backgroundColor)]}>
         <Form
           validationSchema={validation}

@@ -1,8 +1,5 @@
-import {Platform} from 'react-native';
-import {PERMISSIONS, check, request} from 'react-native-permissions';
 import {store} from '../../helpers/Redux/store';
 import {
-  resetCreateNewTaskBackgrounds,
   setBackgroundColor,
   setCreateNewTaskBackgrounds,
 } from '../../helpers/Redux/mainReducer';
