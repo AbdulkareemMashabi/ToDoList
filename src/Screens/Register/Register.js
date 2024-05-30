@@ -1,4 +1,3 @@
-import {useEffect} from 'react';
 import Locale from '../../helpers/localization';
 import Text from '../../Components/Text/Text';
 import Form from '../../Components/Form/Form';
