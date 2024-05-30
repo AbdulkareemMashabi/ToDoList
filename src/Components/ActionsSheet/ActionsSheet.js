@@ -1,6 +1,6 @@
 import React, {useEffect, useRef} from 'react';
 import {default as RNActionSheet} from 'react-native-actions-sheet';
-import {Keyboard, View} from 'react-native';
+import {Keyboard} from 'react-native';
 import styles from './ActionsSheet.style';
 
 const ActionsSheet = ({children, visible, onClose}) => {

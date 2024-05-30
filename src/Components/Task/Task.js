@@ -3,7 +3,7 @@ import styles from './Task.style';
 import Text from '../Text/Text';
 import {Icons} from '../../assets/Icons';
 import Button from '../Button/Button';
-import {useCallback, useRef, useState} from 'react';
+import {useRef, useState} from 'react';
 import {
   getBorderColor,
   getBorderColorSubTask,
