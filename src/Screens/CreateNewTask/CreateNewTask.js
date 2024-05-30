@@ -23,7 +23,7 @@ import {setImageBackground} from './utils';
 import {CreateNewTaskImages} from '../../assets/CreateNewTaskImages';
 import OneLineToggle from '../../Components/OneLineToggle/OneLineToggle';
 
-export const CreateNewTask = ({route}) => {
+export const CreateNewTask = ({navigation, route}) => {
   const {userId, backgroundColor, createNewTaskBackgrounds} = useSelector(
     state => state.main,
   );
