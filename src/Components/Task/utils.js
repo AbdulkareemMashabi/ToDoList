@@ -93,7 +93,7 @@ export const updateStatus = async ({
         mainTask: {...mainTask, status: true},
       };
       if (subTasks.length)
-        finalValues.setTasks = subTasks.map(item => ({...item, status: true}));
+        finalValues.subTasks = subTasks.map(item => ({...item, status: true}));
     }
 
     if (!mainTask?.color)
