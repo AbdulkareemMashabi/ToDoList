@@ -16,8 +16,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Toast from 'react-native-toast-message';
 import PopUp from '../Components/PopUp/PopUp';
 import Locale from '../helpers/localization';
-
-import styles from './App.style';
+import {getScreenOptions} from './utils';
 
 const Stack = createNativeStackNavigator();
 
@@ -44,17 +43,9 @@ export const App = () => {
         }}>
         <Stack.Navigator
           initialRouteName={pagesNames.lottie}
-          screenOptions={{
-            headerTitleAlign: 'center',
-            contentStyle: styles.pageStyle,
-            headerTransparent: true,
-            headerBackTitleVisible: false,
-            headerTintColor: 'black',
-            headerTitleStyle:
-              currentPage === pagesNames.taskDetailsScreen
-                ? styles.title
-                : null,
-          }}>
+          screenOptions={({navigation}) =>
+            getScreenOptions(navigation, currentPage)
+          }>
           <Stack.Screen
             name={pagesNames.lottie}
             component={Lottie}
@@ -66,6 +57,17 @@ export const App = () => {
             name={pagesNames.dashboard}
             component={Dashboard}
             options={{title: Locale.t('pagesNames.dashboard')}}
+            listeners={{
+              focus: () => {
+                setCurrentPage(pagesNames.dashboard);
+              },
+              blur: () => {
+                setCurrentPage(null);
+              },
+              beforeRemove: () => {
+                setCurrentPage(null);
+              },
+            }}
           />
           <Stack.Screen
             name={pagesNames.login}
