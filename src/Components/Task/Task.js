@@ -27,7 +27,7 @@ export const Task = ({data, id, onPress}) => {
     });
   };
 
-  const setSubTaskData = () => {
+  const setSubTaskData = index => {
     updateStatus({
       mainTask,
       selectedIndex: index,
@@ -80,7 +80,9 @@ export const Task = ({data, id, onPress}) => {
                 <Image source={Icons.check} />
               ) : (
                 <Button
-                  onPress={setSubTaskData}
+                  onPress={() => {
+                    setSubTaskData(index);
+                  }}
                   containerStyle={[
                     styles.subTaskCircle,
                     mainTask.status
