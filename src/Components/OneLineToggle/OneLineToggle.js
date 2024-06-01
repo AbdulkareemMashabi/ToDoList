@@ -2,6 +2,7 @@ import {Switch, View} from 'react-native';
 import Text from '../Text/Text';
 
 import styles from './OneLineToggle.styles';
+import {backgroundColors} from '../../helpers/utils';
 
 export const OneLineToggle = ({
   onValueChange,
@@ -19,8 +20,9 @@ export const OneLineToggle = ({
         color={disabled ? 'grey' : null}
       />
       <Switch
-        trackColor={{true: onColor}}
-        disabled={disabled}
+        trackColor={{true: onColor || backgroundColors.green, false: 'grey'}}
+        color
+        disabled={!!disabled}
         value={!!value}
         onValueChange={v => {
           onValueChange(v);

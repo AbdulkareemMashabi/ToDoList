@@ -6,14 +6,13 @@ import {
   ScrollView,
   View,
 } from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import {SafeAreaView, useSafeAreaInsets} from 'react-native-safe-area-context';
 import styles from './Container.style';
 import Skeleton from '../Skeleton/Skeleton';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import LottieView from 'lottie-react-native';
 import {useSelector} from 'react-redux';
 import {Images} from '../../assets/Images';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import Button from '../Button/Button';
 
 export const Container = ({
@@ -54,7 +53,10 @@ export const Container = ({
         pointerEvents={isLoading || isLoadingOverLay ? 'none' : 'auto'}
         style={[
           styles.flex_1,
-          {paddingTop: insets.top, backgroundColor: backgroundColor},
+          {
+            paddingTop: Platform.OS === 'ios' ? insets.top : 50,
+            backgroundColor: backgroundColor,
+          },
         ]}
         onStartShouldSetResponder={() => {
           Keyboard.dismiss();
