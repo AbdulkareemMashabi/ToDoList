@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "Screenshot 1445-11-24 at 8.13.23 PM.png",
+      "filename" : "laucnhImage.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "Screenshot 1445-11-24 at 8.13.23 PM@2x.png",
+      "filename" : "laucnhImage@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "Screenshot 1445-11-24 at 8.13.23 PM@3x.png",
+      "filename" : "launchImage@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
