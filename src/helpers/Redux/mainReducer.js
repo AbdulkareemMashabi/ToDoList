@@ -7,6 +7,7 @@ const initialState = {
   backgroundColor: null,
   createNewTaskBackgrounds: [],
   userData: {},
+  isDeviceId: false,
 };
 
 export const mainReducer = createSlice({
@@ -34,6 +35,9 @@ export const mainReducer = createSlice({
     resetCreateNewTaskBackgrounds: state => {
       state.createNewTaskBackgrounds = [];
     },
+    setIsDeviceId: state => {
+      state.isDeviceId = true;
+    },
   },
 });
 
@@ -45,6 +49,7 @@ export const {
   setUserData,
   setCreateNewTaskBackgrounds,
   resetCreateNewTaskBackgrounds,
+  setIsDeviceId,
 } = mainReducer.actions;
 
 export default mainReducer.reducer;
