@@ -16,6 +16,8 @@ import {getShadow} from '../../helpers/shadow';
 
 export const Task = ({data, id, onPress}) => {
   const [tasks, setTasks] = useState(data);
+  const {mainTask, subTasks} = tasks || {};
+  const color = mainTask?.color || useRef(getRandomColor()).current;
 
   const setMainTaskData = () => {
     updateStatus({
@@ -37,9 +39,6 @@ export const Task = ({data, id, onPress}) => {
       setTasks,
     });
   };
-
-  const {mainTask, subTasks} = tasks || {};
-  const color = mainTask?.color || useRef(getRandomColor()).current;
 
   const mainTaskBorderColor = getBorderColor(mainTask.date, mainTask.status);
 
