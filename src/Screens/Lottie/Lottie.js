@@ -24,8 +24,14 @@ export const Lottie = ({navigation}) => {
     };
 
     init().finally(async () => {
-      await BootSplash.hide({fade: true});
-      setStartApp(true);
+      new Promise(resolve => {
+        setTimeout(async () => {
+          await BootSplash.hide({fade: true});
+          resolve();
+        }, 500);
+      }).then(() => {
+        setStartApp(true);
+      });
     });
   }, []);
 
