@@ -10,6 +10,7 @@ import {auth} from '../../helpers/firebase';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useDispatch} from 'react-redux';
 import {
+  setIsDeviceId,
   setIsLoading,
   setIsLoadingOverLay,
   setUserId,
@@ -111,6 +112,7 @@ export const Login = ({navigation, route}) => {
           dispatch(setIsLoadingOverLay(true));
           const deviceId = await getUniqueId();
           await AsyncStorage.setItem('userId', deviceId);
+          dispatch(setIsDeviceId());
           dispatch(setUserId(deviceId));
           dispatch(setIsLoadingOverLay(false));
           showToast('loginPage.loginSuccessfully');
