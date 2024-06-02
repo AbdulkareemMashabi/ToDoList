@@ -19,6 +19,8 @@ import {
   FIREBASE_MESSAGING_SENDER_ID,
   FIREBASE_APP_ID,
 } from '@env';
+import CryptoJS from 'crypto-js';
+import {store} from './Redux/store';
 
 const firebaseConfig = FIREBASE_API_KEY
   ? {
@@ -41,7 +43,8 @@ export const auth = initializeAuth(app, {
 });
 
 export const addUserData = async (userId, data) => {
-  const result = await addDoc(collection(db, userId), {
+  const finalUserId = await getUserId(userId);
+  const result = await addDoc(collection(db, finalUserId), {
     mainTask: {...data, status: false},
     subTasks: [],
   });
@@ -49,22 +52,35 @@ export const addUserData = async (userId, data) => {
 };
 
 export const getAllDocuments = async userId => {
-  return await getDocs(collection(db, userId));
+  const finalUserId = await getUserId(userId);
+  return await getDocs(collection(db, finalUserId));
 };
 
 export const getSpecificDocument = async (userId, documentId) => {
-  const docRef = doc(db, userId, documentId);
+  const finalUserId = await getUserId(userId);
+  const docRef = doc(db, finalUserId, documentId);
   const docData = await getDoc(docRef);
   return docData.data();
 };
 
 export const updateDocuments = async (userId, documentId, data) => {
-  const documentRef = doc(db, userId, documentId);
+  const finalUserId = await getUserId(userId);
+  const documentRef = doc(db, finalUserId, documentId);
   await updateDoc(documentRef, data);
 };
 
 export const deleteDocument = async (userId, documentId) => {
-  await deleteDoc(doc(db, userId, documentId));
+  const finalUserId = await getUserId(userId);
+  await deleteDoc(doc(db, finalUserId, documentId));
+};
+
+const getUserId = async userId => {
+  let finalUserId = userId;
+  const {isDeviceId} = store.getState().main;
+  if (isDeviceId) {
+    finalUserId = await CryptoJS.SHA256(userId).toString();
+  }
+  return finalUserId;
 };
 
 export default app;
