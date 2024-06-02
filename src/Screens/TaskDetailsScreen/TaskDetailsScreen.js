@@ -141,8 +141,8 @@ export const TaskDetailsScreen = ({navigation, route}) => {
   const onSubmit = async values => {
     const finalValues = {
       mainTask: {
+        ...formData.mainTask,
         ...values,
-        calendarId: formData?.mainTask?.calendarId,
         status: false,
       },
     };
