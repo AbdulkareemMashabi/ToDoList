@@ -18,6 +18,7 @@ import {
   FIREBASE_STORAGE_BUCKET,
   FIREBASE_MESSAGING_SENDER_ID,
   FIREBASE_APP_ID,
+  PRIVATE_KEY,
 } from '@env';
 import CryptoJS from 'crypto-js';
 import {store} from './Redux/store';
@@ -78,7 +79,7 @@ const getUserId = async userId => {
   let finalUserId = userId;
   const {isDeviceId} = store.getState().main;
   if (isDeviceId) {
-    finalUserId = await CryptoJS.SHA256(userId).toString();
+    finalUserId = await CryptoJS.HmacSHA256(userId, PRIVATE_KEY).toString();
   }
   return finalUserId;
 };
