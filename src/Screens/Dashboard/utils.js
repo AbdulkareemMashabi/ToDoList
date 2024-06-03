@@ -23,6 +23,7 @@ export const handleEnterFace = (navigation, userId) => {
           onPress={async () => {
             try {
               store.dispatch(setIsLoadingOverLay(true));
+              await AsyncStorage.setItem('guestLogin', '');
               await AsyncStorage.setItem(
                 'language',
                 Locale.language === 'ar' ? 'en' : 'ar',

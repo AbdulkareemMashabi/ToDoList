@@ -9,7 +9,11 @@ import {Alert, I18nManager} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import RNRestart from 'react-native-restart';
 import {useDispatch} from 'react-redux';
-import {setIsLoading, setUserId} from '../../helpers/Redux/mainReducer';
+import {
+  setIsDeviceId,
+  setIsLoading,
+  setUserId,
+} from '../../helpers/Redux/mainReducer';
 import BootSplash from 'react-native-bootsplash';
 
 import styles from './Lottie.style';
@@ -64,6 +68,8 @@ export const Lottie = ({navigation}) => {
   const getUserId = async () => {
     dispatch(setIsLoading(true));
     const userId = await AsyncStorage.getItem('userId');
+    const isDeviceId = await AsyncStorage.getItem('guestLogin');
+    if (isDeviceId) dispatch(setIsDeviceId());
     dispatch(setUserId(userId));
     dispatch(setIsLoading(false));
   };

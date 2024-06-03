@@ -112,6 +112,7 @@ export const Login = ({navigation, route}) => {
           dispatch(setIsLoadingOverLay(true));
           const deviceId = await getUniqueId();
           await AsyncStorage.setItem('userId', deviceId);
+          await AsyncStorage.setItem('guestLogin', 'true');
           dispatch(setIsDeviceId());
           dispatch(setUserId(deviceId));
           dispatch(setIsLoadingOverLay(false));
