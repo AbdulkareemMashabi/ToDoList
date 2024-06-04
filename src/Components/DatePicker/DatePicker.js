@@ -67,11 +67,7 @@ export const DatePicker = ({
           variant="bodyRegular"
           color={'grey'}
         />
-        <Text
-          style={styles.textInput}
-          value={value || ''}
-          variant="bodySemibold"
-        />
+        <Text style={styles.textInput} value={value} variant="bodySemibold" />
         <Image
           source={Icons.calendar}
           tintColor={backgroundColor}

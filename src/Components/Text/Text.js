@@ -1,6 +1,5 @@
 import {Animated} from 'react-native';
 import Locale from '../../helpers/localization';
-import {isNil} from '../../helpers/utils';
 
 import styles from './Text.style';
 
@@ -41,7 +40,7 @@ export const Text = ({
         style,
         bold ? styles.boldStyle : null,
       ]}>
-      {!isNil(value) ? value : Locale.t(localeKey, localeProps)}
+      {value ? value : Locale.t(localeKey, localeProps)}
     </Animated.Text>
   );
 };
