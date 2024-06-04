@@ -26,6 +26,26 @@ export const Register = ({navigation}) => {
       .required(Locale.t('common.required')),
   });
 
+  const onSubmit = async values => {
+    try {
+      dispatch(setIsLoading(true));
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        values.email,
+        values.password,
+      );
+      const userId = userCredential.user.uid;
+      await AsyncStorage.setItem('userId', userId);
+      dispatch(setUserId(userId));
+      showToast('register.registeredSuccessfully');
+      dispatch(setIsLoading(false));
+      navigation.navigate(pagesNames.dashboard);
+    } catch (e) {
+      handleAPIErrors(e);
+      dispatch(setIsLoading(false));
+    }
+  };
+
   return (
     <Container backgroundImage={Images.waves}>
       <Text localeKey={'register.register'} />
@@ -45,25 +65,7 @@ export const Register = ({navigation}) => {
             label: 'common.confirmPassword',
           },
         ]}
-        onSubmit={async values => {
-          try {
-            dispatch(setIsLoading(true));
-            const userCredential = await createUserWithEmailAndPassword(
-              auth,
-              values.email,
-              values.password,
-            );
-            const userId = userCredential.user.uid;
-            await AsyncStorage.setItem('userId', userId);
-            dispatch(setUserId(userId));
-            showToast('register.registeredSuccessfully');
-            dispatch(setIsLoading(false));
-            navigation.navigate(pagesNames.dashboard);
-          } catch (e) {
-            handleAPIErrors(e);
-            dispatch(setIsLoading(false));
-          }
-        }}
+        onSubmit={onSubmit}
       />
     </Container>
   );

@@ -53,7 +53,7 @@ export const CreateNewTask = ({navigation, route}) => {
       dispatch(setIsLoading(true));
       const body = {
         ...values,
-        color: backgroundColor || backgroundColors.blue,
+        color: backgroundColor,
       };
       if (calendarId) body.calendarId = calendarId;
 
@@ -71,7 +71,7 @@ export const CreateNewTask = ({navigation, route}) => {
   };
 
   return (
-    <Container backgroundImage={image || CreateNewTaskImages.blue}>
+    <Container backgroundImage={image}>
       <View style={[styles.view, getShadow(backgroundColor)]}>
         <Form
           validationSchema={validation}

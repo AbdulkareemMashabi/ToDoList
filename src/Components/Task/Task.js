@@ -42,68 +42,76 @@ export const Task = ({data, id, onPress}) => {
 
   const mainTaskBorderColor = getBorderColor(mainTask.date, mainTask.status);
 
+  const mainTaskRender = () => (
+    <View style={styles.mainTaskParent}>
+      {mainTask.status ? (
+        <Image source={Icons.check} />
+      ) : (
+        <Button
+          containerStyle={[styles.mainTaskCircle, mainTaskBorderColor]}
+          variant="manualDraw"
+          onPress={setMainTaskData}
+        />
+      )}
+      <View style={styles.mainTaskTitleDate}>
+        <Text
+          value={mainTask.title}
+          numberOfLines={1}
+          ellipsizeMode={'tail'}
+          isLineThrough={mainTask.status}
+        />
+        <Text value={mainTask?.date} variant="subHead" />
+      </View>
+    </View>
+  );
+
+  const subTasksRender = () => (
+    <FlatList
+      scrollEnabled={false}
+      showsVerticalScrollIndicator={false}
+      data={subTasks || []}
+      renderItem={({item, index}) => (
+        <View style={styles.subTaskParent} key={index}>
+          {mainTask.status || item.status ? (
+            <Image source={Icons.check} />
+          ) : (
+            <Button
+              onPress={() => {
+                setSubTaskData(index);
+              }}
+              containerStyle={[
+                styles.subTaskCircle,
+                mainTask.status
+                  ? mainTaskBorderColor
+                  : mainTask?.date && getDateDifference(mainTask?.date) < 0
+                  ? {borderColor: backgroundColors.red}
+                  : getBorderColorSubTask(item?.status),
+              ]}
+              variant="manualDraw"
+            />
+          )}
+          <View style={styles.subTaskTitleParent}>
+            <Text
+              value={item.title}
+              numberOfLines={1}
+              ellipsizeMode={'tail'}
+              isLineThrough={mainTask.status || item.status}
+            />
+          </View>
+        </View>
+      )}
+    />
+  );
+
   return (
     <TouchableOpacity
       style={[styles.container, {...getShadow(color)}]}
       onPress={onPress}>
       <View style={[styles.leftBlock, {backgroundColor: color}]} />
       <View style={styles.taskSubTasksParent}>
-        <View style={styles.mainTaskParent}>
-          {mainTask.status ? (
-            <Image source={Icons.check} />
-          ) : (
-            <Button
-              containerStyle={[styles.mainTaskCircle, mainTaskBorderColor]}
-              variant="manualDraw"
-              onPress={setMainTaskData}
-            />
-          )}
-          <View style={styles.mainTaskTitleDate}>
-            <Text
-              value={mainTask.title}
-              numberOfLines={1}
-              ellipsizeMode={'tail'}
-              isLineThrough={mainTask.status}
-            />
-            <Text value={mainTask?.date} variant="subHead" />
-          </View>
-        </View>
+        {mainTaskRender()}
         {subTasks?.length !== 0 ? <View style={styles.separator} /> : null}
-        <FlatList
-          scrollEnabled={false}
-          showsVerticalScrollIndicator={false}
-          data={subTasks || []}
-          renderItem={({item, index}) => (
-            <View style={styles.subTaskParent} key={index}>
-              {mainTask.status || item.status ? (
-                <Image source={Icons.check} />
-              ) : (
-                <Button
-                  onPress={() => {
-                    setSubTaskData(index);
-                  }}
-                  containerStyle={[
-                    styles.subTaskCircle,
-                    mainTask.status
-                      ? mainTaskBorderColor
-                      : mainTask?.date && getDateDifference(mainTask?.date) < 0
-                      ? {borderColor: backgroundColors.red}
-                      : getBorderColorSubTask(item?.status),
-                  ]}
-                  variant="manualDraw"
-                />
-              )}
-              <View style={styles.subTaskTitleParent}>
-                <Text
-                  value={item.title}
-                  numberOfLines={1}
-                  ellipsizeMode={'tail'}
-                  isLineThrough={mainTask.status || item.status}
-                />
-              </View>
-            </View>
-          )}
-        />
+        {subTasksRender()}
       </View>
     </TouchableOpacity>
   );

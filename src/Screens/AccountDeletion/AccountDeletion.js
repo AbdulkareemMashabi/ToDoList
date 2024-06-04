@@ -20,6 +20,22 @@ export const AccountDeletion = ({navigation}) => {
     password: Yup.string().required(Locale.t('common.required')),
   });
 
+  const onSubmit = async values => {
+    try {
+      dispatch(setIsLoading(true));
+      await signInWithEmailAndPassword(auth, values.email, values.password);
+      const _auth = getAuth();
+      const user = _auth.currentUser;
+      await deleteUser(user);
+      showToast('accountDeletion.successfulDeletion');
+      navigation.goBack();
+    } catch (e) {
+      handleAPIErrors(e);
+    } finally {
+      dispatch(setIsLoading(false));
+    }
+  };
+
   return (
     <Container backgroundImage={Images.waves}>
       <Text localeKey={'accountDeletion.message'} />
@@ -30,25 +46,7 @@ export const AccountDeletion = ({navigation}) => {
           {type: 'PasswordInput', name: 'password', label: 'common.password'},
         ]}
         validationSchema={validation}
-        onSubmit={async values => {
-          try {
-            dispatch(setIsLoading(true));
-            await signInWithEmailAndPassword(
-              auth,
-              values.email,
-              values.password,
-            );
-            const _auth = getAuth();
-            const user = _auth.currentUser;
-            await deleteUser(user);
-            showToast('accountDeletion.successfulDeletion');
-            navigation.goBack();
-          } catch (e) {
-            handleAPIErrors(e);
-          } finally {
-            dispatch(setIsLoading(false));
-          }
-        }}
+        onSubmit={onSubmit}
         buttonLocaleKey={'common.confirm'}
       />
     </Container>

@@ -95,20 +95,23 @@ export const setTaskToCalendar = async ({
   onSubmit,
   mainTask,
 }) => {
+  // if calendar toggle is enabled
   if (calendar) {
     const permissionResult = await RNCalendarEvents.checkPermissions();
 
     switch (permissionResult) {
-      case RESULT_PERMISSION.UNDETERMINED:
+      case RESULT_PERMISSION.UNDETERMINED: // if the permission is not requested before
         const requestedPermission = await RNCalendarEvents.requestPermissions();
         if (
           [RESULT_PERMISSION.AUTHORIZED, RESULT_PERMISSION.RESTRICTED].includes(
             requestedPermission,
           )
         ) {
+          // authorized
           if (mainTask) onSubmit(values);
           else setInCalendar(values, onSubmit);
         } else {
+          // not authorized
           onSubmit(values);
         }
         break;
@@ -149,8 +152,10 @@ export const setInCalendar = async (values, onSubmit, isFromDetailsScreen) => {
       startDate: new Date().toISOString(),
       endDate: endDate.toISOString(),
       notes: description || '',
+      description: description || '',
     };
 
+    //check if endDate is today date
     if (checkIfSelectedIsTodayDate(endDate))
       body.startDate = new Date(Date.now() - 864e5).toISOString(); // set to yesterday date
 

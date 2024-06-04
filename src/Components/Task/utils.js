@@ -71,6 +71,8 @@ export const updateStatus = async ({
     dispatch(setIsLoadingOverLay(true));
     const {userId} = store.getState().main;
     let finalValues = {};
+
+    //set selected subTask to be done
     if (!isNil(selectedIndex)) {
       let newSubTasks = subTasks.slice();
       newSubTasks[selectedIndex] = {
@@ -80,22 +82,19 @@ export const updateStatus = async ({
       finalValues = {
         subTasks: newSubTasks,
       };
-      let allSubTasksDone = true;
-      for (let i = 0; i < finalValues?.subTasks?.length; i++) {
-        if (!finalValues.subTasks[i].status) {
-          allSubTasksDone = false;
-          break;
-        }
-      }
-      if (allSubTasksDone) finalValues.mainTask = {...mainTask, status: true};
+      // search if all subTasks are done
+      const allSubTasksDone = finalValues?.subTasks.find(item => !item.status);
+
+      if (!allSubTasksDone) finalValues.mainTask = {...mainTask, status: true}; //set main task to be done if all subTasks are done
     } else {
       finalValues = {
-        mainTask: {...mainTask, status: true},
+        mainTask: {...mainTask, status: true}, // set mainTask to be done
       };
       if (subTasks.length)
-        finalValues.subTasks = subTasks.map(item => ({...item, status: true}));
+        finalValues.subTasks = subTasks.map(item => ({...item, status: true})); // set subTasks to be done, because mainTask is done
     }
 
+    // save color of whole task
     if (!mainTask?.color)
       finalValues.mainTask = {
         ...(finalValues?.mainTask || mainTask),
@@ -103,7 +102,7 @@ export const updateStatus = async ({
       };
 
     await updateDocuments(userId, documentId, finalValues);
-    setTasks({mainTask, subTasks, ...finalValues});
+    setTasks({mainTask, subTasks, ...finalValues}); // update locally
     dispatch(setIsLoadingOverLay(false));
   } catch (e) {
     handleAPIErrors(e);

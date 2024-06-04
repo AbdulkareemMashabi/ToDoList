@@ -21,9 +21,6 @@ export const Dashboard = ({navigation}) => {
 
   useEffect(() => {
     handleEnterFace(navigation, userId);
-  }, [userId]);
-
-  useEffect(() => {
     if (userId) refreshing();
     else setLoading(false);
   }, [userId]);
@@ -39,25 +36,26 @@ export const Dashboard = ({navigation}) => {
           title: 'myWishesPage.connectionTitle',
           firstButtonTitle: 'myWishesPage.connectionButton',
           withoutCancel: true,
+          blueButton: true,
         });
     });
   }, []);
 
+  const getRenderFooter = () => {
+    if (userData?.length)
+      return {
+        source: 'taskDetails.addNewTask',
+        onPress: () => {
+          navigation.push(pagesNames.createNewTask, {
+            refreshing,
+          });
+        },
+      };
+    else return null;
+  };
+
   return (
-    <Container
-      isLoading={loading}
-      renderFooter={
-        userData?.length
-          ? {
-              source: 'taskDetails.addNewTask',
-              onPress: () => {
-                navigation.push(pagesNames.createNewTask, {
-                  refreshing,
-                });
-              },
-            }
-          : null
-      }>
+    <Container isLoading={loading} renderFooter={getRenderFooter()}>
       <FlatList
         contentContainerStyle={styles.flatList}
         refreshing={loading}

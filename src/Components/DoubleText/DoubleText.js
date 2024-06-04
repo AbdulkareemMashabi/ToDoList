@@ -11,6 +11,41 @@ export const DoubleText = ({
   editButtonPress,
   done,
 }) => {
+  const leftSideRender = () => (
+    <>
+      <View style={styles.imageTextView}>
+        {done ? <Image source={Icons.check} style={styles.image} /> : null}
+        <Text value={title} numberOfLines={1} ellipsizeMode={'tail'} />
+      </View>
+      <Text
+        value={description}
+        variant="bodyRegular"
+        style={styles.description}
+      />
+    </>
+  );
+
+  const rightSideRender = () => (
+    <>
+      <Text
+        value={date}
+        variant="bodyRegular"
+        color={'grey'}
+        style={styles.date}
+      />
+      {editButtonPress ? (
+        <Button
+          source={Icons.edit}
+          onPress={editButtonPress}
+          containerStyle={[
+            styles.alignCenter,
+            !description ? styles.editButton : null,
+          ]}
+        />
+      ) : null}
+    </>
+  );
+
   return (
     <View style={styles.container}>
       <View
@@ -18,15 +53,7 @@ export const DoubleText = ({
           styles.imageAndText,
           !date && !editButtonPress ? styles.flex_1 : null,
         ]}>
-        <View style={styles.imageTextView}>
-          {done ? <Image source={Icons.check} style={styles.image} /> : null}
-          <Text value={title} numberOfLines={1} ellipsizeMode={'tail'} />
-        </View>
-        <Text
-          value={description}
-          variant="bodyRegular"
-          style={styles.description}
-        />
+        {leftSideRender()}
       </View>
       <View
         style={[
@@ -35,22 +62,7 @@ export const DoubleText = ({
           !description ? styles.oneItem : null,
           !date && !editButtonPress ? styles.flex_0 : null,
         ]}>
-        <Text
-          value={date}
-          variant="bodyRegular"
-          color={'grey'}
-          style={styles.date}
-        />
-        {editButtonPress ? (
-          <Button
-            source={Icons.edit}
-            onPress={editButtonPress}
-            containerStyle={[
-              styles.alignCenter,
-              !description ? styles.editButton : null,
-            ]}
-          />
-        ) : null}
+        {rightSideRender()}
       </View>
     </View>
   );

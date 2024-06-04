@@ -50,6 +50,38 @@ export const Login = ({navigation, route}) => {
     else navigation.navigate(pagesNames.dashboard);
   };
 
+  const onSubmit = async values => {
+    try {
+      dispatch(setIsLoading(true));
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        values.email,
+        values.password,
+      );
+      const userId = userCredential.user.uid;
+      await AsyncStorage.setItem('userId', userId);
+      dispatch(setUserId(userId));
+      showToast('loginPage.loginSuccessfully');
+      dispatch(setIsLoading(false));
+      routing();
+    } catch (e) {
+      handleAPIErrors(e);
+      dispatch(setIsLoading(false));
+    }
+  };
+
+  const guestLogin = async () => {
+    dispatch(setIsLoadingOverLay(true));
+    const deviceId = await getUniqueId();
+    await AsyncStorage.setItem('userId', deviceId);
+    await AsyncStorage.setItem('guestLogin', 'true');
+    dispatch(setIsDeviceId());
+    dispatch(setUserId(deviceId));
+    dispatch(setIsLoadingOverLay(false));
+    showToast('loginPage.loginSuccessfully');
+    routing();
+  };
+
   return (
     <Container backgroundImage={Images.waves}>
       <Text localeKey={'loginPage.title'} />
@@ -64,25 +96,7 @@ export const Login = ({navigation, route}) => {
           {type: 'PasswordInput', name: 'password', label: 'common.password'},
         ]}
         validationSchema={validation}
-        onSubmit={async values => {
-          try {
-            dispatch(setIsLoading(true));
-            const userCredential = await signInWithEmailAndPassword(
-              auth,
-              values.email,
-              values.password,
-            );
-            const userId = userCredential.user.uid;
-            await AsyncStorage.setItem('userId', userId);
-            dispatch(setUserId(userId));
-            showToast('loginPage.loginSuccessfully');
-            dispatch(setIsLoading(false));
-            routing();
-          } catch (e) {
-            handleAPIErrors(e);
-            dispatch(setIsLoading(false));
-          }
-        }}
+        onSubmit={onSubmit}
         buttonLocaleKey={'loginPage.login'}
         renderFooter={
           <Button
@@ -108,17 +122,7 @@ export const Login = ({navigation, route}) => {
         icon={Icons.userLogo}
         containerStyle={styles.guest}
         variant="iconWithText"
-        onPress={async () => {
-          dispatch(setIsLoadingOverLay(true));
-          const deviceId = await getUniqueId();
-          await AsyncStorage.setItem('userId', deviceId);
-          await AsyncStorage.setItem('guestLogin', 'true');
-          dispatch(setIsDeviceId());
-          dispatch(setUserId(deviceId));
-          dispatch(setIsLoadingOverLay(false));
-          showToast('loginPage.loginSuccessfully');
-          routing();
-        }}
+        onPress={guestLogin}
       />
     </Container>
   );

@@ -23,7 +23,6 @@ export const handleEnterFace = (navigation, userId) => {
           onPress={async () => {
             try {
               store.dispatch(setIsLoadingOverLay(true));
-              await AsyncStorage.setItem('guestLogin', '');
               await AsyncStorage.setItem(
                 'language',
                 Locale.language === 'ar' ? 'en' : 'ar',
@@ -49,6 +48,7 @@ export const handleEnterFace = (navigation, userId) => {
                 title: 'myWishesPage.logOut',
                 confirmButton: async () => {
                   await AsyncStorage.setItem('userId', '');
+                  await AsyncStorage.setItem('guestLogin', '');
                   RNRestart.restart();
                 },
               });
@@ -78,7 +78,6 @@ export const deleteSpecificDocument = async (
     const {id, data} = item;
     const {mainTask} = data;
     await deleteDocument(userId, id);
-    store.dispatch(setIsLoadingOverLay(false));
     if (mainTask?.calendarId) {
       await RNCalendarEvents.removeEvent(mainTask.calendarId);
     }
@@ -86,8 +85,8 @@ export const deleteSpecificDocument = async (
     refreshing();
   } catch (e) {
     handleAPIErrors(e);
-    store.dispatch(setIsLoadingOverLay(false));
   } finally {
+    store.dispatch(setIsLoadingOverLay(false));
     closePopUp?.();
   }
 };

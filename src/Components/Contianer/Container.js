@@ -17,7 +17,6 @@ import Button from '../Button/Button';
 
 export const Container = ({
   children,
-  noPadding,
   style,
   scrollable,
   isLoading: _isLoading,
@@ -30,7 +29,7 @@ export const Container = ({
   const insets = useSafeAreaInsets();
 
   const renderContent = () => {
-    if (_isLoading) return <Skeleton padding={noPadding} />;
+    if (_isLoading) return <Skeleton />;
     else if (scrollable)
       return <ScrollView style={styles.renderContent}>{children}</ScrollView>;
     else return <View style={styles.renderContent}>{children}</View>;

@@ -16,7 +16,6 @@ export const Button = ({
   withoutShadow,
   textColor,
   disabled,
-  containerColor,
   withoutKeyBoardDismes,
   boldText,
   icon,
@@ -61,10 +60,9 @@ export const Button = ({
       );
     else if (variant === 'iconWithText')
       return (
-        <View style={styles.iconWithTextView}>
+        <View style={[styles.iconWithTextView, contentStyle]}>
           <Image source={icon} style={styles.icon} tintColor={getTextColor()} />
           <Text
-            style={contentStyle}
             textAlign={'center'}
             variant="bodySemibold"
             localeKey={source}
@@ -86,6 +84,7 @@ export const Button = ({
         />
       );
   };
+
   return (
     <TouchableOpacity
       activeOpacity={disabled ? 1 : 0.2}
@@ -95,9 +94,8 @@ export const Button = ({
         containerStyle,
         variant === 'primary' && disabled ? styles.disabled : null,
         variant === 'primary' && !withoutShadow
-          ? getShadow(shadowColor || containerColor || 'blue')
+          ? getShadow(shadowColor || 'blue')
           : null,
-        containerColor ? {backgroundColor: containerColor} : null,
       ]}
       hitSlop={{top: 15, bottom: 15, left: 15, right: 15}}
       onPress={!disabled ? _onPress : null}>
