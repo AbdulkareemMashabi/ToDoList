@@ -29,7 +29,6 @@ export const PasswordInput = ({
         getValueOnChange={getValueOnChange}
       />
       <Button
-        withoutKeyBoardDismes
         containerStyle={styles.button}
         source={isHidden ? Icons.eyeOff : Icons.eye}
         onPress={() => {

@@ -9,7 +9,7 @@
     "TaskDeletedSuccessfully": "المهمة حذفت بنجاح",
     "connectionTitle": "اتصال الانترنت مطلوب",
     "connectionButton": "تمام",
-    "logOut":"هل أنت متأكد أنك تريد تسجيل الخروج؟"
+    "logOut": "هل أنت متأكد أنك تريد تسجيل الخروج؟"
   },
   "loginPage": {
     "loginTitle": "تسجيل دخول",
@@ -35,13 +35,13 @@
     "cancel": "الغاء",
     "done": "مكتمل",
     "deleteAccount": "حذف حساب",
-    "guestLogin":"الدخول كضيف",
-    "setTaskInCalendar":"إضافة المهمة الى التقويم",
-    "accessDenied":"تم رفض الوصول الى التقويم",
-    "accessDeniedButton":"اذهب الى الاعدادات",
+    "guestLogin": "الدخول كضيف",
+    "setTaskInCalendar": "إضافة المهمة الى التقويم",
+    "accessDenied": "تم رفض الوصول الى التقويم",
+    "accessDeniedButton": "اذهب الى الاعدادات",
     "openSettings": "اذهب للاعدادات",
-    "addedSuccessfully":"تم اضافة المهمة الى التقويم بنجاح",
-    "editedSuccessfully":"تم تعديل المهمة بنجاح"
+    "addedSuccessfully": "تم اضافة المهمة الى التقويم بنجاح",
+    "editedSuccessfully": "تم تعديل المهمة في التقويم بنجاح"
   },
   "register": {
     "register": "تسجيل",
@@ -77,8 +77,8 @@
     "message": "ادخل ايميلك وكلمة السر لحذف حسابك",
     "successfulDeletion": "تم حذف الحساب بنجاح"
   },
-  "pagesNames":{ 
-    "Lottie":"لوتي",
+  "pagesNames": {
+    "Lottie": "لوتي",
     "dashboard": "أمنياتي",
     "login": "تسجيل دخول",
     "register": "تسجيل",

@@ -30,6 +30,7 @@ export const TaskDetailsScreen = ({navigation, route}) => {
   const {documentId, refreshing} = route.params;
   const [formData, setFormData] = useState(null);
   const [openMainForm, setOpenMainForm] = useState(false);
+  const [mainTaskSubmitted, setMainTaskSubmitted] = useState(false);
   const [initialLoading, setInitialLoading] = useState(false);
   const [newSubTask, setNewSubTask] = useState('');
   const [enableDoneButton, setEnableDonButton] = useState(false);
@@ -61,7 +62,7 @@ export const TaskDetailsScreen = ({navigation, route}) => {
         />
       ),
     });
-  }, [enableDoneButton, formData, setCalendarFun, calendar]);
+  }, [enableDoneButton, formData, setCalendarFun, calendar, mainTaskSubmitted]);
 
   useEffect(() => {
     getData();
@@ -83,7 +84,7 @@ export const TaskDetailsScreen = ({navigation, route}) => {
   };
 
   const setCalendarFun = () => {
-    if (calendar && enableDoneButton) {
+    if (calendar && enableDoneButton && mainTaskSubmitted) {
       setInCalendar(formData?.mainTask, submit, true);
     } else submit();
   };
@@ -91,12 +92,13 @@ export const TaskDetailsScreen = ({navigation, route}) => {
   const submit = async (_, calendarId, showToast) => {
     if (enableDoneButton)
       try {
+        const finalCalendarId = calendarId || calendar;
         dispatch(setIsLoadingOverLay(true));
         await updateDocuments(userId, documentId, {
           ...formData,
           mainTask: {
             ...formData.mainTask,
-            calendarId: calendarId ? calendarId : null,
+            calendarId: finalCalendarId ? finalCalendarId : null,
           },
         });
         if (calendarId) showToast?.();
@@ -148,6 +150,7 @@ export const TaskDetailsScreen = ({navigation, route}) => {
     };
     setFormData({...formData, ...finalValues});
     setEnableDonButton(true);
+    setMainTaskSubmitted(true);
     setOpenMainForm(false);
     if (calendar) {
       const permissionResult = await RNCalendarEvents.checkPermissions();
@@ -242,14 +245,14 @@ export const TaskDetailsScreen = ({navigation, route}) => {
           initialValues={getInitialValues(formData)}
           fields={getFormFields(setIsCalendarAvail)}
           validationSchema={validation}
-          onSubmit={values =>
+          onSubmit={values => {
             setTaskToCalendar({
               values,
               calendar,
               mainTask: formData?.mainTask,
               onSubmit,
-            })
-          }
+            });
+          }}
         />
       </ActionsSheet>
     </Container>

@@ -16,22 +16,11 @@ export const Button = ({
   withoutShadow,
   textColor,
   disabled,
-  withoutKeyBoardDismes,
   boldText,
   icon,
   flipRTL,
 }) => {
   const isIcon = typeof source === 'number';
-
-  const _onPress = () => {
-    if (Platform.OS === 'ios' || withoutKeyBoardDismes) onPress();
-    else if (!withoutKeyBoardDismes) {
-      Keyboard.dismiss();
-      setTimeout(() => {
-        onPress();
-      }, 50);
-    }
-  };
 
   const getTextColor = () => {
     if (textColor) return textColor;
@@ -98,7 +87,7 @@ export const Button = ({
           : null,
       ]}
       hitSlop={{top: 15, bottom: 15, left: 15, right: 15}}
-      onPress={!disabled ? _onPress : null}>
+      onPress={!disabled ? onPress : null}>
       {contentRender()}
     </TouchableOpacity>
   );
