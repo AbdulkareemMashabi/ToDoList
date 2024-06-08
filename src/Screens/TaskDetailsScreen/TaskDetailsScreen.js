@@ -31,7 +31,7 @@ export const TaskDetailsScreen = ({navigation, route}) => {
   const [formData, setFormData] = useState(null);
   const [openMainForm, setOpenMainForm] = useState(false);
   const [mainTaskSubmitted, setMainTaskSubmitted] = useState(false);
-  const [initialLoading, setInitialLoading] = useState(false);
+  const [initialLoading, setInitialLoading] = useState(true);
   const [newSubTask, setNewSubTask] = useState('');
   const [enableDoneButton, setEnableDonButton] = useState(false);
   const [calendar, setCalendar] = useState(false);
@@ -70,7 +70,6 @@ export const TaskDetailsScreen = ({navigation, route}) => {
 
   const getData = async () => {
     try {
-      setInitialLoading(true);
       const document = await getSpecificDocument(userId, documentId);
       const {date, calendarId} = document?.mainTask || {};
       setIsCalendarAvail(date);
