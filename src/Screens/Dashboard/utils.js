@@ -100,6 +100,7 @@ export const getUserData = async setLoading => {
     documents.forEach(doc => {
       reShapeDocuments.push({id: doc.id, data: doc.data()});
     });
+    reShapeDocuments.reverse();
     store.dispatch(setUserData(reShapeDocuments));
   } catch (e) {
     handleAPIErrors(e);
