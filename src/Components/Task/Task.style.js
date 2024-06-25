@@ -51,4 +51,7 @@ export default StyleSheet.create({
     backgroundColor: '#E6E9EF',
     marginVertical: 8,
   },
+  lottie: {
+    ...StyleSheet.absoluteFillObject,
+  },
 });
