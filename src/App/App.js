@@ -87,7 +87,7 @@ export const App = () => {
           <Stack.Screen
             name={pagesNames.taskDetailsScreen}
             component={TaskDetailsScreen}
-            options={{title: Locale.t('pagesNames.taskDetailsScreen')}}
+            options={{title: ''}}
             listeners={{
               focus: () => {
                 setCurrentPage(pagesNames.taskDetailsScreen);
