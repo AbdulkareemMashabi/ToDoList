@@ -100,7 +100,7 @@ export const Dashboard = ({navigation}) => {
           return (
             <View key={index}>
               <Swipeable
-                isSwipeableAtBegin={index === 0}
+                isSwipeableAtBegin={index === 0 && userData.length === 1}
                 renderAction={() => (
                   <View style={styles.buttonsTaskContainer}>
                     <Button
