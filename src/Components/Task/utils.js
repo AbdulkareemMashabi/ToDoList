@@ -8,6 +8,7 @@ import {
   isNil,
 } from '../../helpers/utils';
 import moment from 'moment';
+import Sound from 'react-native-sound';
 
 export const getBorderColor = (date, status) => {
   if (!date) {
@@ -66,6 +67,7 @@ export const updateStatus = async ({
   documentId,
   color,
   setTasks,
+  setEnableLottie,
 }) => {
   try {
     dispatch(setIsLoadingOverLay(true));
@@ -102,6 +104,8 @@ export const updateStatus = async ({
       };
 
     await updateDocuments(userId, documentId, finalValues);
+    playSoundAndLottie(finalValues.mainTask?.status, setEnableLottie);
+
     setTasks({mainTask, subTasks, ...finalValues}); // update locally
     dispatch(setIsLoadingOverLay(false));
   } catch (e) {
@@ -113,4 +117,15 @@ export const updateStatus = async ({
 export const getRandomColor = () => {
   const colors = Object.values(backgroundColors);
   return colors[Math.floor(Math.random() * colors.length)];
+};
+
+const playSoundAndLottie = (isMainTaskCompleted, setEnableLottie) => {
+  var sound = new Sound('correct_sound.mp3', Sound.MAIN_BUNDLE, error => {
+    if (error) {
+      return;
+    }
+
+    sound.play();
+    if (isMainTaskCompleted) setEnableLottie(true);
+  });
 };
