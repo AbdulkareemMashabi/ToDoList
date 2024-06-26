@@ -60,28 +60,35 @@ export const handleAPIErrors = error => {
 };
 
 export const toastConfig = {
-  success: props => (
-    <View
-      style={{
-        flexDirection: 'row',
-        backgroundColor: '#30D158',
-        alignItems: 'center',
-        borderRadius: 16,
-        paddingVertical: 6,
-        paddingHorizontal: 10,
-        marginHorizontal: 20,
-      }}>
-      <Image source={Icons.checkMark} style={{marginHorizontal: 10}} />
-      <Text color={'white'} localeKey={props.text1} variant="bodySemibold" />
-    </View>
-  ),
+  success: props => {
+    return (
+      <View
+        style={{
+          flexDirection: 'row',
+          backgroundColor: '#30D158',
+          alignItems: 'center',
+          borderRadius: 16,
+          paddingVertical: 6,
+          paddingHorizontal: 10,
+          marginHorizontal: 20,
+        }}>
+        <Image
+          source={props.props.image || Icons.checkMark}
+          style={{marginHorizontal: 10}}
+          tintColor={'white'}
+        />
+        <Text color={'white'} localeKey={props.text1} variant="bodySemibold" />
+      </View>
+    );
+  },
 };
 
-export const showToast = text => {
+export const showToast = (text, props) => {
   Toast.show({
     type: 'success',
     position: 'top',
     text1: text,
+    props,
   });
 };
 
@@ -167,6 +174,7 @@ export const setInCalendar = async (values, onSubmit) => {
       onSubmit(values, setToCalendar, () => {
         showToast(
           `common.${calendarId ? 'editedSuccessfully' : 'addedSuccessfully'}`,
+          {image: Icons.calendar},
         );
       });
     }
