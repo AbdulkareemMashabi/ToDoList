@@ -44,4 +44,7 @@ export default StyleSheet.create({
   editButton: {
     marginTop: 10,
   },
+  alignEnd: {
+    alignSelf: 'flex-end',
+  },
 });

@@ -39,6 +39,7 @@ export const DoubleText = ({
           onPress={editButtonPress}
           containerStyle={[
             styles.alignCenter,
+            !date ? styles.alignEnd : null,
             !description ? styles.editButton : null,
           ]}
         />
