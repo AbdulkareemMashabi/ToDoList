@@ -20,11 +20,13 @@ export default StyleSheet.create({
     alignSelf: 'center',
   },
   subContainer: {
-    alignItems: 'flex-end',
+    alignItems: 'center',
     justifyContent: 'space-between',
-    height: 60,
     flex: 1.1,
     marginLeft: 16,
+  },
+  subContainerWithNoDate: {
+    alignItems: 'flex-end',
   },
   oneItem: {
     justifyContent: 'center',
@@ -38,13 +40,7 @@ export default StyleSheet.create({
   flex_1: {
     flex: 1,
   },
-  alignCenter: {
-    alignSelf: 'center',
-  },
   editButton: {
     marginTop: 10,
-  },
-  alignEnd: {
-    alignSelf: 'flex-end',
   },
 });

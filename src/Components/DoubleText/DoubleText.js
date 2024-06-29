@@ -37,11 +37,7 @@ export const DoubleText = ({
         <Button
           source={Icons.edit}
           onPress={editButtonPress}
-          containerStyle={[
-            styles.alignCenter,
-            !date ? styles.alignEnd : null,
-            !description ? styles.editButton : null,
-          ]}
+          containerStyle={date ? styles.editButton : null}
         />
       ) : null}
     </>
@@ -59,6 +55,7 @@ export const DoubleText = ({
       <View
         style={[
           styles.subContainer,
+          !date ? styles.subContainerWithNoDate : null,
           (!editButtonPress || !date) && description ? styles.oneItem : null,
           !description ? styles.oneItem : null,
           !date && !editButtonPress ? styles.flex_0 : null,
