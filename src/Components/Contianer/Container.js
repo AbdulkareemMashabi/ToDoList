@@ -31,6 +31,8 @@ export const Container = ({
   );
   const behavior = Platform.OS === 'ios' ? 'padding' : 'height';
   const insets = useSafeAreaInsets();
+  const loadingLottiePath = '../../assets/Lottie/loadingOverLay.json';
+  const doneLottiePath = '../../assets/Lottie/doneLottie.json';
 
   const renderContent = () => {
     if (_isLoading) return <Skeleton />;
@@ -44,6 +46,31 @@ export const Container = ({
       <View style={styles.renderFooter}>
         <Button {...renderFooter} />
       </View>
+    );
+  };
+
+  const lottieAnimation = () => {
+    return (
+      <>
+        {isLoadingOverLay || enableDoneLottie ? (
+          <View
+            style={isLoadingOverLay ? styles.lottieView : styles.doneLottie}>
+            <LottieView
+              source={
+                isLoadingOverLay
+                  ? require(loadingLottiePath)
+                  : require(doneLottiePath)
+              }
+              autoPlay
+              loop={!enableDoneLottie}
+              onAnimationFinish={() => {
+                if (enableDoneLottie) dispatch(setEnableDoneLottie(false));
+              }}
+              style={styles.takingAllPage}
+            />
+          </View>
+        ) : null}
+      </>
     );
   };
 
@@ -72,30 +99,8 @@ export const Container = ({
             {renderContent()}
           </KeyboardAvoidingView>
           {renderFooter && renderFooterContent()}
+          {lottieAnimation()}
         </GestureHandlerRootView>
-        {isLoadingOverLay ? (
-          <View style={styles.lottieView}>
-            <LottieView
-              source={require('../../assets/Lottie/loadingOverLay.json')}
-              autoPlay
-              loop
-              style={styles.takingAllPage}
-            />
-          </View>
-        ) : null}
-        {enableDoneLottie ? (
-          <View style={styles.doneLottie}>
-            <LottieView
-              source={require('../../assets/Lottie/doneLottie.json')}
-              autoPlay
-              loop={false}
-              onAnimationFinish={() => {
-                dispatch(setEnableDoneLottie(false));
-              }}
-              style={styles.takingAllPage}
-            />
-          </View>
-        ) : null}
       </SafeAreaView>
     </ImageBackground>
   );

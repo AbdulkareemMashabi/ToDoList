@@ -17,8 +17,6 @@ export default StyleSheet.create({
   lottieView: {
     backgroundColor: 'rgba(0,0,0,0.5)',
     ...StyleSheet.absoluteFillObject,
-    justifyContent: 'center',
-    alignItems: 'center',
   },
   doneLottie: {
     ...StyleSheet.absoluteFillObject,
