@@ -56,6 +56,7 @@ export const Container = ({
           <View
             style={isLoadingOverLay ? styles.lottieView : styles.doneLottie}>
             <LottieView
+              speed={2}
               source={
                 isLoadingOverLay
                   ? require(loadingLottiePath)
