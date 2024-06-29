@@ -41,6 +41,6 @@ export default StyleSheet.create({
     flex: 1,
   },
   editButton: {
-    marginTop: 10,
+    marginTop: 16,
   },
 });
