@@ -4,6 +4,10 @@ import Text from '../Text/Text';
 import {getShadow} from '../../helpers/shadow';
 
 import styles from './Button.style';
+import {useSelector} from 'react-redux';
+import Locale from '../../helpers/localization';
+import {dispatch} from '../../helpers/utils';
+import {setEnableShineLottie} from '../../helpers/Redux/mainReducer';
 
 export const Button = ({
   source,
@@ -19,8 +23,11 @@ export const Button = ({
   boldText,
   icon,
   flipRTL,
+  enableShine,
 }) => {
   const isIcon = typeof source === 'number';
+
+  const {enableShineLottie} = useSelector(state => state.main);
 
   const getTextColor = () => {
     if (textColor) return textColor;
@@ -75,21 +82,35 @@ export const Button = ({
   };
 
   return (
-    <TouchableOpacity
-      activeOpacity={disabled ? 1 : 0.2}
-      style={[
-        flipRTL ? styles.flipRTL : null,
-        !isIcon && variant === 'primary' ? styles.container : null,
-        containerStyle,
-        variant === 'primary' && disabled ? styles.disabled : null,
-        variant === 'primary' && !withoutShadow
-          ? getShadow(shadowColor || 'blue')
-          : null,
-      ]}
-      hitSlop={{top: 15, bottom: 15, left: 15, right: 15}}
-      onPress={!disabled ? onPress : null}>
-      {contentRender()}
-    </TouchableOpacity>
+    <View>
+      {enableShineLottie && enableShine ? (
+        <LottieView
+          source={require('../../assets/Lottie/pressLottie.json')}
+          autoPlay
+          loop
+          onAnimationFinish={() => {
+            dispatch(setEnableShineLottie(false));
+          }}
+          style={[!Locale.isRTL ? styles.flipRTL : null, styles.doneLottie]}
+        />
+      ) : null}
+      <TouchableOpacity
+        activeOpacity={disabled ? 1 : 0.2}
+        style={[
+          flipRTL ? styles.flipRTL : null,
+          !isIcon && variant === 'primary' ? styles.container : null,
+          containerStyle,
+          variant === 'primary' && disabled ? styles.disabled : null,
+          variant === 'primary' && !withoutShadow
+            ? getShadow(shadowColor || 'blue')
+            : null,
+          enableShine ? styles.buttonHeight : null,
+        ]}
+        hitSlop={{top: 15, bottom: 15, left: 15, right: 15}}
+        onPress={!disabled ? onPress : null}>
+        {contentRender()}
+      </TouchableOpacity>
+    </View>
   );
 };
 

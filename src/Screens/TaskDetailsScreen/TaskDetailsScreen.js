@@ -14,7 +14,10 @@ import ActionsSheet from '../../Components/ActionsSheet/ActionsSheet';
 import Form from '../../Components/Form/Form';
 import * as Yup from 'yup';
 import Locale from '../../helpers/localization';
-import {setIsLoadingOverLay} from '../../helpers/Redux/mainReducer';
+import {
+  setEnableShineLottie,
+  setIsLoadingOverLay,
+} from '../../helpers/Redux/mainReducer';
 import {getFormFields, getInitialValues} from './utils';
 import Text from '../../Components/Text/Text';
 import Container from '../../Components/Contianer/Container';
@@ -45,15 +48,17 @@ export const TaskDetailsScreen = ({navigation, route}) => {
   useEffect(() => {
     navigation.setOptions({
       headerTitle: formData?.mainTask?.title,
-      headerRight: () => (
-        <Button
-          disabled={!enableDoneButton}
-          source={'taskDetails.Done'}
-          variant="secondary"
-          containerStyle={styles.doneButton}
-          onPress={setCalendarFun}
-        />
-      ),
+      headerRight: () => {
+        return enableDoneButton ? (
+          <Button
+            enableShine
+            source={'taskDetails.Done'}
+            variant="secondary"
+            containerStyle={styles.doneButton}
+            onPress={setCalendarFun}
+          />
+        ) : null;
+      },
       headerLeft: () => (
         <Button
           source={Platform.OS === 'ios' ? Icons.backButton : Icons.arrow}
@@ -62,6 +67,10 @@ export const TaskDetailsScreen = ({navigation, route}) => {
       ),
     });
   }, [enableDoneButton, formData, setCalendarFun, calendar, mainTaskSubmitted]);
+
+  useEffect(() => {
+    if (enableDoneButton) dispatch(setEnableShineLottie(true));
+  }, [enableDoneButton]);
 
   useEffect(() => {
     getData();

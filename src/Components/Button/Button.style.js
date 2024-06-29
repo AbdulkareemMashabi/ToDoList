@@ -30,4 +30,12 @@ export default StyleSheet.create({
   flipRTL: {
     transform: [{scaleX: -1}],
   },
+  doneLottie: {
+    ...StyleSheet.absoluteFillObject,
+    width: 40,
+    height: 50,
+  },
+  buttonHeight: {
+    height: 50,
+  },
 });
