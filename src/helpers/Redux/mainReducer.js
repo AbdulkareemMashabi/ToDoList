@@ -8,7 +8,7 @@ const initialState = {
   createNewTaskBackgrounds: [],
   userData: {},
   isDeviceId: false,
-  enableLoading: false,
+  enableDoneLottie: false,
 };
 
 export const mainReducer = createSlice({
@@ -39,8 +39,8 @@ export const mainReducer = createSlice({
     setIsDeviceId: state => {
       state.isDeviceId = true;
     },
-    setEnableLoading: (state, action) => {
-      state.enableLoading = action.payload;
+    setEnableDoneLottie: (state, action) => {
+      state.enableDoneLottie = action.payload;
     },
   },
 });
@@ -54,7 +54,7 @@ export const {
   setCreateNewTaskBackgrounds,
   resetCreateNewTaskBackgrounds,
   setIsDeviceId,
-  setEnableLoading,
+  setEnableDoneLottie,
 } = mainReducer.actions;
 
 export default mainReducer.reducer;

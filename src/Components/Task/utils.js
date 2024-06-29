@@ -1,6 +1,6 @@
 import {
   setIsLoadingOverLay,
-  setEnableLoading,
+  setEnableDoneLottie,
 } from '../../helpers/Redux/mainReducer';
 import {store} from '../../helpers/Redux/store';
 import {updateDocuments} from '../../helpers/firebase';
@@ -128,6 +128,6 @@ const playSoundAndLottie = isMainTaskCompleted => {
     }
 
     sound.play();
-    if (isMainTaskCompleted) dispatch(setEnableLoading(true));
+    if (isMainTaskCompleted) dispatch(setEnableDoneLottie(true));
   });
 };

@@ -15,7 +15,7 @@ import {useSelector} from 'react-redux';
 import {Images} from '../../assets/Images';
 import Button from '../Button/Button';
 import {dispatch} from '../../helpers/utils';
-import {setEnableLoading} from '../../helpers/Redux/mainReducer';
+import {setEnableDoneLottie} from '../../helpers/Redux/mainReducer';
 
 export const Container = ({
   children,
@@ -26,7 +26,7 @@ export const Container = ({
   renderFooter,
   backgroundColor,
 }) => {
-  const {isLoading, isLoadingOverLay, enableLoading} = useSelector(
+  const {isLoading, isLoadingOverLay, enableDoneLottie} = useSelector(
     state => state.main,
   );
   const behavior = Platform.OS === 'ios' ? 'padding' : 'height';
@@ -83,14 +83,14 @@ export const Container = ({
             />
           </View>
         ) : null}
-        {enableLoading ? (
+        {enableDoneLottie ? (
           <View style={styles.doneLottie}>
             <LottieView
               source={require('../../assets/Lottie/doneLottie.json')}
               autoPlay
               loop={false}
               onAnimationFinish={() => {
-                dispatch(setEnableLoading(false));
+                dispatch(setEnableDoneLottie(false));
               }}
               style={styles.takingAllPage}
             />
