@@ -13,11 +13,9 @@ import {
 } from './utils';
 import {backgroundColors} from '../../helpers/utils';
 import {getShadow} from '../../helpers/shadow';
-import LottieView from 'lottie-react-native';
 
 export const Task = ({data, id, onPress}) => {
   const [tasks, setTasks] = useState(data);
-  const [enableLottie, setEnableLottie] = useState(false);
   const {mainTask, subTasks} = tasks || {};
   const color = mainTask?.color || useRef(getRandomColor()).current;
 
@@ -28,7 +26,6 @@ export const Task = ({data, id, onPress}) => {
       subTasks,
       color,
       setTasks,
-      setEnableLottie,
     });
   };
 
@@ -40,7 +37,6 @@ export const Task = ({data, id, onPress}) => {
       subTasks,
       color,
       setTasks,
-      setEnableLottie,
     });
   };
 
@@ -107,31 +103,12 @@ export const Task = ({data, id, onPress}) => {
     />
   );
 
-  const doneLottie = () => {
-    return (
-      <>
-        {enableLottie ? (
-          <LottieView
-            source={require('../../assets/Lottie/doneLottie.json')}
-            autoPlay
-            loop={false}
-            onAnimationFinish={() => {
-              setEnableLottie(false);
-            }}
-            style={styles.lottie}
-          />
-        ) : null}
-      </>
-    );
-  };
-
   return (
     <TouchableOpacity
       style={[styles.container, {...getShadow(color)}]}
       onPress={onPress}>
       <View style={[styles.leftBlock, {backgroundColor: color}]} />
       <View style={styles.taskSubTasksParent}>
-        {doneLottie()}
         {mainTaskRender()}
         {subTasks?.length !== 0 ? <View style={styles.separator} /> : null}
         {subTasksRender()}

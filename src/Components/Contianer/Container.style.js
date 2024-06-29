@@ -20,6 +20,9 @@ export default StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  doneLottie: {
+    ...StyleSheet.absoluteFillObject,
+  },
   renderFooter: {
     ...cardShadow,
     backgroundColor: 'white',

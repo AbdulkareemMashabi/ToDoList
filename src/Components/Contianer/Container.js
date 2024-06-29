@@ -14,6 +14,8 @@ import LottieView from 'lottie-react-native';
 import {useSelector} from 'react-redux';
 import {Images} from '../../assets/Images';
 import Button from '../Button/Button';
+import {dispatch} from '../../helpers/utils';
+import {setEnableLoading} from '../../helpers/Redux/mainReducer';
 
 export const Container = ({
   children,
@@ -24,7 +26,9 @@ export const Container = ({
   renderFooter,
   backgroundColor,
 }) => {
-  const {isLoading, isLoadingOverLay} = useSelector(state => state.main);
+  const {isLoading, isLoadingOverLay, enableLoading} = useSelector(
+    state => state.main,
+  );
   const behavior = Platform.OS === 'ios' ? 'padding' : 'height';
   const insets = useSafeAreaInsets();
 
@@ -75,6 +79,19 @@ export const Container = ({
               source={require('../../assets/Lottie/loadingOverLay.json')}
               autoPlay
               loop
+              style={styles.takingAllPage}
+            />
+          </View>
+        ) : null}
+        {enableLoading ? (
+          <View style={styles.doneLottie}>
+            <LottieView
+              source={require('../../assets/Lottie/doneLottie.json')}
+              autoPlay
+              loop={false}
+              onAnimationFinish={() => {
+                dispatch(setEnableLoading(false));
+              }}
               style={styles.takingAllPage}
             />
           </View>

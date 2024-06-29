@@ -1,4 +1,7 @@
-import {setIsLoadingOverLay} from '../../helpers/Redux/mainReducer';
+import {
+  setIsLoadingOverLay,
+  setEnableLoading,
+} from '../../helpers/Redux/mainReducer';
 import {store} from '../../helpers/Redux/store';
 import {updateDocuments} from '../../helpers/firebase';
 import {
@@ -67,7 +70,6 @@ export const updateStatus = async ({
   documentId,
   color,
   setTasks,
-  setEnableLottie,
 }) => {
   try {
     dispatch(setIsLoadingOverLay(true));
@@ -104,7 +106,7 @@ export const updateStatus = async ({
       };
 
     await updateDocuments(userId, documentId, finalValues);
-    playSoundAndLottie(finalValues.mainTask?.status, setEnableLottie);
+    playSoundAndLottie(finalValues.mainTask?.status);
 
     setTasks({mainTask, subTasks, ...finalValues}); // update locally
     dispatch(setIsLoadingOverLay(false));
@@ -119,13 +121,13 @@ export const getRandomColor = () => {
   return colors[Math.floor(Math.random() * colors.length)];
 };
 
-const playSoundAndLottie = (isMainTaskCompleted, setEnableLottie) => {
+const playSoundAndLottie = isMainTaskCompleted => {
   var sound = new Sound('correct_sound.mp3', Sound.MAIN_BUNDLE, error => {
     if (error) {
       return;
     }
 
     sound.play();
-    if (isMainTaskCompleted) setEnableLottie(true);
+    if (isMainTaskCompleted) dispatch(setEnableLoading(true));
   });
 };
