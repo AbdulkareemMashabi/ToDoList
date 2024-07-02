@@ -1,13 +1,9 @@
 import LottieView from 'lottie-react-native';
-import {TouchableOpacity, Image, View, Platform, Keyboard} from 'react-native';
+import {TouchableOpacity, Image, View} from 'react-native';
 import Text from '../Text/Text';
 import {getShadow} from '../../helpers/shadow';
 
 import styles from './Button.style';
-import {useSelector} from 'react-redux';
-import Locale from '../../helpers/localization';
-import {dispatch} from '../../helpers/utils';
-import {setEnableShineLottie} from '../../helpers/Redux/mainReducer';
 
 export const Button = ({
   source,
@@ -23,11 +19,8 @@ export const Button = ({
   boldText,
   icon,
   flipRTL,
-  enableShine,
 }) => {
   const isIcon = typeof source === 'number';
-
-  const {enableShineLottie} = useSelector(state => state.main);
 
   const getTextColor = () => {
     if (textColor) return textColor;
@@ -83,17 +76,6 @@ export const Button = ({
 
   return (
     <View>
-      {enableShineLottie && enableShine ? (
-        <LottieView
-          source={require('../../assets/Lottie/pressLottie.json')}
-          autoPlay
-          loop
-          onAnimationFinish={() => {
-            dispatch(setEnableShineLottie(false));
-          }}
-          style={[!Locale.isRTL ? styles.flipRTL : null, styles.doneLottie]}
-        />
-      ) : null}
       <TouchableOpacity
         activeOpacity={disabled ? 1 : 0.2}
         style={[
@@ -104,7 +86,6 @@ export const Button = ({
           variant === 'primary' && !withoutShadow
             ? getShadow(shadowColor || 'blue')
             : null,
-          enableShine ? styles.buttonHeight : null,
         ]}
         hitSlop={{top: 15, bottom: 15, left: 15, right: 15}}
         onPress={!disabled ? onPress : null}>

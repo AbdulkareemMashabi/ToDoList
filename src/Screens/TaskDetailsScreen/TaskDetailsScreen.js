@@ -14,10 +14,7 @@ import ActionsSheet from '../../Components/ActionsSheet/ActionsSheet';
 import Form from '../../Components/Form/Form';
 import * as Yup from 'yup';
 import Locale from '../../helpers/localization';
-import {
-  setEnableShineLottie,
-  setIsLoadingOverLay,
-} from '../../helpers/Redux/mainReducer';
+import {setIsLoadingOverLay} from '../../helpers/Redux/mainReducer';
 import {getFormFields, getInitialValues} from './utils';
 import Text from '../../Components/Text/Text';
 import Container from '../../Components/Contianer/Container';
@@ -67,10 +64,6 @@ export const TaskDetailsScreen = ({navigation, route}) => {
       ),
     });
   }, [enableDoneButton, formData, setCalendarFun, calendar, mainTaskSubmitted]);
-
-  useEffect(() => {
-    if (enableDoneButton) dispatch(setEnableShineLottie(true));
-  }, [enableDoneButton]);
 
   useEffect(() => {
     getData();
