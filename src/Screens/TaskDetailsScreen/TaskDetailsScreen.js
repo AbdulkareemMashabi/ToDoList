@@ -48,7 +48,6 @@ export const TaskDetailsScreen = ({navigation, route}) => {
       headerRight: () => {
         return enableDoneButton ? (
           <Button
-            enableShine
             source={'taskDetails.Done'}
             variant="secondary"
             containerStyle={styles.doneButton}
