@@ -2,7 +2,7 @@
 
 - Guest Login and Account Login.
 - Firebase.
-- Creating Tasks and SubTasks to the Main Task.
+- Creating Tasks and SubTasks.
 - Link Task with Mobile Calendar.
 - Calebration Animation when Task is Done.
 
