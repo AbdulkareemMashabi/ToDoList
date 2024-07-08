@@ -12,6 +12,13 @@
 
 ![Simulator Screenshot - iPhone 13 Pro Max - 2024-07-08 at 23 31 00](https://github.com/AbdulkareemMashabi/ToDoList/assets/106698136/ff3dfb5d-604b-4051-9fa4-51e2ef4efc0a)
 
+![Simulator Screenshot - iPhone 13 Pro Max - 2024-07-09 at 00 10 35](https://github.com/AbdulkareemMashabi/ToDoList/assets/106698136/8dc658fc-9ad7-49fb-b4c0-81392c08be52)
+
+![Simulator Screenshot - iPhone 13 Pro Max - 2024-07-09 at 00 10 28](https://github.com/AbdulkareemMashabi/ToDoList/assets/106698136/6665c89a-9429-4a8f-af4d-b335a56b3ba4)
+
+![Simulator Screenshot - iPhone 13 Pro Max - 2024-07-09 at 00 10 31](https://github.com/AbdulkareemMashabi/ToDoList/assets/106698136/0d3252ea-41d3-422d-8b8a-d1e09d271f3a)
+
+
 ![Simulator Screenshot - iPhone 13 Pro Max - 2024-07-08 at 23 28 10](https://github.com/AbdulkareemMashabi/ToDoList/assets/106698136/12131c8d-87e3-40fe-a847-bbb28b37cf7c)
 
 ![Simulator Screenshot - iPhone 13 Pro Max - 2024-07-08 at 23 29 36](https://github.com/AbdulkareemMashabi/ToDoList/assets/106698136/72e1dfcc-85ef-42e3-a03d-0c1898de7b5a)
@@ -24,7 +31,9 @@
 
 # Videos
 
-https://github.com/AbdulkareemMashabi/ToDoList/assets/106698136/ccf00f88-5e26-4345-9f93-37f302417df3
+https://github.com/AbdulkareemMashabi/ToDoList/assets/106698136/33609c88-986a-4713-b4aa-e860bf765f7a
 
-https://github.com/AbdulkareemMashabi/ToDoList/assets/106698136/9800fd8d-5179-4d1f-ab29-664d8f91facd
+
+https://github.com/AbdulkareemMashabi/ToDoList/assets/106698136/84248fb1-4661-47de-9609-e7c8dd4ad492
+
 
