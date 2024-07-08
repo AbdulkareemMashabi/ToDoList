@@ -31,10 +31,8 @@
 
 # Videos
 
-https://github.com/AbdulkareemMashabi/ToDoList/assets/106698136/6a2a5866-1bd7-4891-9ed8-895d4fdf2e00
+![Swipe-ezgif com-video-to-gif-converter](https://github.com/AbdulkareemMashabi/ToDoList/assets/106698136/003be7b9-6abf-4f14-85ea-982a22e7c3dd)
 
-
-
-https://github.com/AbdulkareemMashabi/ToDoList/assets/106698136/84248fb1-4661-47de-9609-e7c8dd4ad492
+![DoneAnimation-ezgif com-video-to-gif-converter](https://github.com/AbdulkareemMashabi/ToDoList/assets/106698136/12353f88-98d6-43b3-b6d4-575bf6aa333b)
 
 
