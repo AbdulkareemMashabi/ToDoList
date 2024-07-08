@@ -1,10 +1,10 @@
 # Features
 
-. Guest Login and Account Login.
-. Firebase.
-. Creating Tasks and SubTasks to the Main Task.
-. Link Task with Mobile Calendar.
-. Calebration Animation when Task is Done.
+1- Guest Login and Account Login.
+2- Firebase.
+3- Creating Tasks and SubTasks to the Main Task.
+4- Link Task with Mobile Calendar.
+5- Calebration Animation when Task is Done.
 
 # ScreenShots
 
