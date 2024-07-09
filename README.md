@@ -24,7 +24,7 @@
 
 ![Simulator Screenshot - iPhone 13 Pro Max - 2024-07-08 at 23 29 52](https://github.com/AbdulkareemMashabi/ToDoList/assets/106698136/a95025ef-978b-4f5c-b1bb-357a9bba1564)
 
-# Videos
+# Videos (gif)
 
 ![Swipe-ezgif com-video-to-gif-converter](https://github.com/AbdulkareemMashabi/ToDoList/assets/106698136/003be7b9-6abf-4f14-85ea-982a22e7c3dd)
 
