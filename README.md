@@ -7,6 +7,7 @@
 - Calebration Animation when Task is Done.
 
 # ScreenShots
+![Simulator Screenshot - iPhone 13 Pro Max - 2024-07-08 at 23 31 08](https://github.com/AbdulkareemMashabi/ToDoList/assets/106698136/79df062b-b718-4cef-b6be-e320463963eb)
 
 ![Simulator Screenshot - iPhone 13 Pro Max - 2024-07-08 at 23 31 08](https://github.com/AbdulkareemMashabi/ToDoList/assets/106698136/5eb524c2-0703-4633-8efd-69f38fc9737f)
 
