@@ -1,5 +1,5 @@
-import {useEffect, useRef, useState} from 'react';
-import {Animated, TouchableOpacity, Image} from 'react-native';
+import {useEffect, useState} from 'react';
+import {TouchableOpacity, Image} from 'react-native';
 import Text from '../Text/Text';
 import Locale from '../../helpers/localization';
 import {cardShadow} from '../../helpers/shadow';
@@ -9,6 +9,8 @@ import {useSelector} from 'react-redux';
 import moment from 'moment';
 
 import styles from './DatePicker.style';
+
+import {useSharedValue, withTiming} from 'react-native-reanimated';
 
 export const DatePicker = ({
   onValueChange,
@@ -23,8 +25,8 @@ export const DatePicker = ({
   const [dateValue, setDateValue] = useState(
     minimumDate || new Date(moment().format('YYYY-MM-DD')),
   );
-  const fontSizeRef = useRef(new Animated.Value(17)).current;
-  const positionRef = useRef(new Animated.Value(16)).current;
+  const fontSizeRef = useSharedValue(17);
+  const positionRef = useSharedValue(16);
 
   const {backgroundColor} = useSelector(state => state.main);
 
@@ -42,18 +44,8 @@ export const DatePicker = ({
   }, [value]);
 
   const onFocus = () => {
-    Animated.parallel([
-      Animated.timing(fontSizeRef, {
-        toValue: 15,
-        duration: 400,
-        useNativeDriver: false,
-      }).start(),
-      Animated.timing(positionRef, {
-        toValue: 2,
-        duration: 400,
-        useNativeDriver: false,
-      }).start(),
-    ]);
+    fontSizeRef.value = withTiming(15, {duration: 600});
+    positionRef.value = withTiming(0, {duration: 600});
   };
 
   return (
@@ -62,6 +54,7 @@ export const DatePicker = ({
         onPress={() => setOpen(true)}
         style={[styles.touchableOpacity, cardShadow, style]}>
         <Text
+          isAnimated
           style={[styles.text, {fontSize: fontSizeRef, top: positionRef}]}
           localeKey={label}
           variant="bodyRegular"

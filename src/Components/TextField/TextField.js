@@ -1,10 +1,11 @@
 import {useEffect, useRef, useState} from 'react';
-import {Animated, TextInput, TouchableOpacity} from 'react-native';
+import {TextInput, TouchableOpacity} from 'react-native';
 import Text from '../Text/Text';
 import Locale from '../../helpers/localization';
 import {cardShadow} from '../../helpers/shadow';
 
 import styles from './TextField.style';
+import {useSharedValue, withTiming} from 'react-native-reanimated';
 
 export const TextField = ({
   onValueChange,
@@ -17,8 +18,8 @@ export const TextField = ({
   onBlurField,
   multiline,
 }) => {
-  const fontSizeRef = useRef(new Animated.Value(17)).current;
-  const positionRef = useRef(new Animated.Value(16)).current;
+  const fontSizeRef = useSharedValue(17);
+  const positionRef = useSharedValue(16);
   const [isInFocus, setIsInFocus] = useState(false);
   const refsFocus = useRef(null);
 
@@ -32,34 +33,16 @@ export const TextField = ({
     setTimeout(() => {
       setIsInFocus(false);
     }, 600);
-    Animated.parallel([
-      Animated.timing(fontSizeRef, {
-        toValue: 15,
-        duration: 600,
-        useNativeDriver: false,
-      }).start(),
-      Animated.timing(positionRef, {
-        toValue: 0,
-        duration: 600,
-        useNativeDriver: false,
-      }).start(),
-    ]);
+    fontSizeRef.value = withTiming(15, {duration: 600});
+    positionRef.value = withTiming(0, {duration: 600});
   };
   const onBlur = () => {
-    if (!value)
-      Animated.parallel([
-        Animated.timing(fontSizeRef, {
-          toValue: 17,
-          duration: 600,
-          useNativeDriver: false,
-        }).start(),
-        Animated.timing(positionRef, {
-          toValue: 16,
-          duration: 600,
-          useNativeDriver: false,
-        }).start(),
-      ]);
+    if (!value) {
+      fontSizeRef.value = withTiming(17, {duration: 600});
+      positionRef.value = withTiming(16, {duration: 600});
+    }
   };
+
   return (
     <TouchableOpacity
       onPress={() => refsFocus.current.focus()}
@@ -69,6 +52,7 @@ export const TextField = ({
         style,
       ]}>
       <Text
+        isAnimated
         style={[styles.text, {fontSize: fontSizeRef, top: positionRef}]}
         localeKey={label}
         variant="bodyRegular"

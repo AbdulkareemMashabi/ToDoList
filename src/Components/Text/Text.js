@@ -1,5 +1,7 @@
-import {Animated} from 'react-native';
+import Animated from 'react-native-reanimated';
 import Locale from '../../helpers/localization';
+
+import {Text as RNText} from 'react-native';
 
 import styles from './Text.style';
 
@@ -15,6 +17,7 @@ export const Text = ({
   textAlign,
   isLineThrough,
   bold,
+  isAnimated,
 }) => {
   const getColor = () => {
     if (!color) return null;
@@ -27,8 +30,10 @@ export const Text = ({
 
   if (!value && !localeKey) return null;
 
+  const TextComponent = isAnimated ? Animated.Text : RNText;
+
   return (
-    <Animated.Text
+    <TextComponent
       numberOfLines={numberOfLines}
       ellipsizeMode={ellipsizeMode}
       style={[
@@ -41,7 +46,7 @@ export const Text = ({
         bold ? styles.boldStyle : null,
       ]}>
       {value ? value : Locale.t(localeKey, localeProps)}
-    </Animated.Text>
+    </TextComponent>
   );
 };
 
