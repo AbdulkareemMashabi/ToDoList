@@ -5,7 +5,11 @@ import Locale from '../../helpers/localization';
 import {cardShadow} from '../../helpers/shadow';
 
 import styles from './TextField.style';
-import {useSharedValue, withTiming} from 'react-native-reanimated';
+import {
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
+} from 'react-native-reanimated';
 
 export const TextField = ({
   onValueChange,
@@ -43,6 +47,13 @@ export const TextField = ({
     }
   };
 
+  const animatedStyles = useAnimatedStyle(() => {
+    return {
+      fontSize: fontSizeRef.value,
+      top: positionRef.value,
+    };
+  });
+
   return (
     <TouchableOpacity
       onPress={() => refsFocus.current.focus()}
@@ -53,7 +64,7 @@ export const TextField = ({
       ]}>
       <Text
         isAnimated
-        style={[styles.text, {fontSize: fontSizeRef, top: positionRef}]}
+        style={[styles.text, animatedStyles]}
         localeKey={label}
         variant="bodyRegular"
         color={'grey'}

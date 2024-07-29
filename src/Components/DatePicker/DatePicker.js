@@ -10,7 +10,11 @@ import moment from 'moment';
 
 import styles from './DatePicker.style';
 
-import {useSharedValue, withTiming} from 'react-native-reanimated';
+import {
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
+} from 'react-native-reanimated';
 
 export const DatePicker = ({
   onValueChange,
@@ -48,6 +52,13 @@ export const DatePicker = ({
     positionRef.value = withTiming(0, {duration: 600});
   };
 
+  const animatedStyles = useAnimatedStyle(() => {
+    return {
+      fontSize: fontSizeRef.value,
+      top: positionRef.value,
+    };
+  });
+
   return (
     <>
       <TouchableOpacity
@@ -55,7 +66,7 @@ export const DatePicker = ({
         style={[styles.touchableOpacity, cardShadow, style]}>
         <Text
           isAnimated
-          style={[styles.text, {fontSize: fontSizeRef, top: positionRef}]}
+          style={[styles.text, animatedStyles]}
           localeKey={label}
           variant="bodyRegular"
           color={'grey'}
