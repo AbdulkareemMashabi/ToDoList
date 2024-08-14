@@ -17,6 +17,8 @@ const Icons = {
   accountDeletion: require('./accountDeletion.png'),
   arrow: require('./arrow.png'),
   userLogo: require('./userLogo.png'),
+  emptyStar: require('./emptyStar.png'),
+  filledStar: require('./filledStar.png'),
 };
 
 export {Icons};

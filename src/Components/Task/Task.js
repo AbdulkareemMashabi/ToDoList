@@ -107,7 +107,11 @@ export const Task = ({data, id, onPress}) => {
     <TouchableOpacity
       style={[styles.container, {...getShadow(color)}]}
       onPress={onPress}>
-      <View style={[styles.leftBlock, {backgroundColor: color}]} />
+      <View style={[styles.leftBlock, {backgroundColor: color}]}>
+        {data.favorite ? (
+          <Image source={Icons.filledStar} tintColor={'#EAB308'} />
+        ) : null}
+      </View>
       <View style={styles.taskSubTasksParent}>
         {mainTaskRender()}
         {subTasks?.length !== 0 ? <View style={styles.separator} /> : null}

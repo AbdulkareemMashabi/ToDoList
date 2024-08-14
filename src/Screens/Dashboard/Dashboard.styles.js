@@ -21,6 +21,9 @@ export default StyleSheet.create({
   deleteButton: {
     backgroundColor: 'rgba(255,236,236,0.25)',
   },
+  favoriteButton: {
+    backgroundColor: 'rgba(234, 179, 8, 0.10)',
+  },
   infoButton: {
     backgroundColor: 'rgba(50,173,230,0.05)',
   },

@@ -3,9 +3,10 @@ import {StyleSheet} from 'react-native';
 export default StyleSheet.create({
   container: {flexDirection: 'row', padding: 6},
   leftBlock: {
-    width: 20,
+    width: 25,
     borderTopLeftRadius: 16,
     borderBottomLeftRadius: 16,
+    justifyContent: 'center',
   },
   taskSubTasksParent: {
     flex: 1,

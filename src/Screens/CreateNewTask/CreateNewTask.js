@@ -10,7 +10,6 @@ import {
   setIsLoading,
 } from '../../helpers/Redux/mainReducer';
 import {
-  backgroundColors,
   handleAPIErrors,
   pagesNames,
   setTaskToCalendar,
@@ -20,7 +19,6 @@ import Container from '../../Components/Contianer/Container';
 import styles from './CreateNewTask.style';
 import {View} from 'react-native';
 import {setImageBackground} from './utils';
-import {CreateNewTaskImages} from '../../assets/CreateNewTaskImages';
 import OneLineToggle from '../../Components/OneLineToggle/OneLineToggle';
 
 export const CreateNewTask = ({navigation, route}) => {

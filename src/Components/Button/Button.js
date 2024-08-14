@@ -19,6 +19,7 @@ export const Button = ({
   boldText,
   icon,
   flipRTL,
+  tintColor,
 }) => {
   const isIcon = typeof source === 'number';
 
@@ -27,6 +28,12 @@ export const Button = ({
     else if (disabled) return 'grey';
     else if (variant === 'primary') return 'white';
     else return '#32ADE6';
+  };
+
+  const getImageColor = () => {
+    if (disabled) return 'grey';
+    else if (tintColor) return tintColor;
+    else null;
   };
 
   const contentRender = () => {
@@ -44,7 +51,7 @@ export const Button = ({
         <Image
           source={source}
           style={[contentStyle, styles.imageSize]}
-          tintColor={disabled ? 'grey' : null}
+          tintColor={getImageColor()}
         />
       );
     else if (variant === 'iconWithText')

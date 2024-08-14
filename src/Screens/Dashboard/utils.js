@@ -88,6 +88,7 @@ export const deleteSpecificDocument = async (userId, item, refreshing) => {
 export const getUserData = async setLoading => {
   try {
     setLoading(true);
+    let favoriteItem = null;
     const {userId} = store.getState().main;
     const documents = await getAllDocuments(userId);
     const reShapeDocuments = [];
@@ -95,7 +96,16 @@ export const getUserData = async setLoading => {
       reShapeDocuments.push({id: doc.id, data: doc.data()});
     });
     reShapeDocuments.reverse();
-    store.dispatch(setUserData(reShapeDocuments));
+
+    const newArrayData = reShapeDocuments.filter(item => {
+      const {favorite} = item?.data;
+      if (favorite) favoriteItem = item;
+      return !favorite;
+    });
+
+    if (favoriteItem) newArrayData.unshift(favoriteItem);
+
+    store.dispatch(setUserData(newArrayData));
   } catch (e) {
     handleAPIErrors(e);
   } finally {
