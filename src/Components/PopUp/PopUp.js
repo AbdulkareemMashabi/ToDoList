@@ -30,8 +30,9 @@ export const PopUp = ({navigation, route}) => {
         />
         <Button
           source={firstButtonTitle || 'common.confirm'}
-          onPress={() => {
-            confirmButton?.(dismissPopUp) || dismissPopUp();
+          onPress={async () => {
+            await confirmButton();
+            dismissPopUp();
           }}
           containerStyle={[
             styles.spaceBetweenItems,

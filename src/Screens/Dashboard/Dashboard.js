@@ -1,18 +1,16 @@
 import {useEffect, useState} from 'react';
 import {View, FlatList, AppState} from 'react-native';
-import Button from '../../Components/Button/Button';
-import {Icons} from '../../assets/Icons';
-import EmptyList from '../../Components/EmptyList/EmptyList';
-import {Images} from '../../assets/Images';
 import {pagesNames} from '../../helpers/utils';
 import {useSelector} from 'react-redux';
-import {deleteSpecificDocument, handleEnterFace} from './utils';
+import {handleEnterFace} from './utils';
 import styles from './Dashboard.styles';
 import Task from '../../Components/Task/Task';
 import Swipeable from '../../Components/Swipeable/Swipeable';
 import {getUserData} from './utils';
 import Container from '../../Components/Contianer/Container';
 import NetInfo from '@react-native-community/netinfo';
+import SwipeableButtons from './DashboardComponents/SwipeableButtons';
+import EmptyComponent from './DashboardComponents/EmptyComponent';
 
 export const Dashboard = ({navigation}) => {
   const [loading, setLoading] = useState(true);
@@ -54,6 +52,13 @@ export const Dashboard = ({navigation}) => {
     else return null;
   };
 
+  const onPressItem = itemId => {
+    navigation.navigate(pagesNames.taskDetailsScreen, {
+      documentId: itemId,
+      refreshing,
+    });
+  };
+
   return (
     <Container isLoading={loading} renderFooter={getRenderFooter()}>
       <FlatList
@@ -63,74 +68,31 @@ export const Dashboard = ({navigation}) => {
           refreshing();
         }}
         ListEmptyComponent={
-          <View style={styles.flex_1}>
-            <EmptyList
-              image={Images.emptyListPic}
-              title={'myWishesPage.emptyFormTitle'}
-              description={'myWishesPage.emptyFormTDescription'}
-            />
-            <Button
-              containerStyle={[styles.button, styles.plusButton]}
-              source={Icons.plus}
-              onPress={() => {
-                if (userId)
-                  navigation.push(pagesNames.createNewTask, {refreshing});
-                else
-                  navigation.push(pagesNames.login, {
-                    routing: () => {
-                      navigation.replace(pagesNames.createNewTask, {
-                        refreshing,
-                      });
-                    },
-                  });
-              }}
-            />
-          </View>
+          <EmptyComponent navigation={navigation} refreshing={refreshing} />
         }
         showsVerticalScrollIndicator={false}
         ItemSeparatorComponent={<View style={styles.separator} />}
         data={userData}
         renderItem={({item, index}) => {
-          const onPress = () => {
-            navigation.navigate(pagesNames.taskDetailsScreen, {
-              documentId: item.id,
-              refreshing,
-            });
-          };
           return (
             <View key={index}>
               <Swipeable
                 isSwipeableAtBegin={index === 0 && userData.length === 1}
                 renderAction={() => (
-                  <View style={styles.buttonsTaskContainer}>
-                    <Button
-                      containerStyle={[styles.button, styles.infoButton]}
-                      source={Icons.info}
-                      withoutShadow
-                      onPress={onPress}
-                    />
-                    <Button
-                      containerStyle={[styles.button, styles.deleteButton]}
-                      source={Icons.trash}
-                      withoutShadow
-                      onPress={() => {
-                        navigation.navigate(pagesNames.popUp, {
-                          title: 'myWishesPage.deletePopUpTitle',
-                          description: 'myWishesPage.deletePopUpDescription',
-                          confirmButton: dismissPopUp => {
-                            deleteSpecificDocument(
-                              userId,
-                              item,
-                              dismissPopUp,
-                              refreshing,
-                            );
-                          },
-                        });
-                      }}
-                    />
-                  </View>
+                  <SwipeableButtons
+                    onPressItem={onPressItem}
+                    navigation={navigation}
+                    item={item}
+                    refreshing={refreshing}
+                  />
                 )}>
-                <Task id={item.id} data={item.data} onPress={onPress} />
+                <Task
+                  id={item.id}
+                  data={item.data}
+                  onPress={() => {
+                    onPressItem(item.id);
+                  }}
+                />
               </Swipeable>
             </View>
           );

@@ -67,12 +67,7 @@ export const handleEnterFace = (navigation, userId) => {
   });
 };
 
-export const deleteSpecificDocument = async (
-  userId,
-  item,
-  closePopUp,
-  refreshing,
-) => {
+export const deleteSpecificDocument = async (userId, item, refreshing) => {
   try {
     store.dispatch(setIsLoadingOverLay(true));
     const {id, data} = item;
@@ -87,7 +82,6 @@ export const deleteSpecificDocument = async (
     handleAPIErrors(e);
   } finally {
     store.dispatch(setIsLoadingOverLay(false));
-    closePopUp?.();
   }
 };
 
