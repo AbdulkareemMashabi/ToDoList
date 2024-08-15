@@ -91,21 +91,21 @@ export const getUserData = async setLoading => {
     let favoriteItem = null;
     const {userId} = store.getState().main;
     const documents = await getAllDocuments(userId);
-    const reShapeDocuments = [];
+    let reShapeDocuments = [];
     documents.forEach(doc => {
       reShapeDocuments.push({id: doc.id, data: doc.data()});
     });
     reShapeDocuments.reverse();
 
-    const newArrayData = reShapeDocuments.filter(item => {
+    reShapeDocuments = reShapeDocuments.filter(item => {
       const {favorite} = item?.data;
       if (favorite) favoriteItem = item;
       return !favorite;
     });
 
-    if (favoriteItem) newArrayData.unshift(favoriteItem);
+    if (favoriteItem) reShapeDocuments.unshift(favoriteItem);
 
-    store.dispatch(setUserData(newArrayData));
+    store.dispatch(setUserData(reShapeDocuments));
   } catch (e) {
     handleAPIErrors(e);
   } finally {
