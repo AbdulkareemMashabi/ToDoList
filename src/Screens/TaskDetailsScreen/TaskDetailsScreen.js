@@ -4,6 +4,7 @@ import {
   RESULT_PERMISSION,
   handleAPIErrors,
   setInCalendar,
+  setSharedData,
   setTaskToCalendar,
 } from '../../helpers/utils';
 import {getSpecificDocument, updateDocuments} from '../../helpers/firebase';
@@ -93,14 +94,18 @@ export const TaskDetailsScreen = ({navigation, route}) => {
       try {
         const finalCalendarId = calendarId || calendar;
         dispatch(setIsLoadingOverLay(true));
-        await updateDocuments(userId, documentId, {
+        const newData = {
           ...formData,
           mainTask: {
             ...formData.mainTask,
             calendarId: finalCalendarId ? finalCalendarId : null,
           },
-        });
+        };
+        await updateDocuments(userId, documentId, newData);
         if (calendarId) showToast?.();
+        if (formData.favorite) {
+          setSharedData(newData);
+        }
         dispatch(setIsLoadingOverLay(false));
         navigation.goBack();
         refreshing();

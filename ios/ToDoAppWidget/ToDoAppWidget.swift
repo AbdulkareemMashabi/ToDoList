@@ -35,7 +35,7 @@ struct Provider: IntentTimelineProvider {
           }
         } else {
           let nextRefresh = Calendar.current.date(byAdding: .second, value: 5, to: entryDate)!
-          let entry = SimpleEntry(date: nextRefresh, configuration: configuration, themConfig: configuration.themeConfig, data: WidgetData(mainTask:  nil, subTasks: nil))
+          let entry = SimpleEntry(date: nextRefresh, configuration: configuration, themConfig: configuration.themeConfig, data: WidgetData())
           let timeline = Timeline(entries: [entry], policy: .never)
           
           
@@ -50,11 +50,23 @@ struct Provider: IntentTimelineProvider {
 struct Task: Decodable {
   let title: String
   let status: Bool
+  let date: String?
+  
+  init(title: String, status: Bool, date: String? = nil) {
+      self.title = title
+      self.status = status
+      self.date = date
+  }
 }
 
 struct WidgetData: Decodable {
   let mainTask: Task?
   let subTasks: [Task]?
+  
+  init(mainTask: Task? = nil, subTasks: [Task]? = nil) {
+      self.mainTask = mainTask
+      self.subTasks = subTasks
+  }
 }
 
 func defaultData() -> WidgetData {
@@ -78,7 +90,12 @@ func drawOneLine(_ task: Task,_ color: Color) -> some View {
             Circle().stroke(Color.blue, lineWidth: 4).frame(width: 18, height: 18)
         }
     }
-    Text(task.title).foregroundColor(color)
+    VStack{
+      Text(task.title).foregroundColor(color).bold()
+      if task.date != nil{
+        Text(task.date!).foregroundColor(color).font(.caption)
+      }
+    }
   }.frame(maxWidth: .infinity, alignment: .leading)
 }
 
