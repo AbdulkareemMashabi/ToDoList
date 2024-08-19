@@ -381,8 +381,6 @@ PODS:
   - React-jsinspector (0.72.6)
   - React-logger (0.72.6):
     - glog
-  - react-native-add-calendar-event (5.0.0):
-    - React-Core
   - react-native-date-picker (4.3.5):
     - React-Core
   - react-native-netinfo (11.3.0):
@@ -514,10 +512,21 @@ PODS:
     - React-Core
   - RNPermissions (4.1.5):
     - React-Core
+  - RNReactNativeSharedGroupPreferences (1.1.24):
+    - React
+  - RNReanimated (3.14.0):
+    - RCT-Folly (= 2021.07.22.00)
+    - React-Core
+    - ReactCommon/turbomodule/core
   - RNScreens (3.31.1):
     - RCT-Folly (= 2021.07.22.00)
     - React-Core
     - React-RCTImage
+  - RNSound (0.11.2):
+    - React-Core
+    - RNSound/Core (= 0.11.2)
+  - RNSound/Core (0.11.2):
+    - React-Core
   - SocketRocket (0.6.1)
   - Yoga (1.14.0)
   - YogaKit (1.18.1):
@@ -571,7 +580,6 @@ DEPENDENCIES:
   - React-jsiexecutor (from `../node_modules/react-native/ReactCommon/jsiexecutor`)
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector`)
   - React-logger (from `../node_modules/react-native/ReactCommon/logger`)
-  - react-native-add-calendar-event (from `../node_modules/react-native-add-calendar-event`)
   - react-native-date-picker (from `../node_modules/react-native-date-picker`)
   - "react-native-netinfo (from `../node_modules/@react-native-community/netinfo`)"
   - react-native-restart (from `../node_modules/react-native-restart`)
@@ -599,7 +607,10 @@ DEPENDENCIES:
   - RNDeviceInfo (from `../node_modules/react-native-device-info`)
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - RNPermissions (from `../node_modules/react-native-permissions`)
+  - RNReactNativeSharedGroupPreferences (from `../node_modules/react-native-shared-group-preferences`)
+  - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
+  - RNSound (from `../node_modules/react-native-sound`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
@@ -668,8 +679,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/jsinspector"
   React-logger:
     :path: "../node_modules/react-native/ReactCommon/logger"
-  react-native-add-calendar-event:
-    :path: "../node_modules/react-native-add-calendar-event"
   react-native-date-picker:
     :path: "../node_modules/react-native-date-picker"
   react-native-netinfo:
@@ -724,8 +733,14 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-gesture-handler"
   RNPermissions:
     :path: "../node_modules/react-native-permissions"
+  RNReactNativeSharedGroupPreferences:
+    :path: "../node_modules/react-native-shared-group-preferences"
+  RNReanimated:
+    :path: "../node_modules/react-native-reanimated"
   RNScreens:
     :path: "../node_modules/react-native-screens"
+  RNSound:
+    :path: "../node_modules/react-native-sound"
   Yoga:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
@@ -766,11 +781,10 @@ SPEC CHECKSUMS:
   React-jsiexecutor: 3bf18ff7cb03cd8dfdce08fbbc0d15058c1d71ae
   React-jsinspector: 194e32c6aab382d88713ad3dd0025c5f5c4ee072
   React-logger: cebf22b6cf43434e471dc561e5911b40ac01d289
-  react-native-add-calendar-event: b1b85599d2d9046a0368ab454b4959c7fb441c72
   react-native-date-picker: 90d1d60802a20085125657940b944f2bb4e5c113
   react-native-netinfo: 4d9fc0e592e253ec58258c47420bf44abce0d0b3
   react-native-restart: 325d6881a9996d88e3b35d0967d70842a3eaf713
-  react-native-safe-area-context: dcab599c527c2d7de2d76507a523d20a0b83823d
+  react-native-safe-area-context: d84fb7b437da22c1cb4965e5f08af2bb99bf317e
   React-NativeModulesApple: 02e35e9a51e10c6422f04f5e4076a7c02243fff2
   React-perflogger: e3596db7e753f51766bceadc061936ef1472edc3
   React-RCTActionSheet: 17ab132c748b4471012abbcdcf5befe860660485
@@ -789,16 +803,19 @@ SPEC CHECKSUMS:
   React-utils: fa59c9a3375fb6f4aeb66714fd3f7f76b43a9f16
   ReactCommon: dd03c17275c200496f346af93a7b94c53f3093a4
   RNBootSplash: d3873fac675a862da85443df5aa4d1d17c8e2d71
-  RNCalendarEvents: 7e65eb4a94f53c1744d1e275f7fafcfaa619f7a3
+  RNCalendarEvents: 99a07d9a74a62b5b423d8c9df04dc0b8f8b94faf
   RNCAsyncStorage: 1160d71197e7dd93690c031a1282d077064b9d72
   RNDeviceInfo: bb300ff0676edbaa26cc93e9690e670c86ab9609
   RNGestureHandler: 6e46dde1f87e5f018a54fe5d40cd0e0b942b49ee
   RNPermissions: 5b718fc8078637df487331a34e9d7b3e14a3e51d
+  RNReactNativeSharedGroupPreferences: 29092869fc2e40d5baca5e15d82fa5c24a668977
+  RNReanimated: 158b2f80fdb043ab5a645ba047209badbd7eb9a9
   RNScreens: 93ae3be2f119d955620f9bbb39ad372adb53b7a9
+  RNSound: 6c156f925295bdc83e8e422e7d8b38d33bc71852
   SocketRocket: f32cd54efbe0f095c4d7594881e52619cfe80b17
   Yoga: b76f1acfda8212aa16b7e26bcce3983230c82603
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
 PODFILE CHECKSUM: 29e478d4ea0008e9d422014591f2c5615829827c
 
-COCOAPODS: 1.12.0
+COCOAPODS: 1.15.2
