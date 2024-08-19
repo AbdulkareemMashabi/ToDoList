@@ -14,6 +14,7 @@ import RNCalendarEvents from 'react-native-calendar-events';
 import AndroidOpenSettings from 'react-native-android-open-settings';
 import {store} from './Redux/store';
 import SharedGroupPreferences from 'react-native-shared-group-preferences';
+import {STORAGE_KEY, APP_GROUP_KEY} from '@env';
 
 export const pagesNames = {
   lottie: 'Lottie',
@@ -207,10 +208,6 @@ export const setSharedData = async data => {
   if (Platform.OS !== 'ios') {
     return;
   }
-  await SharedGroupPreferences.setItem(
-    'toDoListAbdulkareem',
-    data || {},
-    'group.abdulkareemMashabi',
-  );
+  await SharedGroupPreferences.setItem(STORAGE_KEY, data || {}, APP_GROUP_KEY);
   reloadWidgetContent();
 };
