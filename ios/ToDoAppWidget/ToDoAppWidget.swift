@@ -87,27 +87,27 @@ struct ToDoAppWidgetEntryView : View {
 
 
   var body: some View {
-
+    let color = entry.themConfig  == ToDoThemeEnum.dark ? Color.white : Color.black
 
       ZStack{
         ContainerRelativeShape().fill(entry.themConfig  == ToDoThemeEnum.dark ? Color.black : Color.white)
         if (entry.data.mainTask != nil){
         VStack {
-          drawOneLine(entry.data.mainTask!,entry.themConfig  == ToDoThemeEnum.dark ? Color.white : Color.black)
+          drawOneLine(entry.data.mainTask!,color)
           if (entry.data.subTasks != nil && !entry.data.subTasks!.isEmpty){
             RoundedRectangle(cornerRadius: 16)
-              .fill(entry.themConfig  == ToDoThemeEnum.dark ? Color.white : Color.black)
+              .fill(color)
               .frame(height: 10)
             VStack{
               ForEach(entry.data.subTasks!, id: \.title) { item in
-                drawOneLine(item,entry.themConfig  == ToDoThemeEnum.dark ? Color.white : Color.black)
+                drawOneLine(item,color)
               }}.padding(.leading,8)
           }
           
         }.padding()
       }
         else {
-            Text("No Favorite Task Found").foregroundColor(entry.themConfig == ToDoThemeEnum.dark ? Color.white : Color.black)
+            Text("No Favorite Task Found").foregroundColor(color)
     }
 
     }
