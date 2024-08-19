@@ -1,5 +1,9 @@
 import {Icons} from '../../../assets/Icons';
-import {handleAPIErrors, pagesNames} from '../../../helpers/utils';
+import {
+  handleAPIErrors,
+  pagesNames,
+  setSharedData,
+} from '../../../helpers/utils';
 import {deleteSpecificDocument} from '../utils';
 
 import styles from '../Dashboard.styles';
@@ -24,11 +28,18 @@ export const SwipeableButtons = ({
     try {
       dispatch(setIsLoadingOverLay(true));
       const FavoriteIndex = userData.findIndex(item => item?.data?.favorite);
-      await updateDocuments(userId, item.id, {...item, favorite: true});
+
+      const favoriteItemData = item.data;
+      await updateDocuments(userId, item.id, {
+        ...favoriteItemData,
+        favorite: true,
+      });
+      setSharedData(favoriteItemData);
+
       if (FavoriteIndex !== -1) {
         const favoriteItem = userData[FavoriteIndex];
         await updateDocuments(userId, favoriteItem.id, {
-          ...favoriteItem,
+          ...favoriteItem.data,
           favorite: false,
         });
       }
@@ -43,7 +54,8 @@ export const SwipeableButtons = ({
   const convertToUnFavorite = async () => {
     try {
       dispatch(setIsLoadingOverLay(true));
-      await updateDocuments(userId, item.id, {...item, favorite: false});
+      await updateDocuments(userId, item.id, {...item.data, favorite: false});
+      setSharedData();
       refreshing();
     } catch (e) {
       handleAPIErrors(e);

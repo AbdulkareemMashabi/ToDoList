@@ -4,7 +4,12 @@ import Button from '../../Components/Button/Button';
 import {Icons} from '../../assets/Icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import RNRestart from 'react-native-restart';
-import {handleAPIErrors, pagesNames, showToast} from '../../helpers/utils';
+import {
+  handleAPIErrors,
+  pagesNames,
+  setSharedData,
+  showToast,
+} from '../../helpers/utils';
 import styles from './Dashboard.styles';
 import {deleteDocument, getAllDocuments} from '../../helpers/firebase';
 import {
@@ -71,12 +76,13 @@ export const deleteSpecificDocument = async (userId, item, refreshing) => {
   try {
     store.dispatch(setIsLoadingOverLay(true));
     const {id, data} = item;
-    const {mainTask} = data;
+    const {mainTask, favorite} = data;
     await deleteDocument(userId, id);
     if (mainTask?.calendarId) {
       await RNCalendarEvents.removeEvent(mainTask.calendarId);
     }
     showToast('myWishesPage.TaskDeletedSuccessfully');
+    if (favorite) setSharedData();
     refreshing();
   } catch (e) {
     handleAPIErrors(e);

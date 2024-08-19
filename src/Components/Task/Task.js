@@ -26,6 +26,7 @@ export const Task = ({data, id, onPress}) => {
       subTasks,
       color,
       setTasks,
+      favorite: data?.favorite,
     });
   };
 
@@ -37,6 +38,7 @@ export const Task = ({data, id, onPress}) => {
       subTasks,
       color,
       setTasks,
+      favorite: data?.favorite,
     });
   };
 
@@ -109,7 +111,11 @@ export const Task = ({data, id, onPress}) => {
       onPress={onPress}>
       <View style={[styles.leftBlock, {backgroundColor: color}]}>
         {data.favorite ? (
-          <Image source={Icons.filledStar} tintColor={'#EAB308'} />
+          <Image
+            source={Icons.filledStar}
+            tintColor={'#dbdb07'}
+            style={styles.imageSize}
+          />
         ) : null}
       </View>
       <View style={styles.taskSubTasksParent}>

@@ -1,4 +1,11 @@
-import {Alert, Image, Linking, Platform, View} from 'react-native';
+import {
+  Alert,
+  Image,
+  Linking,
+  Platform,
+  View,
+  NativeModules,
+} from 'react-native';
 import Locale from './localization';
 import {Icons} from '../assets/Icons';
 import Text from '../Components/Text/Text';
@@ -6,6 +13,7 @@ import Toast from 'react-native-toast-message';
 import RNCalendarEvents from 'react-native-calendar-events';
 import AndroidOpenSettings from 'react-native-android-open-settings';
 import {store} from './Redux/store';
+import SharedGroupPreferences from 'react-native-shared-group-preferences';
 
 export const pagesNames = {
   lottie: 'Lottie',
@@ -189,4 +197,20 @@ export const checkIfSelectedIsTodayDate = date => {
 
 export const dispatch = v => {
   store.dispatch(v);
+};
+
+export const reloadWidgetContent = () => {
+  NativeModules.WidgetRefresh.refreshWidget();
+};
+
+export const setSharedData = async data => {
+  if (Platform.OS !== 'ios') {
+    return;
+  }
+  await SharedGroupPreferences.setItem(
+    'toDoListAbdulkareem',
+    data || {},
+    'group.abdulkareemMashabi',
+  );
+  reloadWidgetContent();
 };

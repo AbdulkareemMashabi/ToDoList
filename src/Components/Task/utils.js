@@ -9,6 +9,7 @@ import {
   dispatch,
   handleAPIErrors,
   isNil,
+  setSharedData,
 } from '../../helpers/utils';
 import moment from 'moment';
 import Sound from 'react-native-sound';
@@ -70,6 +71,7 @@ export const updateStatus = async ({
   documentId,
   color,
   setTasks,
+  favorite,
 }) => {
   try {
     dispatch(setIsLoadingOverLay(true));
@@ -106,9 +108,15 @@ export const updateStatus = async ({
       };
 
     await updateDocuments(userId, documentId, finalValues);
+    const newData = {mainTask, subTasks, ...finalValues};
+
+    if (favorite) {
+      setSharedData(newData);
+    }
+
     playSoundAndLottie(finalValues.mainTask?.status);
 
-    setTasks({mainTask, subTasks, ...finalValues}); // update locally
+    setTasks(newData); // update locally
     dispatch(setIsLoadingOverLay(false));
   } catch (e) {
     handleAPIErrors(e);

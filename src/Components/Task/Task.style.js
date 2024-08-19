@@ -7,6 +7,7 @@ export default StyleSheet.create({
     borderTopLeftRadius: 16,
     borderBottomLeftRadius: 16,
     justifyContent: 'center',
+    alignItems: 'center',
   },
   taskSubTasksParent: {
     flex: 1,
@@ -54,5 +55,9 @@ export default StyleSheet.create({
   },
   lottie: {
     ...StyleSheet.absoluteFillObject,
+  },
+  imageSize: {
+    width: 20,
+    height: 20,
   },
 });
