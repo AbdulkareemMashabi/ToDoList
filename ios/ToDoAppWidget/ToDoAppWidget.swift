@@ -80,14 +80,59 @@ struct SimpleEntry: TimelineEntry {
     let data: WidgetData
 }
 
+enum Colors {
+    static let orange = Color.orange
+    static let green = Color.green
+    static let red = Color.red
+}
+
+func getBorderColor(date: String?, status: Bool) -> Color {
+    if date == nil {
+        return status ? Colors.green : Colors.orange
+    }
+    
+    guard let days = getDateDifference(date: date!) else {
+        return Colors.orange  // Default color if date parsing fails
+    }
+    
+    if days >= 0 && !status {
+        return Colors.orange
+    } else if days < 0 && !status {
+        return Colors.red
+    } else {
+        return Colors.green
+    }
+}
+
+func getBorderColorSubTask(status: Bool) -> Color {
+    return status ? Colors.green : Colors.orange
+}
+
+func getDateDifference(date: String) -> Int? {
+    let dateFormatter = DateFormatter()
+    dateFormatter.dateFormat = "dd/MM/yyyy"
+    
+    guard let endDate = dateFormatter.date(from: date) else {
+        return nil
+    }
+    
+    let startDate = Calendar.current.startOfDay(for: Date())
+    
+    let components = Calendar.current.dateComponents([.day], from: startDate, to: endDate)
+  
+    return components.day
+}
+
 func drawOneLine(_ task: Task,_ color: Color) -> some View {
+  let circleColor = (task.date != nil) ? getBorderColor(date: task.date, status: task.status) : getBorderColorSubTask(status: task.status)
+  
   
   return HStack(alignment: .center){
     Group {
         if task.status {
             Image("checkMark").resizable().frame(width: 24, height: 24)
         } else {
-            Circle().stroke(Color.blue, lineWidth: 4).frame(width: 18, height: 18)
+            Circle().stroke(circleColor, lineWidth: 4).frame(width: 18, height: 18)
         }
     }
     VStack{

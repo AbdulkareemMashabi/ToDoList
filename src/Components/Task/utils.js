@@ -53,15 +53,20 @@ export const getBorderColorSubTask = status => {
 };
 
 export const getDateDifference = date => {
-  const startDate = new Date();
-  startDate.setHours(0, 0, 0, 0);
+  const startDate = new Date(moment().format('YYYY-MM-DD'));
   const dataObject = date.split('/');
   const endDate = new Date(
     moment(`${dataObject[2]}-${dataObject[1]}-${dataObject[0]}`).format(
       'YYYY-MM-DD',
     ),
   );
-  return endDate - startDate;
+
+  const differenceInMill = endDate - startDate;
+  const differenceInDays = differenceInMill / (1000 * 60 * 60 * 24);
+
+  console.log(startDate, endDate, differenceInDays);
+
+  return Math.floor(differenceInDays);
 };
 
 export const updateStatus = async ({
