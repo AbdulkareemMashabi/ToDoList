@@ -15,6 +15,12 @@ import AndroidOpenSettings from 'react-native-android-open-settings';
 import {store} from './Redux/store';
 import SharedGroupPreferences from 'react-native-shared-group-preferences';
 import {STORAGE_KEY, APP_GROUP_KEY} from '@env';
+import {
+  PERMISSIONS,
+  RESULTS,
+  requestMultiple,
+  checkMultiple,
+} from 'react-native-permissions';
 
 export const pagesNames = {
   lottie: 'Lottie',
@@ -200,14 +206,67 @@ export const dispatch = v => {
   store.dispatch(v);
 };
 
-export const reloadWidgetContent = () => {
+export const reloadWidgetContentIOS = async () => {
   NativeModules.WidgetRefresh.refreshWidget();
 };
 
-export const setSharedData = async data => {
-  if (Platform.OS !== 'ios') {
-    return;
-  }
+export const reloadWidgetContentAndroid = async data => {
+  NativeModules.RNSharedWidget.setData(STORAGE_KEY, JSON.stringify(data));
+};
+
+const setDataInStorage = async data => {
   await SharedGroupPreferences.setItem(STORAGE_KEY, data || {}, APP_GROUP_KEY);
-  reloadWidgetContent();
+};
+
+export const setSharedData = async data => {
+  if (Platform.OS === 'ios') {
+    setDataInStorage(data);
+    reloadWidgetContentIOS();
+  } else {
+    await checkWidgetPermission();
+    reloadWidgetContentAndroid(data);
+  }
+};
+
+const requestAndroidPermissions = async () => {
+  return requestMultiple([
+    PERMISSIONS.ANDROID.WRITE_EXTERNAL_STORAGE,
+    PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE,
+  ])
+    .then(async result => {
+      if (
+        result['android.permission.READ_EXTERNAL_STORAGE'] ===
+          RESULTS.GRANTED &&
+        result['android.permission.WRITE_EXTERNAL_STORAGE'] === RESULTS.GRANTED
+      ) {
+        return true;
+      }
+    })
+    .catch(error => {
+      // …
+    });
+};
+
+const checkWidgetPermission = async () => {
+  return checkMultiple([
+    PERMISSIONS.ANDROID.WRITE_EXTERNAL_STORAGE,
+    PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE,
+  ])
+    .then(async result => {
+      if (
+        result['android.permission.READ_EXTERNAL_STORAGE'] ===
+          RESULTS.GRANTED &&
+        result['android.permission.WRITE_EXTERNAL_STORAGE'] === RESULTS.GRANTED
+      ) {
+        return true;
+      } else if (
+        result['android.permission.READ_EXTERNAL_STORAGE'] === RESULTS.DENIED ||
+        result['android.permission.WRITE_EXTERNAL_STORAGE'] === RESULTS.DENIED
+      ) {
+        return await requestAndroidPermissions();
+      }
+    })
+    .catch(error => {
+      // …
+    });
 };
