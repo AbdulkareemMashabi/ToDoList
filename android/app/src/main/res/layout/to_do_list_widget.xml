@@ -4,6 +4,7 @@ android:layout_height="wrap_content"
 android:orientation="horizontal"
     style="@style/Widget.ToDoList.AppWidget.Container"
     android:theme="@style/AppTheme.AppWidgetContainer"
+    android:id="@+id/root"
     >
 
     <ImageView
