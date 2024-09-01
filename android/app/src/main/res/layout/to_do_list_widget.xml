@@ -11,7 +11,9 @@ android:orientation="horizontal"
         android:id="@+id/imageView"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:src="@drawable/baseline_pending_actions_24"
+        />
 
 <TextView
     android:textStyle="bold"
