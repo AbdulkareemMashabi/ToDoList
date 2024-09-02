@@ -64,8 +64,6 @@ export const getDateDifference = date => {
   const differenceInMill = endDate - startDate;
   const differenceInDays = differenceInMill / (1000 * 60 * 60 * 24);
 
-  console.log(startDate, endDate, differenceInDays);
-
   return Math.floor(differenceInDays);
 };
 
