@@ -211,7 +211,12 @@ export const reloadWidgetContentIOS = async () => {
 };
 
 export const reloadWidgetContentAndroid = async data => {
-  NativeModules.RNSharedWidget.setData(STORAGE_KEY, JSON.stringify(data || {}));
+  NativeModules.RNSharedWidget.setData(
+    STORAGE_KEY,
+    JSON.stringify(
+      data || {mainTask: {title: '', date: '', status: 'false'}, subTasks: []},
+    ),
+  );
 };
 
 const setDataInStorage = async data => {
