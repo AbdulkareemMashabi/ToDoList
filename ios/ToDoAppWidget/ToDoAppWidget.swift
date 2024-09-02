@@ -169,7 +169,9 @@ struct ToDoAppWidgetEntryView : View {
         }.padding()
       }
         else {
-            Text("No Favorite Task Found").foregroundColor(color)
+          let currentLanguage = Locale.preferredLanguages.first ?? "en"
+          let title = currentLanguage.contains("ar") ? "لم يتم العثور على مهمات مفضلة" : "No Favorite Task Found"
+            Text(title).foregroundColor(color)
     }
 
     }
