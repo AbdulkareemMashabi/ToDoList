@@ -31,18 +31,8 @@ struct Provider: IntentTimelineProvider {
             let entry = SimpleEntry(date: nextUpdateDate, configuration: configuration, themConfig: configuration.themeConfig ,data: parsedData, isArabic: isArabic())
             let timeline = Timeline(entries: [entry], policy: .atEnd)
             completion(timeline)
-          } else {
-            print("Could not parse data")
-          }
-        } else {
-          let nextRefresh = Calendar.current.date(byAdding: .second, value: 5, to: entryDate)!
-          let entry = SimpleEntry(date: nextRefresh, configuration: configuration, themConfig: configuration.themeConfig, data: WidgetData(), isArabic: isArabic())
-          let timeline = Timeline(entries: [entry], policy: .never)
-          
-          
-          completion(timeline)
-          
-        }
+          } 
+        } 
       }
       
     }
