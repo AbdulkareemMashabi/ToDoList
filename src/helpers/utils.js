@@ -85,7 +85,7 @@ export const toastConfig = {
           borderRadius: 16,
           paddingVertical: 6,
           paddingHorizontal: 10,
-          marginHorizontal: 20,
+          margin: 20,
         }}>
         <Image
           source={props.props.image || Icons.checkMark}
