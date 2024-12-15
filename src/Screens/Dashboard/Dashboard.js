@@ -1,5 +1,5 @@
 import {useEffect, useState} from 'react';
-import {View, FlatList, AppState} from 'react-native';
+import {View, FlatList, AppState, RefreshControl} from 'react-native';
 import {pagesNames} from '../../helpers/utils';
 import {useSelector} from 'react-redux';
 import {handleEnterFace} from './utils';
@@ -62,12 +62,16 @@ export const Dashboard = ({navigation}) => {
   return (
     <Container isLoading={loading} renderFooter={getRenderFooter()}>
       <FlatList
-        scrollEnabled={!!userId}
         contentContainerStyle={styles.flatList}
-        refreshing={loading}
-        onRefresh={() => {
-          refreshing();
-        }}
+        refreshControl={
+          <RefreshControl
+            refreshing={loading}
+            onRefresh={() => {
+              refreshing();
+            }}
+            enabled={!!userId}
+          />
+        }
         ListEmptyComponent={
           <EmptyComponent navigation={navigation} refreshing={refreshing} />
         }
