@@ -15,7 +15,7 @@ export const getScreenOptions = (navigation, currentPage) => ({
     currentPage !== pagesNames.dashboard
       ? () => (
           <Button
-            flipRTL
+            flipRTL={Platform.OS === 'ios'}
             source={Platform.OS === 'ios' ? Icons.backButton : Icons.arrow}
             onPress={() => {
               navigation.goBack();
