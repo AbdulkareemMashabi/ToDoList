@@ -4,6 +4,7 @@ import Text from '../Text/Text';
 import {getShadow} from '../../helpers/shadow';
 
 import styles from './Button.style';
+import Locale from '../../helpers/localization';
 
 export const Button = ({
   source,
@@ -86,7 +87,7 @@ export const Button = ({
       <TouchableOpacity
         activeOpacity={disabled ? 1 : 0.2}
         style={[
-          flipRTL ? styles.flipRTL : null,
+          flipRTL && Locale.isRTL ? styles.flipRTL : null,
           !isIcon && variant === 'primary' ? styles.container : null,
           containerStyle,
           variant === 'primary' && disabled ? styles.disabled : null,
