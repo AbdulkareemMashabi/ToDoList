@@ -4,6 +4,7 @@ import Button from '../Components/Button/Button';
 import {pagesNames} from '../helpers/utils';
 import styles from './App.style';
 import {Icons} from '../assets/Icons';
+import Locale from '../helpers/localization';
 
 export const getScreenOptions = (navigation, currentPage) => ({
   headerTitleAlign: 'center',
@@ -15,7 +16,7 @@ export const getScreenOptions = (navigation, currentPage) => ({
     currentPage !== pagesNames.dashboard
       ? () => (
           <Button
-            flipRTL={Platform.OS === 'ios'}
+            flipRTL={Platform.OS === 'ios' && Locale.isRTL}
             source={Platform.OS === 'ios' ? Icons.backButton : Icons.arrow}
             onPress={() => {
               navigation.goBack();

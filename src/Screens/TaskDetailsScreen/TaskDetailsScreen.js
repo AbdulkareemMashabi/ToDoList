@@ -58,7 +58,7 @@ export const TaskDetailsScreen = ({navigation, route}) => {
       },
       headerLeft: () => (
         <Button
-          flipRTL={Platform.OS === 'ios'}
+          flipRTL={Platform.OS === 'ios' && Locale.isRTL}
           source={Platform.OS === 'ios' ? Icons.backButton : Icons.arrow}
           onPress={setCalendarFun}
         />
