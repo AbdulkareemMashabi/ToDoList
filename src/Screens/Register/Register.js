@@ -2,14 +2,12 @@ import Locale from '../../helpers/localization';
 import Text from '../../Components/Text/Text';
 import Form from '../../Components/Form/Form';
 import * as Yup from 'yup';
-import {createUserWithEmailAndPassword} from 'firebase/auth';
-import {auth} from '../../helpers/firebase';
 import {useDispatch} from 'react-redux';
-import {setIsLoading, setUserId} from '../../helpers/Redux/mainReducer';
+import {setIsLoading} from '../../helpers/Redux/mainReducer';
 import {handleAPIErrors, pagesNames, showToast} from '../../helpers/utils';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import Container from '../../Components/Contianer/Container';
 import {Images} from '../../assets/Images';
+import {signUp} from '../../helpers/authServices';
 
 export const Register = ({navigation}) => {
   const dispatch = useDispatch();
@@ -29,17 +27,10 @@ export const Register = ({navigation}) => {
   const onSubmit = async values => {
     try {
       dispatch(setIsLoading(true));
-      const userCredential = await createUserWithEmailAndPassword(
-        auth,
-        values.email,
-        values.password,
-      );
-      const userId = userCredential.user.uid;
-      await AsyncStorage.setItem('userId', userId);
-      dispatch(setUserId(userId));
+      await signUp(values, navigation);
       showToast('register.registeredSuccessfully');
       dispatch(setIsLoading(false));
-      navigation.navigate(pagesNames.dashboard);
+      navigation.navigate(pagesNames.login);
     } catch (e) {
       handleAPIErrors(e);
       dispatch(setIsLoading(false));
