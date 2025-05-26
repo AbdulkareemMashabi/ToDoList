@@ -12,7 +12,7 @@ import {
   storeToken,
 } from '../../helpers/utils';
 import styles from './Dashboard.styles';
-import {deleteDocument, getAllDocuments} from '../../helpers/firebase';
+import {deleteDocument} from '../../helpers/firebase';
 import {
   setIsLoadingOverLay,
   setUserData,
