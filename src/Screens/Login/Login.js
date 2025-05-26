@@ -5,21 +5,16 @@ import Form from '../../Components/Form/Form';
 import * as Yup from 'yup';
 import Button from '../../Components/Button/Button';
 import {handleAPIErrors, pagesNames, showToast} from '../../helpers/utils';
-import {signInWithEmailAndPassword} from 'firebase/auth';
-import {auth} from '../../helpers/firebase';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useDispatch} from 'react-redux';
 import {
-  setIsDeviceId,
   setIsLoading,
   setIsLoadingOverLay,
-  setUserId,
 } from '../../helpers/Redux/mainReducer';
 import Container from '../../Components/Contianer/Container';
 import styles from './Login.style';
 import {Icons} from '../../assets/Icons';
 import {Images} from '../../assets/Images';
-import {getUniqueId} from 'react-native-device-info';
+import {login, signUpWithId} from '../../helpers/authServices';
 
 export const Login = ({navigation, route}) => {
   const dispatch = useDispatch();
@@ -47,20 +42,17 @@ export const Login = ({navigation, route}) => {
 
   const routing = () => {
     if (route?.params?.routing) route.params.routing();
-    else navigation.navigate(pagesNames.dashboard);
+    else
+      navigation.reset({
+        index: 0, // Set the first screen in the stack
+        routes: [{name: pagesNames.dashboard}], // Replace stack with "Home" screen
+      });
   };
 
   const onSubmit = async values => {
     try {
       dispatch(setIsLoading(true));
-      const userCredential = await signInWithEmailAndPassword(
-        auth,
-        values.email,
-        values.password,
-      );
-      const userId = userCredential.user.uid;
-      await AsyncStorage.setItem('userId', userId);
-      dispatch(setUserId(userId));
+      await login(values, navigation);
       showToast('loginPage.loginSuccessfully');
       dispatch(setIsLoading(false));
       routing();
@@ -71,15 +63,16 @@ export const Login = ({navigation, route}) => {
   };
 
   const guestLogin = async () => {
-    dispatch(setIsLoadingOverLay(true));
-    const deviceId = await getUniqueId();
-    await AsyncStorage.setItem('userId', deviceId);
-    await AsyncStorage.setItem('guestLogin', 'true');
-    dispatch(setIsDeviceId());
-    dispatch(setUserId(deviceId));
-    dispatch(setIsLoadingOverLay(false));
-    showToast('loginPage.loginSuccessfully');
-    routing();
+    try {
+      dispatch(setIsLoadingOverLay(true));
+      await signUpWithId(navigation);
+      dispatch(setIsLoadingOverLay(false));
+      showToast('loginPage.loginSuccessfully');
+      routing();
+    } catch (e) {
+      handleAPIErrors(e);
+      dispatch(setIsLoadingOverLay(false));
+    }
   };
 
   return (
