@@ -70,6 +70,15 @@ export const App = () => {
             }}
           />
           <Stack.Screen
+            name={pagesNames.nonDismissibleLoginModal}
+            component={Login}
+            options={{
+              presentation: 'modal', // Shows as a modal
+              gestureEnabled: false, // Prevent swipe-to-close
+              headerShown: false, // Hide header
+            }}
+          />
+          <Stack.Screen
             name={pagesNames.login}
             component={Login}
             options={{title: Locale.t('pagesNames.login')}}
