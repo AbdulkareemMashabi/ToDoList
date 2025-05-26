@@ -21,6 +21,8 @@ import {
   requestMultiple,
   checkMultiple,
 } from 'react-native-permissions';
+import EncryptedStorage from 'react-native-encrypted-storage';
+import {setToken} from './Redux/mainReducer';
 
 export const pagesNames = {
   lottie: 'Lottie',
@@ -32,6 +34,7 @@ export const pagesNames = {
   taskDetailsScreen: 'TaskDetailsScreen',
   popUp: 'PopUp',
   deleteAccount: 'deleteAccount',
+  nonDismissibleLoginModal: 'nonDismissibleLoginModal',
 };
 
 export const pagesUseWaveImage = [
@@ -67,7 +70,7 @@ export const shadowColors = {
 };
 
 export const handleAPIErrors = error => {
-  const message = errorMessages?.[error?.code?.split('/')[1]];
+  const message = errorMessages?.[error?.code?.split('/')[1]] || error?.message;
   Alert.alert(
     Locale.t('common.errorOccurred'),
     Locale.t(message || 'APIErrorMessages.generalError'),
@@ -274,4 +277,26 @@ const checkWidgetPermission = async () => {
     .catch(error => {
       // …
     });
+};
+
+export const validateAuthentication = async ({res, navigation}) => {
+  if (res?.status === 401) {
+    navigation.navigate(pagesNames.nonDismissibleLoginModal, {nonHide: true});
+    throw new Error('loginPage.sessionEnd');
+  } else if (![200, 201].includes(res?.status)) {
+    const {message} = res.json();
+    throw new Error(message);
+  } else {
+    return await res?.json();
+  }
+};
+
+export const storeToken = async token => {
+  const dispatch = store.dispatch;
+  dispatch(setToken(token));
+  return await EncryptedStorage.setItem('authToken', token);
+};
+
+export const readToken = async () => {
+  return await EncryptedStorage.getItem('authToken');
 };
