@@ -1,5 +1,5 @@
 import LottieView from 'lottie-react-native';
-import {pagesNames} from '../../helpers/utils';
+import {pagesNames, readToken} from '../../helpers/utils';
 import Container from '../../Components/Contianer/Container';
 import {useEffect, useState} from 'react';
 import Locale from '../../helpers/localization';
@@ -12,6 +12,7 @@ import {useDispatch} from 'react-redux';
 import {
   setIsDeviceId,
   setIsLoading,
+  setToken,
   setUserId,
 } from '../../helpers/Redux/mainReducer';
 import BootSplash from 'react-native-bootsplash';
@@ -24,7 +25,7 @@ export const Lottie = ({navigation}) => {
   useEffect(() => {
     const init = async () => {
       getUserLanguage();
-      getUserId();
+      getToken();
     };
 
     init().finally(async () => {
@@ -65,12 +66,10 @@ export const Lottie = ({navigation}) => {
     }
   };
 
-  const getUserId = async () => {
+  const getToken = async () => {
     dispatch(setIsLoading(true));
-    const userId = await AsyncStorage.getItem('userId');
-    const isDeviceId = await AsyncStorage.getItem('guestLogin');
-    if (isDeviceId) dispatch(setIsDeviceId());
-    dispatch(setUserId(userId));
+    const token = await readToken();
+    dispatch(setToken(token));
     dispatch(setIsLoading(false));
   };
 
