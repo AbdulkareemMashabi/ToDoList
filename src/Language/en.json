@@ -17,7 +17,8 @@
     "description": "Login here to save your wishes to the cloud",
     "login": "Login",
     "forgetPassword": "Forget Password",
-    "loginSuccessfully": "You have been logged in successfully"
+    "loginSuccessfully": "You have been logged in successfully",
+    "sessionEnd": "Session has expired. Please log in again to continue."
   },
   "common": {
     "userName": "Username",
