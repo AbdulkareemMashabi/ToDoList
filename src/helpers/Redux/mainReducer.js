@@ -9,6 +9,7 @@ const initialState = {
   userData: {},
   isDeviceId: false,
   enableDoneLottie: false,
+  token: null,
 };
 
 export const mainReducer = createSlice({
@@ -23,6 +24,9 @@ export const mainReducer = createSlice({
     },
     setUserId: (state, action) => {
       state.userId = action.payload;
+    },
+    setToken: (state, action) => {
+      state.token = action.payload;
     },
     setBackgroundColor: (state, action) => {
       state.backgroundColor = action.payload;
@@ -55,6 +59,7 @@ export const {
   resetCreateNewTaskBackgrounds,
   setIsDeviceId,
   setEnableDoneLottie,
+  setToken,
 } = mainReducer.actions;
 
 export default mainReducer.reducer;
