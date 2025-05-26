@@ -14,17 +14,17 @@ import EmptyComponent from './DashboardComponents/EmptyComponent';
 
 export const Dashboard = ({navigation}) => {
   const [loading, setLoading] = useState(true);
-  const {userId} = useSelector(state => state.main);
+  const {token} = useSelector(state => state.main);
   const {userData} = useSelector(state => state.main);
 
   useEffect(() => {
-    handleEnterFace(navigation, userId);
-    if (userId) refreshing();
+    handleEnterFace(navigation, token);
+    if (token) refreshing();
     else setLoading(false);
-  }, [userId]);
+  }, [token]);
 
   const refreshing = () => {
-    getUserData(setLoading);
+    getUserData(setLoading, navigation);
   };
 
   useEffect(() => {
@@ -69,7 +69,7 @@ export const Dashboard = ({navigation}) => {
             onRefresh={() => {
               refreshing();
             }}
-            enabled={!!userId}
+            enabled={!!token}
           />
         }
         ListEmptyComponent={
