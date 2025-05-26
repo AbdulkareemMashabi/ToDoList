@@ -9,6 +9,7 @@ import {
   pagesNames,
   setSharedData,
   showToast,
+  storeToken,
 } from '../../helpers/utils';
 import styles from './Dashboard.styles';
 import {deleteDocument, getAllDocuments} from '../../helpers/firebase';
@@ -18,8 +19,9 @@ import {
 } from '../../helpers/Redux/mainReducer';
 import {store} from '../../helpers/Redux/store';
 import RNCalendarEvents from 'react-native-calendar-events';
+import {getAllTasks} from '../../helpers/taskServices';
 
-export const handleEnterFace = (navigation, userId) => {
+export const handleEnterFace = (navigation, token) => {
   navigation.setOptions({
     headerRight: () => (
       <View style={styles.buttonsContainer}>
@@ -45,15 +47,14 @@ export const handleEnterFace = (navigation, userId) => {
             }
           }}
         />
-        {userId ? (
+        {token ? (
           <Button
             source={Icons.logOut}
             onPress={async () => {
               navigation.navigate(pagesNames.popUp, {
                 title: 'myWishesPage.logOut',
                 confirmButton: async () => {
-                  await AsyncStorage.setItem('userId', '');
-                  await AsyncStorage.setItem('guestLogin', '');
+                  await storeToken('');
                   RNRestart.restart();
                 },
               });
@@ -91,27 +92,12 @@ export const deleteSpecificDocument = async (userId, item, refreshing) => {
   }
 };
 
-export const getUserData = async setLoading => {
+export const getUserData = async (setLoading, navigation) => {
   try {
     setLoading(true);
-    let favoriteItem = null;
-    const {userId} = store.getState().main;
-    const documents = await getAllDocuments(userId);
-    let reShapeDocuments = [];
-    documents.forEach(doc => {
-      reShapeDocuments.push({id: doc.id, data: doc.data()});
-    });
-    reShapeDocuments.reverse();
+    const result = await getAllTasks(navigation);
 
-    reShapeDocuments = reShapeDocuments.filter(item => {
-      const {favorite} = item?.data;
-      if (favorite) favoriteItem = item;
-      return !favorite;
-    });
-
-    if (favoriteItem) reShapeDocuments.unshift(favoriteItem);
-
-    store.dispatch(setUserData(reShapeDocuments));
+    store.dispatch(setUserData(result?.data));
   } catch (e) {
     handleAPIErrors(e);
   } finally {
