@@ -2,13 +2,12 @@ import Locale from '../../helpers/localization';
 import Text from '../../Components/Text/Text';
 import Form from '../../Components/Form/Form';
 import * as Yup from 'yup';
-import {deleteUser, getAuth, signInWithEmailAndPassword} from 'firebase/auth';
 import {handleAPIErrors, showToast} from '../../helpers/utils';
 import {useDispatch} from 'react-redux';
 import {setIsLoading} from '../../helpers/Redux/mainReducer';
-import {auth} from '../../helpers/firebase';
 import Container from '../../Components/Contianer/Container';
 import {Images} from '../../assets/Images';
+import {deleteAccount, login} from '../../helpers/authServices';
 
 export const AccountDeletion = ({navigation}) => {
   const dispatch = useDispatch();
@@ -23,10 +22,8 @@ export const AccountDeletion = ({navigation}) => {
   const onSubmit = async values => {
     try {
       dispatch(setIsLoading(true));
-      await signInWithEmailAndPassword(auth, values.email, values.password);
-      const _auth = getAuth();
-      const user = _auth.currentUser;
-      await deleteUser(user);
+      await login(values, navigation);
+      await deleteAccount(navigation);
       showToast('accountDeletion.successfulDeletion');
       navigation.goBack();
     } catch (e) {
