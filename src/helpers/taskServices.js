@@ -5,9 +5,33 @@ export const getAllTasks = async navigation => {
   return await fetch('http://10.0.2.2:8080/task/list', {
     method: 'GET',
     headers: {
+      Authorization: 'Bearer ' + token,
+    },
+  })
+    .then(async res => {
+      return await validateAuthentication({navigation, res});
+    })
+    .catch(error => {
+      throw error;
+    });
+};
+
+export const createTask = async (data, navigation) => {
+  const {title, date, description, calendarId, color} = data || {};
+  const token = await readToken();
+  return await fetch('http://10.0.2.2:8080/task/create-task', {
+    method: 'POST',
+    headers: {
       'Content-Type': 'application/json',
       Authorization: 'Bearer ' + token,
     },
+    body: JSON.stringify({
+      title,
+      date,
+      description,
+      calendarId,
+      color,
+    }),
   })
     .then(async res => {
       return await validateAuthentication({navigation, res});
