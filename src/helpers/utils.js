@@ -281,6 +281,7 @@ const checkWidgetPermission = async () => {
 
 export const validateAuthentication = async ({res, navigation}) => {
   if (res?.status === 401) {
+    await storeToken('');
     navigation.navigate(pagesNames.nonDismissibleLoginModal, {nonHide: true});
     throw new Error('loginPage.sessionEnd');
   } else if (![200, 201].includes(res?.status)) {
