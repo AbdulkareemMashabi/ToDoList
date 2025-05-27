@@ -9,12 +9,7 @@ import {Alert, I18nManager} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import RNRestart from 'react-native-restart';
 import {useDispatch} from 'react-redux';
-import {
-  setIsDeviceId,
-  setIsLoading,
-  setToken,
-  setUserId,
-} from '../../helpers/Redux/mainReducer';
+import {setIsLoading, setToken} from '../../helpers/Redux/mainReducer';
 import BootSplash from 'react-native-bootsplash';
 
 import styles from './Lottie.style';
