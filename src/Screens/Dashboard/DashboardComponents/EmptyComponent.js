@@ -10,7 +10,7 @@ import {useSelector} from 'react-redux';
 import Button from '../../../Components/Button/Button';
 
 export const EmptyComponent = ({navigation, refreshing}) => {
-  const {userId} = useSelector(state => state.main);
+  const {token} = useSelector(state => state.main);
 
   return (
     <View style={styles.flex_1}>
@@ -23,7 +23,7 @@ export const EmptyComponent = ({navigation, refreshing}) => {
         containerStyle={[styles.button, styles.plusButton]}
         source={Icons.plus}
         onPress={() => {
-          if (userId) navigation.push(pagesNames.createNewTask, {refreshing});
+          if (token) navigation.push(pagesNames.createNewTask, {refreshing});
           else
             navigation.push(pagesNames.login, {
               routing: () => {
