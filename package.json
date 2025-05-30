@@ -40,7 +40,7 @@
     "react-native-shared-group-preferences": "^1.1.24",
     "react-native-shimmer-placeholder": "^2.0.9",
     "react-native-sound": "^0.11.2",
-    "react-native-toast-message": "^2.1.8",
+    "react-native-toast-message": "^2.3.0",
     "react-redux": "^8.1.3",
     "yup": "^1.3.2"
   },
