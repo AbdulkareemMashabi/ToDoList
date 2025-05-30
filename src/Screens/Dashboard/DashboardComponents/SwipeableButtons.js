@@ -3,16 +3,17 @@ import {
   handleAPIErrors,
   pagesNames,
   setSharedData,
+  showToast,
 } from '../../../helpers/utils';
-import {deleteSpecificDocument} from '../utils';
 
 import styles from '../Dashboard.styles';
 
-import {useDispatch, useSelector} from 'react-redux';
+import {useDispatch} from 'react-redux';
 import {View} from 'react-native';
 import Button from '../../../Components/Button/Button';
-import {updateDocuments} from '../../../helpers/firebase';
 import {setIsLoadingOverLay} from '../../../helpers/Redux/mainReducer';
+import {deleteTaskService, updateFavorite} from '../../../helpers/taskServices';
+import RNCalendarEvents from 'react-native-calendar-events';
 
 export const SwipeableButtons = ({
   onPressItem,
@@ -20,29 +21,14 @@ export const SwipeableButtons = ({
   item,
   navigation,
 }) => {
-  const {userId, userData} = useSelector(state => state.main);
-  const {favorite} = item.data;
+  const {favorite, _id} = item || {};
   const dispatch = useDispatch();
 
-  const convertToFavorite = async () => {
+  const handleFavoriteData = async newFavorite => {
     try {
       dispatch(setIsLoadingOverLay(true));
-      const FavoriteIndex = userData.findIndex(item => item?.data?.favorite);
-
-      const favoriteItemData = item.data;
-      await updateDocuments(userId, item.id, {
-        ...favoriteItemData,
-        favorite: true,
-      });
-      setSharedData(favoriteItemData);
-
-      if (FavoriteIndex !== -1) {
-        const favoriteItem = userData[FavoriteIndex];
-        await updateDocuments(userId, favoriteItem.id, {
-          ...favoriteItem.data,
-          favorite: false,
-        });
-      }
+      await updateFavorite(_id, navigation);
+      setSharedData(newFavorite ? item : undefined);
       refreshing();
     } catch (e) {
       handleAPIErrors(e);
@@ -51,11 +37,15 @@ export const SwipeableButtons = ({
     }
   };
 
-  const convertToUnFavorite = async () => {
+  const deleteTask = async () => {
     try {
       dispatch(setIsLoadingOverLay(true));
-      await updateDocuments(userId, item.id, {...item.data, favorite: false});
-      setSharedData();
+      await deleteTaskService(_id, navigation);
+      const calendarId = item?.calendarId;
+      if (calendarId) {
+        await RNCalendarEvents.removeEvent(calendarId);
+      }
+      showToast('myWishesPage.TaskDeletedSuccessfully');
       refreshing();
     } catch (e) {
       handleAPIErrors(e);
@@ -71,7 +61,7 @@ export const SwipeableButtons = ({
         source={Icons.info}
         withoutShadow
         onPress={() => {
-          onPressItem(item.id);
+          onPressItem(_id);
         }}
       />
       <Button
@@ -83,7 +73,7 @@ export const SwipeableButtons = ({
             title: 'myWishesPage.deletePopUpTitle',
             description: 'myWishesPage.deletePopUpDescription',
             confirmButton: () => {
-              deleteSpecificDocument(userId, item, refreshing);
+              deleteTask();
             },
           });
         }}
@@ -94,8 +84,7 @@ export const SwipeableButtons = ({
         tintColor={'#EAB308'}
         withoutShadow
         onPress={() => {
-          if (!favorite) convertToFavorite();
-          else convertToUnFavorite();
+          handleFavoriteData(!favorite);
         }}
       />
     </View>
