@@ -40,3 +40,87 @@ export const createTask = async (data, navigation) => {
       throw error;
     });
 };
+
+export const updateTask = async (data, navigation) => {
+  const {taskId, newValues} = data || {};
+  const token = await readToken();
+  return await fetch('http://10.0.2.2:8080/task/update-task', {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + token,
+    },
+    body: JSON.stringify({
+      taskId,
+      newValues,
+    }),
+  })
+    .then(async res => {
+      return await validateAuthentication({navigation, res});
+    })
+    .catch(error => {
+      throw error;
+    });
+};
+
+export const updateFavorite = async (taskId, navigation) => {
+  const token = await readToken();
+  return await fetch('http://10.0.2.2:8080/task/update-favorite', {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + token,
+    },
+    body: JSON.stringify({
+      taskId,
+    }),
+  })
+    .then(async res => {
+      return await validateAuthentication({navigation, res});
+    })
+    .catch(error => {
+      throw error;
+    });
+};
+
+export const updateStatusService = async (data, navigation) => {
+  const {taskId, newValues} = data || {};
+  const token = await readToken();
+  return await fetch('http://10.0.2.2:8080/task/update-status', {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + token,
+    },
+    body: JSON.stringify({
+      taskId,
+      newValues,
+    }),
+  })
+    .then(async res => {
+      return await validateAuthentication({navigation, res});
+    })
+    .catch(error => {
+      throw error;
+    });
+};
+
+export const deleteTaskService = async (taskId, navigation) => {
+  const token = await readToken();
+  return await fetch('http://10.0.2.2:8080/task/delete-task', {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + token,
+    },
+    body: JSON.stringify({
+      taskId,
+    }),
+  })
+    .then(async res => {
+      return await validateAuthentication({navigation, res});
+    })
+    .catch(error => {
+      throw error;
+    });
+};
