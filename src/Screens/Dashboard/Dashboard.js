@@ -62,7 +62,7 @@ export const Dashboard = ({navigation}) => {
   return (
     <Container isLoading={loading} renderFooter={getRenderFooter()}>
       <FlatList
-        scrollEnabled={!!userId}
+        scrollEnabled={!!token}
         contentContainerStyle={styles.flatList}
         refreshControl={
           <RefreshControl
