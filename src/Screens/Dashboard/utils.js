@@ -76,9 +76,9 @@ export const handleEnterFace = (navigation, token) => {
 export const deleteSpecificDocument = async (userId, item, refreshing) => {
   try {
     store.dispatch(setIsLoadingOverLay(true));
-    const {id, data} = item;
+    const {_id, data} = item;
     const {mainTask, favorite} = data;
-    await deleteDocument(userId, id);
+    await deleteDocument(userId, _id);
     if (mainTask?.calendarId) {
       await RNCalendarEvents.removeEvent(mainTask.calendarId);
     }
