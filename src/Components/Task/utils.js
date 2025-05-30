@@ -2,13 +2,11 @@ import {
   setIsLoadingOverLay,
   setEnableDoneLottie,
 } from '../../helpers/Redux/mainReducer';
-import {store} from '../../helpers/Redux/store';
-import {updateDocuments} from '../../helpers/firebase';
+import {updateStatusService} from '../../helpers/taskServices';
 import {
   backgroundColors,
   dispatch,
   handleAPIErrors,
-  isNil,
   setSharedData,
 } from '../../helpers/utils';
 import moment from 'moment';
@@ -68,58 +66,33 @@ export const getDateDifference = date => {
 };
 
 export const updateStatus = async ({
-  mainTask,
-  selectedIndex,
-  subTasks,
-  documentId,
-  color,
-  setTasks,
+  setTask,
   favorite,
+  navigation,
+  task,
+  index,
 }) => {
   try {
     dispatch(setIsLoadingOverLay(true));
-    const {userId} = store.getState().main;
-    let finalValues = {};
+    const newTaskValues = {...task};
 
-    //set selected subTask to be done
-    if (!isNil(selectedIndex)) {
-      let newSubTasks = subTasks.slice();
-      newSubTasks[selectedIndex] = {
-        ...newSubTasks[selectedIndex],
-        status: true,
-      };
-      finalValues = {
-        subTasks: newSubTasks,
-      };
-      // search if all subTasks are done
-      const allSubTasksDone = finalValues?.subTasks.find(item => !item.status);
-
-      if (!allSubTasksDone) finalValues.mainTask = {...mainTask, status: true}; //set main task to be done if all subTasks are done
+    if (index?.toString()) {
+      newTaskValues.subTasks[index].status = true;
     } else {
-      finalValues = {
-        mainTask: {...mainTask, status: true}, // set mainTask to be done
-      };
-      if (subTasks.length)
-        finalValues.subTasks = subTasks.map(item => ({...item, status: true})); // set subTasks to be done, because mainTask is done
+      newTaskValues.status = true;
     }
-
-    // save color of whole task
-    if (!mainTask?.color)
-      finalValues.mainTask = {
-        ...(finalValues?.mainTask || mainTask),
-        color: color,
-      };
-
-    await updateDocuments(userId, documentId, finalValues);
-    const newData = {mainTask, subTasks, ...finalValues};
+    await updateStatusService(
+      {taskId: task._id, newValues: newTaskValues},
+      navigation,
+    );
 
     if (favorite) {
-      setSharedData(newData);
+      setSharedData(newTaskValues);
     }
 
-    playSoundAndLottie(finalValues.mainTask?.status);
+    playSoundAndLottie(newTaskValues?.status);
 
-    setTasks(newData); // update locally
+    setTask(newTaskValues); // update locally
     dispatch(setIsLoadingOverLay(false));
   } catch (e) {
     handleAPIErrors(e);

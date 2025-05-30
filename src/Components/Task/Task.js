@@ -14,55 +14,44 @@ import {
 import {backgroundColors} from '../../helpers/utils';
 import {getShadow} from '../../helpers/shadow';
 
-export const Task = ({data, id, onPress}) => {
-  const [tasks, setTasks] = useState(data);
-  const {mainTask, subTasks} = tasks || {};
-  const color = mainTask?.color || useRef(getRandomColor()).current;
+export const Task = ({item, onPress, navigation}) => {
+  const [task, setTask] = useState(item);
+  const {subTasks, favorite, status, date, title, color} = task || {};
+  const mainTaskColor = color || useRef(getRandomColor()).current;
 
-  const setMainTaskData = () => {
+  const setTaskStatus = index => {
     updateStatus({
-      mainTask,
-      documentId: id,
-      subTasks,
-      color,
-      setTasks,
-      favorite: data?.favorite,
+      setTask,
+      favorite,
+      navigation,
+      task,
+      index,
     });
   };
 
-  const setSubTaskData = index => {
-    updateStatus({
-      mainTask,
-      selectedIndex: index,
-      documentId: id,
-      subTasks,
-      color,
-      setTasks,
-      favorite: data?.favorite,
-    });
-  };
-
-  const mainTaskBorderColor = getBorderColor(mainTask.date, mainTask.status);
+  const mainTaskBorderColor = getBorderColor(date, status);
 
   const mainTaskRender = () => (
     <View style={styles.mainTaskParent}>
-      {mainTask.status ? (
+      {status ? (
         <Image source={Icons.check} />
       ) : (
         <Button
           containerStyle={[styles.mainTaskCircle, mainTaskBorderColor]}
           variant="manualDraw"
-          onPress={setMainTaskData}
+          onPress={() => {
+            setTaskStatus();
+          }}
         />
       )}
       <View style={styles.mainTaskTitleDate}>
         <Text
-          value={mainTask.title}
+          value={title}
           numberOfLines={1}
           ellipsizeMode={'tail'}
-          isLineThrough={mainTask.status}
+          isLineThrough={status}
         />
-        <Text value={mainTask?.date} variant="subHead" />
+        <Text value={date} variant="subHead" />
       </View>
     </View>
   );
@@ -74,18 +63,18 @@ export const Task = ({data, id, onPress}) => {
       data={subTasks || []}
       renderItem={({item, index}) => (
         <View style={styles.subTaskParent} key={index}>
-          {mainTask.status || item.status ? (
+          {status || item.status ? (
             <Image source={Icons.check} />
           ) : (
             <Button
               onPress={() => {
-                setSubTaskData(index);
+                setTaskStatus(index);
               }}
               containerStyle={[
                 styles.subTaskCircle,
-                mainTask.status
+                status
                   ? mainTaskBorderColor
-                  : mainTask?.date && getDateDifference(mainTask?.date) < 0
+                  : date && getDateDifference(date) < 0
                   ? {borderColor: backgroundColors.red}
                   : getBorderColorSubTask(item?.status),
               ]}
@@ -97,7 +86,7 @@ export const Task = ({data, id, onPress}) => {
               value={item.title}
               numberOfLines={1}
               ellipsizeMode={'tail'}
-              isLineThrough={mainTask.status || item.status}
+              isLineThrough={status || item.status}
             />
           </View>
         </View>
@@ -107,10 +96,10 @@ export const Task = ({data, id, onPress}) => {
 
   return (
     <TouchableOpacity
-      style={[styles.container, {...getShadow(color)}]}
+      style={[styles.container, {...getShadow(mainTaskColor)}]}
       onPress={onPress}>
-      <View style={[styles.leftBlock, {backgroundColor: color}]}>
-        {data.favorite ? (
+      <View style={[styles.leftBlock, {backgroundColor: mainTaskColor}]}>
+        {favorite ? (
           <Image
             source={Icons.filledStar}
             tintColor={'#dbdb07'}
