@@ -50,7 +50,7 @@ export const login = async (data, navigation) => {
 export const signUpWithId = async navigation => {
   const deviceId = await getUniqueId();
   const secureDeviceId = CryptoJS.AES.encrypt(deviceId, PRIVATE_KEY).toString();
-  return await fetch('http://10.0.2.2:8080/auth/signupId', {
+  return await fetch('http://10.0.2.2:8080/auth/signup-Id', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -71,8 +71,8 @@ export const signUpWithId = async navigation => {
 
 export const deleteAccount = async navigation => {
   const token = await readToken();
-  return await fetch('http://10.0.2.2:8080/auth/delete', {
-    method: 'PUT',
+  return await fetch('http://10.0.2.2:8080/auth/delete-account', {
+    method: 'DELETE',
     headers: {
       Authorization: 'Bearer ' + token,
     },
