@@ -14,15 +14,15 @@ import {
   pagesNames,
   setTaskToCalendar,
 } from '../../helpers/utils';
-import {addUserData} from '../../helpers/firebase';
 import Container from '../../Components/Contianer/Container';
 import styles from './CreateNewTask.style';
 import {View} from 'react-native';
 import {setImageBackground} from './utils';
 import OneLineToggle from '../../Components/OneLineToggle/OneLineToggle';
+import {createTask} from '../../helpers/taskServices';
 
 export const CreateNewTask = ({navigation, route}) => {
-  const {userId, backgroundColor, createNewTaskBackgrounds} = useSelector(
+  const {backgroundColor, createNewTaskBackgrounds} = useSelector(
     state => state.main,
   );
   const {refreshing} = route.params;
@@ -49,17 +49,16 @@ export const CreateNewTask = ({navigation, route}) => {
   const onSubmit = async (values, calendarId, showToast) => {
     try {
       dispatch(setIsLoading(true));
-      const body = {
-        ...values,
-        color: backgroundColor,
-      };
-      if (calendarId) body.calendarId = calendarId;
 
-      const docId = await addUserData(userId, body);
+      const {task} =
+        (await createTask(
+          {calendarId, color: backgroundColor, ...values},
+          navigation,
+        )) || {};
       showToast?.();
       dispatch(setIsLoading(false));
       navigation.replace(pagesNames.taskDetailsScreen, {
-        documentId: docId,
+        task,
         refreshing,
       });
     } catch (e) {
