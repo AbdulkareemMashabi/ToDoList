@@ -1,5 +1,5 @@
 export const getInitialValues = formData => {
-  const {title, description, date} = formData?.mainTask || {};
+  const {title, description, date} = formData || {};
   let getInitialValue = {
     title: title,
     description: description,

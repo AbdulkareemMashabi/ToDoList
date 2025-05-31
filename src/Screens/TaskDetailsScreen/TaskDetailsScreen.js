@@ -7,7 +7,7 @@ import {
   setSharedData,
   setTaskToCalendar,
 } from '../../helpers/utils';
-import {getSpecificDocument, updateDocuments} from '../../helpers/firebase';
+import {updateDocuments} from '../../helpers/firebase';
 import {useDispatch, useSelector} from 'react-redux';
 import DoubleText from '../../Components/DoubleText/DoubleText';
 import styles from './TaskDetailsScreen.style';
@@ -25,19 +25,24 @@ import Button from '../../Components/Button/Button';
 import {Icons} from '../../assets/Icons';
 import OneLineToggle from '../../Components/OneLineToggle/OneLineToggle';
 import RNCalendarEvents from 'react-native-calendar-events';
+import {updateTask} from '../../helpers/taskServices';
 
 export const TaskDetailsScreen = ({navigation, route}) => {
+  const {task, refreshing} = route.params;
+  const {date: initialDate, calendarId: initialCalendarId, _id} = task || {};
+
   const {userId} = useSelector(state => state.main);
-  const {documentId, refreshing} = route.params;
-  const [formData, setFormData] = useState(null);
+  const [formData, setFormData] = useState(task);
   const [openMainForm, setOpenMainForm] = useState(false);
   const [mainTaskSubmitted, setMainTaskSubmitted] = useState(false);
-  const [initialLoading, setInitialLoading] = useState(true);
   const [newSubTask, setNewSubTask] = useState('');
   const [enableDoneButton, setEnableDonButton] = useState(false);
-  const [calendar, setCalendar] = useState(false);
-  const [isCalendarAvail, setIsCalendarAvail] = useState(false);
+  const [calendar, setCalendar] = useState(initialCalendarId);
+  const [isCalendarAvail, setIsCalendarAvail] = useState(initialDate);
   const dispatch = useDispatch();
+
+  const {title, date, status, description, calendarId, subTasks} =
+    formData || {};
 
   const validation = Yup.object().shape({
     title: Yup.string().required(Locale.t('common.required')),
@@ -45,7 +50,7 @@ export const TaskDetailsScreen = ({navigation, route}) => {
 
   useEffect(() => {
     navigation.setOptions({
-      headerTitle: formData?.mainTask?.title,
+      headerTitle: title,
       headerRight: () => {
         return enableDoneButton ? (
           <Button
@@ -66,46 +71,19 @@ export const TaskDetailsScreen = ({navigation, route}) => {
     });
   }, [enableDoneButton, formData, setCalendarFun, calendar, mainTaskSubmitted]);
 
-  useEffect(() => {
-    getData();
-  }, []);
-
-  const getData = async () => {
-    try {
-      const document = await getSpecificDocument(userId, documentId);
-      const {date, calendarId} = document?.mainTask || {};
-      setIsCalendarAvail(date);
-      setCalendar(calendarId);
-      setFormData(document);
-    } catch (e) {
-      handleAPIErrors(e);
-    } finally {
-      setInitialLoading(false);
-    }
-  };
-
-  const setCalendarFun = () => {
-    if (calendar && enableDoneButton && mainTaskSubmitted) {
-      setInCalendar(formData?.mainTask, submit);
-    } else submit();
-  };
-
   const submit = async (_, calendarId, showToast) => {
     if (enableDoneButton)
       try {
         const finalCalendarId = calendarId || calendar;
         dispatch(setIsLoadingOverLay(true));
-        const newData = {
+        const newValues = {
           ...formData,
-          mainTask: {
-            ...formData.mainTask,
-            calendarId: finalCalendarId ? finalCalendarId : null,
-          },
+          calendarId: finalCalendarId ? finalCalendarId : null,
         };
-        await updateDocuments(userId, documentId, newData);
+        await updateTask({taskId: _id, newValues}, navigation);
         if (calendarId) showToast?.();
         if (formData.favorite) {
-          setSharedData(newData);
+          setSharedData(newValues);
         }
         dispatch(setIsLoadingOverLay(false));
         navigation.goBack();
@@ -120,10 +98,16 @@ export const TaskDetailsScreen = ({navigation, route}) => {
     }
   };
 
+  const setCalendarFun = () => {
+    if (calendar && enableDoneButton && mainTaskSubmitted) {
+      setInCalendar(formData, submit);
+    } else submit();
+  };
+
   const textFieldBlur = () => {
     if (newSubTask) {
       let finalValues = {};
-      finalValues = {subTasks: formData?.subTasks.slice()};
+      finalValues = {subTasks: subTasks.slice()};
       finalValues.subTasks.push({
         title: newSubTask,
         status: false,
@@ -137,7 +121,7 @@ export const TaskDetailsScreen = ({navigation, route}) => {
   const deleteTask = index => {
     let finalValues = {};
     finalValues = {
-      subTasks: formData?.subTasks.slice(),
+      subTasks: subTasks.slice(),
     };
     finalValues.subTasks.splice(index, 1);
 
@@ -147,11 +131,9 @@ export const TaskDetailsScreen = ({navigation, route}) => {
 
   const onSubmit = async values => {
     const finalValues = {
-      mainTask: {
-        ...formData.mainTask,
-        ...values,
-        status: false,
-      },
+      ...formData,
+      ...values,
+      status: false,
     };
     setFormData({...formData, ...finalValues});
     setEnableDonButton(true);
@@ -169,7 +151,7 @@ export const TaskDetailsScreen = ({navigation, route}) => {
   };
 
   const footer = () => {
-    if (formData?.mainTask?.status) return null;
+    if (status) return null;
     return (
       <TextField
         withoutShadow
@@ -183,21 +165,21 @@ export const TaskDetailsScreen = ({navigation, route}) => {
   };
 
   return (
-    <Container isLoading={initialLoading}>
+    <Container>
       <DoubleText
-        done={formData?.mainTask?.status}
-        title={formData?.mainTask?.title}
-        description={formData?.mainTask?.description}
-        date={formData?.mainTask?.date}
+        done={status}
+        title={title}
+        description={description}
+        date={date}
         editButtonPress={
-          !formData?.mainTask?.status
+          !status
             ? () => {
                 setOpenMainForm(true);
               }
             : null
         }
       />
-      {formData?.subTasks?.length > 0 ? (
+      {subTasks?.length > 0 ? (
         <>
           <View style={styles.separator} />
           <Text
@@ -211,16 +193,14 @@ export const TaskDetailsScreen = ({navigation, route}) => {
         showsVerticalScrollIndicator={false}
         ListFooterComponent={footer()}
         ItemSeparatorComponent={<View style={styles.flatListSeparator} />}
-        data={formData?.subTasks || []}
+        data={subTasks || []}
         renderItem={({item, index}) => {
           return (
             <View key={index}>
               <SubTask
                 text={item?.title}
                 done={item?.status}
-                deleteButtonPress={
-                  !formData?.mainTask?.status ? () => deleteTask(index) : null
-                }
+                deleteButtonPress={!status ? () => deleteTask(index) : null}
               />
             </View>
           );
@@ -237,7 +217,7 @@ export const TaskDetailsScreen = ({navigation, route}) => {
           renderFooter={
             isCalendarAvail ? (
               <OneLineToggle
-                disabled={formData?.mainTask?.calendarId}
+                disabled={calendarId}
                 style={styles.toggle}
                 value={calendar}
                 leftText={'common.setTaskInCalendar'}
@@ -254,7 +234,7 @@ export const TaskDetailsScreen = ({navigation, route}) => {
             setTaskToCalendar({
               values,
               calendar,
-              mainTask: formData?.mainTask,
+              mainTask: formData,
               onSubmit,
             });
           }}
