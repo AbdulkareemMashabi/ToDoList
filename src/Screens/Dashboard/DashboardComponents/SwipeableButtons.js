@@ -61,7 +61,7 @@ export const SwipeableButtons = ({
         source={Icons.info}
         withoutShadow
         onPress={() => {
-          onPressItem(_id);
+          onPressItem(item);
         }}
       />
       <Button
