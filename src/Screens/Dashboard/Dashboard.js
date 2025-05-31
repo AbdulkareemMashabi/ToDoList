@@ -52,9 +52,9 @@ export const Dashboard = ({navigation}) => {
     else return null;
   };
 
-  const onPressItem = itemId => {
+  const onPressItem = task => {
     navigation.navigate(pagesNames.taskDetailsScreen, {
-      documentId: itemId,
+      task,
       refreshing,
     });
   };
@@ -96,7 +96,7 @@ export const Dashboard = ({navigation}) => {
                   navigation={navigation}
                   item={item}
                   onPress={() => {
-                    onPressItem(item._id);
+                    onPressItem(item);
                   }}
                 />
               </Swipeable>
