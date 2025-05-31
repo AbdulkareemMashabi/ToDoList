@@ -74,25 +74,31 @@ export const updateStatus = async ({
 }) => {
   try {
     dispatch(setIsLoadingOverLay(true));
-    const newTaskValues = {...task};
+    const newTaskValues = {...task, subTasks: [...task.subTasks]};
 
     if (index?.toString()) {
-      newTaskValues.subTasks[index].status = true;
+      newTaskValues.subTasks[index] = {
+        ...newTaskValues.subTasks[index],
+        status: true,
+      };
     } else {
       newTaskValues.status = true;
     }
-    await updateStatusService(
-      {taskId: task._id, newValues: newTaskValues},
-      navigation,
-    );
+
+    const {updatedTask} =
+      (await updateStatusService(
+        {taskId: task._id, newValues: newTaskValues},
+        navigation,
+      )) || {};
 
     if (favorite) {
-      setSharedData(newTaskValues);
+      setSharedData(updatedTask);
     }
 
-    playSoundAndLottie(newTaskValues?.status);
+    setTask(updatedTask);
 
-    setTask(newTaskValues); // update locally
+    playSoundAndLottie(updatedTask?.status);
+
     dispatch(setIsLoadingOverLay(false));
   } catch (e) {
     handleAPIErrors(e);
