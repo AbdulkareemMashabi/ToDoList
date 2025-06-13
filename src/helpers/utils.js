@@ -82,7 +82,9 @@ export const handleAPIErrors = error => {
   const message = errorMessages?.[error?.code?.split('/')[1]] || error?.message;
   Alert.alert(
     Locale.t('common.errorOccurred'),
-    Locale.t(message || 'APIErrorMessages.generalError'),
+    message
+      ? Locale.t(message)
+      : error?.message || Locale.t('APIErrorMessages.generalError'),
   );
 };
 
@@ -292,10 +294,11 @@ export const validateAuthentication = async ({res}) => {
   if (res?.status === 401) {
     await storeToken('');
     store.dispatch(resetData());
+    const {message} = await res.json();
     navigate(pagesNames.nonDismissibleLoginModal);
-    throw new Error('loginPage.sessionEnd');
+    throw new Error(message);
   } else if (![200, 201].includes(res?.status)) {
-    const {message} = res.json();
+    const {message} = await res.json();
     throw new Error(message);
   } else {
     return await res?.json();
@@ -350,3 +353,21 @@ export function resetNavigation(routes) {
     });
   }
 }
+
+export const callAPI = async ({url, method, headers, body}) => {
+  const finalHeaders = {
+    ...headers,
+    'Accept-Language': Locale.language,
+  };
+  return await fetch(url, {
+    method,
+    headers: finalHeaders,
+    body,
+  })
+    .then(async res => {
+      return await validateAuthentication({res});
+    })
+    .catch(error => {
+      throw error;
+    });
+};
