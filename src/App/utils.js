@@ -1,12 +1,11 @@
 import React from 'react';
 import {Platform} from 'react-native';
 import Button from '../Components/Button/Button';
-import {pagesNames} from '../helpers/utils';
+import {goBack, pagesNames} from '../helpers/utils';
 import styles from './App.style';
 import {Icons} from '../assets/Icons';
-import Locale from '../helpers/localization';
 
-export const getScreenOptions = (navigation, currentPage) => ({
+export const getScreenOptions = currentPage => ({
   headerTitleAlign: 'center',
   contentStyle: styles.pageStyle,
   headerTransparent: true,
@@ -19,7 +18,7 @@ export const getScreenOptions = (navigation, currentPage) => ({
             flipRTL={Platform.OS === 'ios'}
             source={Platform.OS === 'ios' ? Icons.backButton : Icons.arrow}
             onPress={() => {
-              navigation.goBack();
+              goBack();
             }}
           />
         )

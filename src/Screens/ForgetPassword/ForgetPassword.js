@@ -3,16 +3,18 @@ import Text from '../../Components/Text/Text';
 import Form from '../../Components/Form/Form';
 import * as Yup from 'yup';
 import {sendPasswordResetEmail} from 'firebase/auth';
-import {handleAPIErrors, showToast} from '../../helpers/utils';
-import {useDispatch} from 'react-redux';
-import {setIsLoading} from '../../helpers/Redux/mainReducer';
+import {
+  goBack,
+  handleAPIErrors,
+  hideLoader,
+  showLoader,
+  showToast,
+} from '../../helpers/utils';
 import {auth} from '../../helpers/firebase';
 import Container from '../../Components/Contianer/Container';
 import {Images} from '../../assets/Images';
 
-export const ForgetPassword = ({navigation}) => {
-  const dispatch = useDispatch();
-
+export const ForgetPassword = () => {
   const validation = Yup.object().shape({
     email: Yup.string()
       .email(Locale.t('common.emailValidation'))
@@ -32,14 +34,14 @@ export const ForgetPassword = ({navigation}) => {
         validationSchema={validation}
         onSubmit={async values => {
           try {
-            dispatch(setIsLoading(true));
+            showLoader({isLoadingButton: true});
             await sendPasswordResetEmail(auth, values.email);
             showToast('forgetPassword.resetSuccessfully');
-            dispatch(setIsLoading(false));
-            navigation.goBack();
+            hideLoader();
+            goBack();
           } catch (e) {
             handleAPIErrors(e);
-            dispatch(setIsLoading(false));
+            hideLoader();
           }
         }}
       />

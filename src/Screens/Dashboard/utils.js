@@ -6,17 +6,17 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import RNRestart from 'react-native-restart';
 import {
   handleAPIErrors,
+  hideLoader,
+  navigate,
   pagesNames,
   setSharedData,
+  showLoader,
   showToast,
   storeToken,
 } from '../../helpers/utils';
 import styles from './Dashboard.styles';
 import {deleteDocument} from '../../helpers/firebase';
-import {
-  setIsLoadingOverLay,
-  setUserData,
-} from '../../helpers/Redux/mainReducer';
+import {setUserData} from '../../helpers/Redux/mainReducer';
 import {store} from '../../helpers/Redux/store';
 import RNCalendarEvents from 'react-native-calendar-events';
 import {getAllTasks} from '../../helpers/taskServices';
@@ -29,7 +29,7 @@ export const handleEnterFace = (navigation, token) => {
           source={Icons.language}
           onPress={async () => {
             try {
-              store.dispatch(setIsLoadingOverLay(true));
+              showLoader();
               await AsyncStorage.setItem(
                 'language',
                 Locale.language === 'ar' ? 'en' : 'ar',
@@ -51,7 +51,7 @@ export const handleEnterFace = (navigation, token) => {
           <Button
             source={Icons.logOut}
             onPress={async () => {
-              navigation.navigate(pagesNames.popUp, {
+              navigate(pagesNames.popUp, {
                 title: 'myWishesPage.logOut',
                 confirmButton: async () => {
                   await storeToken('');
@@ -64,7 +64,7 @@ export const handleEnterFace = (navigation, token) => {
           <Button
             source={Icons.cloud}
             onPress={() => {
-              navigation.push(pagesNames.login);
+              navigate(pagesNames.login);
             }}
           />
         )}
@@ -75,7 +75,7 @@ export const handleEnterFace = (navigation, token) => {
 
 export const deleteSpecificDocument = async (userId, item, refreshing) => {
   try {
-    store.dispatch(setIsLoadingOverLay(true));
+    showLoader();
     const {_id, data} = item;
     const {mainTask, favorite} = data;
     await deleteDocument(userId, _id);
@@ -88,19 +88,19 @@ export const deleteSpecificDocument = async (userId, item, refreshing) => {
   } catch (e) {
     handleAPIErrors(e);
   } finally {
-    store.dispatch(setIsLoadingOverLay(false));
+    hideLoader();
   }
 };
 
-export const getUserData = async (setLoading, navigation) => {
+export const getUserData = async () => {
   try {
-    setLoading(true);
-    const result = await getAllTasks(navigation);
+    showLoader({isLoadingSkeleton: true});
+    const result = await getAllTasks();
 
     store.dispatch(setUserData(result?.data));
   } catch (e) {
     handleAPIErrors(e);
   } finally {
-    setLoading(false);
+    hideLoader();
   }
 };

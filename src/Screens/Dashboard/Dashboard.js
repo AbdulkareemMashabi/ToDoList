@@ -1,6 +1,6 @@
-import {useEffect, useState} from 'react';
+import {useCallback, useEffect} from 'react';
 import {View, FlatList, AppState, RefreshControl} from 'react-native';
-import {pagesNames} from '../../helpers/utils';
+import {navigate, pagesNames} from '../../helpers/utils';
 import {useSelector} from 'react-redux';
 import {handleEnterFace} from './utils';
 import styles from './Dashboard.styles';
@@ -11,26 +11,24 @@ import Container from '../../Components/Contianer/Container';
 import NetInfo from '@react-native-community/netinfo';
 import SwipeableButtons from './DashboardComponents/SwipeableButtons';
 import EmptyComponent from './DashboardComponents/EmptyComponent';
+import {useFocusEffect} from '@react-navigation/native';
 
 export const Dashboard = ({navigation}) => {
-  const [loading, setLoading] = useState(true);
-  const {token} = useSelector(state => state.main);
-  const {userData} = useSelector(state => state.main);
+  const {token, userData, isLoadingSkeleton} = useSelector(state => state.main);
 
-  useEffect(() => {
-    handleEnterFace(navigation, token);
-    if (token) refreshing();
-    else setLoading(false);
-  }, [token]);
-
-  const refreshing = () => {
-    getUserData(setLoading, navigation);
-  };
+  useFocusEffect(
+    useCallback(() => {
+      handleEnterFace(navigation, token);
+      if (token) {
+        getUserData();
+      }
+    }, []),
+  );
 
   useEffect(() => {
     NetInfo.addEventListener(state => {
       if (!state.isConnected && AppState.currentState === 'active')
-        navigation.navigate(pagesNames.popUp, {
+        navigate(pagesNames.popUp, {
           title: 'myWishesPage.connectionTitle',
           firstButtonTitle: 'myWishesPage.connectionButton',
           withoutCancel: true,
@@ -44,38 +42,33 @@ export const Dashboard = ({navigation}) => {
       return {
         source: 'taskDetails.addNewTask',
         onPress: () => {
-          navigation.push(pagesNames.createNewTask, {
-            refreshing,
-          });
+          navigate(pagesNames.createNewTask);
         },
       };
     else return null;
   };
 
   const onPressItem = task => {
-    navigation.navigate(pagesNames.taskDetailsScreen, {
+    navigate(pagesNames.taskDetailsScreen, {
       task,
-      refreshing,
     });
   };
 
   return (
-    <Container isLoading={loading} renderFooter={getRenderFooter()}>
+    <Container renderFooter={getRenderFooter()}>
       <FlatList
         scrollEnabled={!!token}
         contentContainerStyle={styles.flatList}
         refreshControl={
           <RefreshControl
-            refreshing={loading}
+            refreshing={isLoadingSkeleton}
             onRefresh={() => {
-              refreshing();
+              getUserData();
             }}
             enabled={!!token}
           />
         }
-        ListEmptyComponent={
-          <EmptyComponent navigation={navigation} refreshing={refreshing} />
-        }
+        ListEmptyComponent={<EmptyComponent />}
         showsVerticalScrollIndicator={false}
         ItemSeparatorComponent={<View style={styles.separator} />}
         data={userData}
@@ -85,15 +78,9 @@ export const Dashboard = ({navigation}) => {
               <Swipeable
                 isSwipeableAtBegin={index === 0 && userData.length === 1}
                 renderAction={() => (
-                  <SwipeableButtons
-                    onPressItem={onPressItem}
-                    navigation={navigation}
-                    item={item}
-                    refreshing={refreshing}
-                  />
+                  <SwipeableButtons onPressItem={onPressItem} item={item} />
                 )}>
                 <Task
-                  navigation={navigation}
                   item={item}
                   onPress={() => {
                     onPressItem(item);

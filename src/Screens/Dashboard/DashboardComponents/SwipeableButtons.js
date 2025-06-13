@@ -1,56 +1,52 @@
 import {Icons} from '../../../assets/Icons';
 import {
   handleAPIErrors,
+  hideLoader,
+  navigate,
   pagesNames,
   setSharedData,
+  showLoader,
   showToast,
 } from '../../../helpers/utils';
 
 import styles from '../Dashboard.styles';
 
-import {useDispatch} from 'react-redux';
 import {View} from 'react-native';
 import Button from '../../../Components/Button/Button';
-import {setIsLoadingOverLay} from '../../../helpers/Redux/mainReducer';
 import {deleteTaskService, updateFavorite} from '../../../helpers/taskServices';
 import RNCalendarEvents from 'react-native-calendar-events';
+import {getUserData} from '../utils';
 
-export const SwipeableButtons = ({
-  onPressItem,
-  refreshing,
-  item,
-  navigation,
-}) => {
+export const SwipeableButtons = ({onPressItem, item}) => {
   const {favorite, _id} = item || {};
-  const dispatch = useDispatch();
 
   const handleFavoriteData = async newFavorite => {
     try {
-      dispatch(setIsLoadingOverLay(true));
-      await updateFavorite(_id, navigation);
+      showLoader();
+      await updateFavorite(_id);
       setSharedData(newFavorite ? item : undefined);
-      refreshing();
+      getUserData();
     } catch (e) {
       handleAPIErrors(e);
     } finally {
-      dispatch(setIsLoadingOverLay(false));
+      hideLoader();
     }
   };
 
   const deleteTask = async () => {
     try {
-      dispatch(setIsLoadingOverLay(true));
-      await deleteTaskService(_id, navigation);
+      showLoader();
+      await deleteTaskService(_id);
       const calendarId = item?.calendarId;
       if (calendarId) {
         await RNCalendarEvents.removeEvent(calendarId);
       }
       showToast('myWishesPage.TaskDeletedSuccessfully');
-      refreshing();
+      getUserData();
     } catch (e) {
       handleAPIErrors(e);
     } finally {
-      dispatch(setIsLoadingOverLay(false));
+      hideLoader();
     }
   };
 
@@ -69,7 +65,7 @@ export const SwipeableButtons = ({
         source={Icons.trash}
         withoutShadow
         onPress={() => {
-          navigation.navigate(pagesNames.popUp, {
+          navigate(pagesNames.popUp, {
             title: 'myWishesPage.deletePopUpTitle',
             description: 'myWishesPage.deletePopUpDescription',
             confirmButton: () => {

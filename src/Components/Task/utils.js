@@ -1,13 +1,12 @@
-import {
-  setIsLoadingOverLay,
-  setEnableDoneLottie,
-} from '../../helpers/Redux/mainReducer';
+import {setEnableDoneLottie} from '../../helpers/Redux/mainReducer';
 import {updateStatusService} from '../../helpers/taskServices';
 import {
   backgroundColors,
   dispatch,
   handleAPIErrors,
+  hideLoader,
   setSharedData,
+  showLoader,
 } from '../../helpers/utils';
 import moment from 'moment';
 import Sound from 'react-native-sound';
@@ -65,15 +64,9 @@ export const getDateDifference = date => {
   return Math.floor(differenceInDays);
 };
 
-export const updateStatus = async ({
-  setTask,
-  favorite,
-  navigation,
-  task,
-  index,
-}) => {
+export const updateStatus = async ({setTask, favorite, task, index}) => {
   try {
-    dispatch(setIsLoadingOverLay(true));
+    showLoader();
     const newTaskValues = {...task, subTasks: [...task.subTasks]};
 
     if (index?.toString()) {
@@ -86,10 +79,10 @@ export const updateStatus = async ({
     }
 
     const {updatedTask} =
-      (await updateStatusService(
-        {taskId: task._id, newValues: newTaskValues},
-        navigation,
-      )) || {};
+      (await updateStatusService({
+        taskId: task._id,
+        newValues: newTaskValues,
+      })) || {};
 
     if (favorite) {
       setSharedData(updatedTask);
@@ -99,10 +92,10 @@ export const updateStatus = async ({
 
     playSoundAndLottie(updatedTask?.status);
 
-    dispatch(setIsLoadingOverLay(false));
+    hideLoader();
   } catch (e) {
     handleAPIErrors(e);
-    dispatch(setIsLoadingOverLay(false));
+    hideLoader();
   }
 };
 

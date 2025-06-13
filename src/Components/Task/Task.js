@@ -14,7 +14,7 @@ import {
 import {backgroundColors} from '../../helpers/utils';
 import {getShadow} from '../../helpers/shadow';
 
-export const Task = ({item, onPress, navigation}) => {
+export const Task = ({item, onPress}) => {
   const [task, setTask] = useState(item);
   const {subTasks, favorite, status, date, title, color} = task || {};
   const mainTaskColor = color || useRef(getRandomColor()).current;
@@ -23,7 +23,6 @@ export const Task = ({item, onPress, navigation}) => {
     updateStatus({
       setTask,
       favorite,
-      navigation,
       task,
       index,
     });

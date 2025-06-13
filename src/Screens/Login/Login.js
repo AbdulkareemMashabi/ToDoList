@@ -4,12 +4,15 @@ import Locale from '../../helpers/localization';
 import Form from '../../Components/Form/Form';
 import * as Yup from 'yup';
 import Button from '../../Components/Button/Button';
-import {handleAPIErrors, pagesNames, showToast} from '../../helpers/utils';
-import {useDispatch} from 'react-redux';
 import {
-  setIsLoading,
-  setIsLoadingOverLay,
-} from '../../helpers/Redux/mainReducer';
+  handleAPIErrors,
+  hideLoader,
+  navigate,
+  pagesNames,
+  resetNavigation,
+  showLoader,
+  showToast,
+} from '../../helpers/utils';
 import Container from '../../Components/Contianer/Container';
 import styles from './Login.style';
 import {Icons} from '../../assets/Icons';
@@ -17,7 +20,6 @@ import {Images} from '../../assets/Images';
 import {login, signUpWithId} from '../../helpers/authServices';
 
 export const Login = ({navigation, route}) => {
-  const dispatch = useDispatch();
   useEffect(() => {
     navigation.setOptions({
       headerRight: () => (
@@ -26,7 +28,7 @@ export const Login = ({navigation, route}) => {
           source={Icons.accountDeletion}
           variant="secondary"
           onPress={() => {
-            navigation.push(pagesNames.deleteAccount);
+            navigate(pagesNames.deleteAccount);
           }}
         />
       ),
@@ -41,37 +43,37 @@ export const Login = ({navigation, route}) => {
   });
 
   const routing = () => {
-    if (route?.params?.routing) route.params.routing();
-    else
-      navigation.reset({
-        index: 0, // Set the first screen in the stack
-        routes: [{name: pagesNames.dashboard}], // Replace stack with "Home" screen
-      });
+    if (route?.params?.fromDashboard)
+      resetNavigation([
+        {name: pagesNames.dashboard},
+        {name: pagesNames.createNewTask},
+      ]);
+    else resetNavigation([{name: pagesNames.dashboard}]);
   };
 
   const onSubmit = async values => {
     try {
-      dispatch(setIsLoading(true));
-      await login(values, navigation);
+      showLoader({isLoadingButton: true});
+      await login(values);
       showToast('loginPage.loginSuccessfully');
-      dispatch(setIsLoading(false));
+      hideLoader();
       routing();
     } catch (e) {
       handleAPIErrors(e);
-      dispatch(setIsLoading(false));
+      hideLoader();
     }
   };
 
   const guestLogin = async () => {
     try {
-      dispatch(setIsLoadingOverLay(true));
-      await signUpWithId(navigation);
-      dispatch(setIsLoadingOverLay(false));
+      showLoader();
+      await signUpWithId();
+      hideLoader();
       showToast('loginPage.loginSuccessfully');
       routing();
     } catch (e) {
       handleAPIErrors(e);
-      dispatch(setIsLoadingOverLay(false));
+      hideLoader();
     }
   };
 
@@ -97,7 +99,7 @@ export const Login = ({navigation, route}) => {
             variant="secondary"
             containerStyle={styles.forgetPasswordButton}
             onPress={() => {
-              navigation.push(pagesNames.forgetPassword);
+              navigate(pagesNames.forgetPassword);
             }}
           />
         }
@@ -106,7 +108,7 @@ export const Login = ({navigation, route}) => {
         source={'common.register'}
         variant="secondary"
         onPress={() => {
-          navigation.push(pagesNames.register);
+          navigate(pagesNames.register);
         }}
       />
       <Button

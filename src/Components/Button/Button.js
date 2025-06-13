@@ -5,6 +5,7 @@ import {getShadow} from '../../helpers/shadow';
 
 import styles from './Button.style';
 import Locale from '../../helpers/localization';
+import {LottieIndex} from '../../assets/Lottie';
 
 export const Button = ({
   source,
@@ -41,7 +42,7 @@ export const Button = ({
     if (isLoading)
       return (
         <LottieView
-          source={require('../../assets/Lottie/loading.json')}
+          source={LottieIndex.loading}
           autoPlay
           loop
           style={styles.loading}

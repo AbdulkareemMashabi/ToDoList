@@ -9,10 +9,12 @@ import {Alert, I18nManager} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import RNRestart from 'react-native-restart';
 import {useDispatch} from 'react-redux';
-import {setIsLoading, setToken} from '../../helpers/Redux/mainReducer';
+import {setToken} from '../../helpers/Redux/mainReducer';
 import BootSplash from 'react-native-bootsplash';
 
 import styles from './Lottie.style';
+
+import {LottieIndex} from '../../assets/Lottie';
 
 export const Lottie = ({navigation}) => {
   const [startApp, setStartApp] = useState(false);
@@ -62,17 +64,15 @@ export const Lottie = ({navigation}) => {
   };
 
   const getToken = async () => {
-    dispatch(setIsLoading(true));
     const token = await readToken();
     dispatch(setToken(token));
-    dispatch(setIsLoading(false));
   };
 
   return (
     <Container backgroundColor={'#e5e5e5'}>
       {startApp ? (
         <LottieView
-          source={require('../../assets/Lottie/splash.json')}
+          source={LottieIndex.splash}
           autoPlay
           loop={false}
           onAnimationFinish={() => navigation.replace(pagesNames.dashboard)}

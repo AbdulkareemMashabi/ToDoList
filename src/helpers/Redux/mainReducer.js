@@ -10,12 +10,16 @@ const initialState = {
   isDeviceId: false,
   enableDoneLottie: false,
   token: null,
+  isLoadingSkeleton: false,
 };
 
 export const mainReducer = createSlice({
   name: 'mainReducer',
   initialState,
   reducers: {
+    setIsLoadingSkeleton: (state, action) => {
+      state.isLoadingSkeleton = action.payload;
+    },
     setIsLoading: (state, action) => {
       state.isLoading = action.payload;
     },
@@ -60,6 +64,7 @@ export const {
   setIsDeviceId,
   setEnableDoneLottie,
   setToken,
+  setIsLoadingSkeleton,
 } = mainReducer.actions;
 
 export default mainReducer.reducer;

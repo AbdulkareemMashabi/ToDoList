@@ -3,7 +3,7 @@ import CryptoJS from 'crypto-js';
 import {PRIVATE_KEY} from '@env';
 import {getUniqueId} from 'react-native-device-info';
 
-export const signUp = async (data, navigation) => {
+export const signUp = async data => {
   const {email, password} = data || {};
   const securePassword = CryptoJS.AES.encrypt(password, PRIVATE_KEY).toString();
   return await fetch('http://10.0.2.2:8080/auth/signUp', {
@@ -17,14 +17,14 @@ export const signUp = async (data, navigation) => {
     }),
   })
     .then(async res => {
-      return await validateAuthentication({navigation, res});
+      return await validateAuthentication({res});
     })
     .catch(error => {
       throw error;
     });
 };
 
-export const login = async (data, navigation) => {
+export const login = async data => {
   const {email, password} = data || {};
   const securePassword = CryptoJS.AES.encrypt(password, PRIVATE_KEY).toString();
   return await fetch('http://10.0.2.2:8080/auth/login', {
@@ -38,7 +38,7 @@ export const login = async (data, navigation) => {
     }),
   })
     .then(async res => {
-      const resultBody = await validateAuthentication({navigation, res});
+      const resultBody = await validateAuthentication({res});
       const {token} = resultBody || {};
       return await storeToken(token);
     })
@@ -47,7 +47,7 @@ export const login = async (data, navigation) => {
     });
 };
 
-export const signUpWithId = async navigation => {
+export const signUpWithId = async () => {
   const deviceId = await getUniqueId();
   const secureDeviceId = CryptoJS.AES.encrypt(deviceId, PRIVATE_KEY).toString();
   return await fetch('http://10.0.2.2:8080/auth/signup-Id', {
@@ -60,7 +60,7 @@ export const signUpWithId = async navigation => {
     }),
   })
     .then(async res => {
-      const resultBody = await validateAuthentication({navigation, res});
+      const resultBody = await validateAuthentication({res});
       const {token} = resultBody || {};
       return await storeToken(token);
     })
@@ -69,7 +69,7 @@ export const signUpWithId = async navigation => {
     });
 };
 
-export const deleteAccount = async navigation => {
+export const deleteAccount = async () => {
   const token = await readToken();
   return await fetch('http://10.0.2.2:8080/auth/delete-account', {
     method: 'DELETE',
@@ -78,7 +78,7 @@ export const deleteAccount = async navigation => {
     },
   })
     .then(async res => {
-      await validateAuthentication({navigation, res});
+      await validateAuthentication({res});
       return await storeToken('');
     })
     .catch(error => {

@@ -5,11 +5,11 @@ import {Images} from '../../../assets/Images';
 import styles from '../Dashboard.styles';
 
 import {Icons} from '../../../assets/Icons';
-import {pagesNames} from '../../../helpers/utils';
+import {navigate, pagesNames} from '../../../helpers/utils';
 import {useSelector} from 'react-redux';
 import Button from '../../../Components/Button/Button';
 
-export const EmptyComponent = ({navigation, refreshing}) => {
+export const EmptyComponent = () => {
   const {token} = useSelector(state => state.main);
 
   return (
@@ -23,14 +23,10 @@ export const EmptyComponent = ({navigation, refreshing}) => {
         containerStyle={[styles.button, styles.plusButton]}
         source={Icons.plus}
         onPress={() => {
-          if (token) navigation.push(pagesNames.createNewTask, {refreshing});
+          if (token) navigate(pagesNames.createNewTask);
           else
-            navigation.push(pagesNames.login, {
-              routing: () => {
-                navigation.replace(pagesNames.createNewTask, {
-                  refreshing,
-                });
-              },
+            navigate(pagesNames.login, {
+              fromDashboard: true,
             });
         }}
       />

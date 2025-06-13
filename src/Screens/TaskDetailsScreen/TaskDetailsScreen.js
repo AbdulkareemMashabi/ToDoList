@@ -2,20 +2,20 @@ import {useEffect, useState} from 'react';
 import {FlatList, Platform, View} from 'react-native';
 import {
   RESULT_PERMISSION,
+  goBack,
   handleAPIErrors,
+  hideLoader,
   setInCalendar,
   setSharedData,
   setTaskToCalendar,
+  showLoader,
 } from '../../helpers/utils';
-import {updateDocuments} from '../../helpers/firebase';
-import {useDispatch, useSelector} from 'react-redux';
 import DoubleText from '../../Components/DoubleText/DoubleText';
 import styles from './TaskDetailsScreen.style';
 import ActionsSheet from '../../Components/ActionsSheet/ActionsSheet';
 import Form from '../../Components/Form/Form';
 import * as Yup from 'yup';
 import Locale from '../../helpers/localization';
-import {setIsLoadingOverLay} from '../../helpers/Redux/mainReducer';
 import {getFormFields, getInitialValues} from './utils';
 import Text from '../../Components/Text/Text';
 import Container from '../../Components/Contianer/Container';
@@ -26,12 +26,11 @@ import {Icons} from '../../assets/Icons';
 import OneLineToggle from '../../Components/OneLineToggle/OneLineToggle';
 import RNCalendarEvents from 'react-native-calendar-events';
 import {updateTask} from '../../helpers/taskServices';
+import {getUserData} from '../Dashboard/utils';
 
 export const TaskDetailsScreen = ({navigation, route}) => {
-  const {task, refreshing} = route.params;
+  const {task} = route.params;
   const {date: initialDate, calendarId: initialCalendarId, _id} = task || {};
-
-  const {userId} = useSelector(state => state.main);
   const [formData, setFormData] = useState(task);
   const [openMainForm, setOpenMainForm] = useState(false);
   const [mainTaskSubmitted, setMainTaskSubmitted] = useState(false);
@@ -39,7 +38,6 @@ export const TaskDetailsScreen = ({navigation, route}) => {
   const [enableDoneButton, setEnableDonButton] = useState(false);
   const [calendar, setCalendar] = useState(initialCalendarId);
   const [isCalendarAvail, setIsCalendarAvail] = useState(initialDate);
-  const dispatch = useDispatch();
 
   const {title, date, status, description, calendarId, subTasks} =
     formData || {};
@@ -75,26 +73,26 @@ export const TaskDetailsScreen = ({navigation, route}) => {
     if (enableDoneButton)
       try {
         const finalCalendarId = calendarId || calendar;
-        dispatch(setIsLoadingOverLay(true));
+        showLoader();
         const newValues = {
           ...formData,
           calendarId: finalCalendarId ? finalCalendarId : null,
         };
-        await updateTask({taskId: _id, newValues}, navigation);
+        await updateTask({taskId: _id, newValues});
         if (calendarId) showToast?.();
         if (formData.favorite) {
           setSharedData(newValues);
         }
-        dispatch(setIsLoadingOverLay(false));
-        navigation.goBack();
-        refreshing();
+        hideLoader();
+        goBack();
+        getUserData();
       } catch (e) {
         handleAPIErrors(e);
-        dispatch(setIsLoadingOverLay(false));
+        hideLoader();
       }
     else {
-      refreshing();
-      navigation.goBack();
+      getUserData();
+      goBack();
     }
   };
 

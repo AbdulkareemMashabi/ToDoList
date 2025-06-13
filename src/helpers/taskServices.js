@@ -1,6 +1,6 @@
 import {readToken, validateAuthentication} from './utils';
 
-export const getAllTasks = async navigation => {
+export const getAllTasks = async () => {
   const token = await readToken();
   return await fetch('http://10.0.2.2:8080/task/list', {
     method: 'GET',
@@ -9,14 +9,14 @@ export const getAllTasks = async navigation => {
     },
   })
     .then(async res => {
-      return await validateAuthentication({navigation, res});
+      return await validateAuthentication({res});
     })
     .catch(error => {
       throw error;
     });
 };
 
-export const createTask = async (data, navigation) => {
+export const createTask = async data => {
   const {title, date, description, calendarId, color} = data || {};
   const token = await readToken();
   return await fetch('http://10.0.2.2:8080/task/create-task', {
@@ -34,14 +34,14 @@ export const createTask = async (data, navigation) => {
     }),
   })
     .then(async res => {
-      return await validateAuthentication({navigation, res});
+      return await validateAuthentication({res});
     })
     .catch(error => {
       throw error;
     });
 };
 
-export const updateTask = async (data, navigation) => {
+export const updateTask = async data => {
   const {taskId, newValues} = data || {};
   const token = await readToken();
   return await fetch('http://10.0.2.2:8080/task/update-task', {
@@ -56,14 +56,14 @@ export const updateTask = async (data, navigation) => {
     }),
   })
     .then(async res => {
-      return await validateAuthentication({navigation, res});
+      return await validateAuthentication({res});
     })
     .catch(error => {
       throw error;
     });
 };
 
-export const updateFavorite = async (taskId, navigation) => {
+export const updateFavorite = async taskId => {
   const token = await readToken();
   return await fetch('http://10.0.2.2:8080/task/update-favorite', {
     method: 'PUT',
@@ -76,14 +76,14 @@ export const updateFavorite = async (taskId, navigation) => {
     }),
   })
     .then(async res => {
-      return await validateAuthentication({navigation, res});
+      return await validateAuthentication({res});
     })
     .catch(error => {
       throw error;
     });
 };
 
-export const updateStatusService = async (data, navigation) => {
+export const updateStatusService = async data => {
   const {taskId, newValues} = data || {};
   const token = await readToken();
   return await fetch('http://10.0.2.2:8080/task/update-status', {
@@ -98,14 +98,14 @@ export const updateStatusService = async (data, navigation) => {
     }),
   })
     .then(async res => {
-      return await validateAuthentication({navigation, res});
+      return await validateAuthentication({res});
     })
     .catch(error => {
       throw error;
     });
 };
 
-export const deleteTaskService = async (taskId, navigation) => {
+export const deleteTaskService = async taskId => {
   const token = await readToken();
   return await fetch('http://10.0.2.2:8080/task/delete-task', {
     method: 'DELETE',
@@ -118,7 +118,7 @@ export const deleteTaskService = async (taskId, navigation) => {
     }),
   })
     .then(async res => {
-      return await validateAuthentication({navigation, res});
+      return await validateAuthentication({res});
     })
     .catch(error => {
       throw error;

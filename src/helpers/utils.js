@@ -22,7 +22,15 @@ import {
   checkMultiple,
 } from 'react-native-permissions';
 import EncryptedStorage from 'react-native-encrypted-storage';
-import {setToken} from './Redux/mainReducer';
+import {
+  setIsLoading,
+  setIsLoadingOverLay,
+  setIsLoadingSkeleton,
+  setToken,
+} from './Redux/mainReducer';
+import {createNavigationContainerRef} from '@react-navigation/native';
+
+export const navigationRef = createNavigationContainerRef();
 
 export const pagesNames = {
   lottie: 'Lottie',
@@ -279,10 +287,10 @@ const checkWidgetPermission = async () => {
     });
 };
 
-export const validateAuthentication = async ({res, navigation}) => {
+export const validateAuthentication = async ({res}) => {
   if (res?.status === 401) {
     await storeToken('');
-    navigation.navigate(pagesNames.nonDismissibleLoginModal, {nonHide: true});
+    navigate(pagesNames.nonDismissibleLoginModal);
     throw new Error('loginPage.sessionEnd');
   } else if (![200, 201].includes(res?.status)) {
     const {message} = res.json();
@@ -301,3 +309,42 @@ export const storeToken = async token => {
 export const readToken = async () => {
   return await EncryptedStorage.getItem('authToken');
 };
+
+export const showLoader = async ({isLoadingSkeleton, isLoadingButton} = {}) => {
+  const dispatch = store.dispatch;
+  if (isLoadingSkeleton) {
+    dispatch(setIsLoadingSkeleton(true));
+  } else if (isLoadingButton) {
+    dispatch(setIsLoading(true));
+  } else {
+    dispatch(setIsLoadingOverLay(true));
+  }
+};
+
+export const hideLoader = async () => {
+  const dispatch = store.dispatch;
+  dispatch(setIsLoadingSkeleton(false));
+  dispatch(setIsLoadingOverLay(false));
+  dispatch(setIsLoading(false));
+};
+
+export const navigate = (screenName, params = {}) => {
+  if (navigationRef.isReady()) {
+    navigationRef.navigate(screenName, params);
+  }
+};
+
+export const goBack = () => {
+  if (navigationRef.isReady()) {
+    navigationRef.goBack();
+  }
+};
+
+export function resetNavigation(routes) {
+  if (navigationRef.isReady()) {
+    navigationRef.reset({
+      index: 0,
+      routes,
+    });
+  }
+}

@@ -2,16 +2,18 @@ import Locale from '../../helpers/localization';
 import Text from '../../Components/Text/Text';
 import Form from '../../Components/Form/Form';
 import * as Yup from 'yup';
-import {handleAPIErrors, showToast} from '../../helpers/utils';
-import {useDispatch} from 'react-redux';
-import {setIsLoading} from '../../helpers/Redux/mainReducer';
+import {
+  goBack,
+  handleAPIErrors,
+  hideLoader,
+  showLoader,
+  showToast,
+} from '../../helpers/utils';
 import Container from '../../Components/Contianer/Container';
 import {Images} from '../../assets/Images';
 import {deleteAccount, login} from '../../helpers/authServices';
 
-export const AccountDeletion = ({navigation}) => {
-  const dispatch = useDispatch();
-
+export const AccountDeletion = () => {
   const validation = Yup.object().shape({
     email: Yup.string()
       .email(Locale.t('common.emailValidation'))
@@ -21,15 +23,15 @@ export const AccountDeletion = ({navigation}) => {
 
   const onSubmit = async values => {
     try {
-      dispatch(setIsLoading(true));
-      await login(values, navigation);
-      await deleteAccount(navigation);
+      showLoader({isLoadingButton: true});
+      await login(values);
+      await deleteAccount();
       showToast('accountDeletion.successfulDeletion');
-      navigation.goBack();
+      goBack();
     } catch (e) {
       handleAPIErrors(e);
     } finally {
-      dispatch(setIsLoading(false));
+      hideLoader();
     }
   };
 

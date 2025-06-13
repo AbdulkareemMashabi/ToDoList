@@ -16,26 +16,24 @@ import {Images} from '../../assets/Images';
 import Button from '../Button/Button';
 import {dispatch} from '../../helpers/utils';
 import {setEnableDoneLottie} from '../../helpers/Redux/mainReducer';
+import {LottieIndex} from '../../assets/Lottie';
 
 export const Container = ({
   children,
   style,
   scrollable,
-  isLoading: _isLoading,
   backgroundImage,
   renderFooter,
   backgroundColor,
+  lottie,
 }) => {
-  const {isLoading, isLoadingOverLay, enableDoneLottie} = useSelector(
-    state => state.main,
-  );
+  const {isLoadingSkeleton, isLoadingOverLay, enableDoneLottie, isLoading} =
+    useSelector(state => state.main);
   const behavior = Platform.OS === 'ios' ? 'padding' : 'height';
   const insets = useSafeAreaInsets();
-  const loadingLottiePath = '../../assets/Lottie/loadingOverLay.json';
-  const doneLottiePath = '../../assets/Lottie/doneLottie.json';
 
   const renderContent = () => {
-    if (_isLoading) return <Skeleton />;
+    if (isLoadingSkeleton) return <Skeleton />;
     else if (scrollable)
       return <ScrollView style={styles.renderContent}>{children}</ScrollView>;
     else return <View style={styles.renderContent}>{children}</View>;
@@ -58,9 +56,9 @@ export const Container = ({
             <LottieView
               speed={isLoadingOverLay ? 1 : 2}
               source={
-                isLoadingOverLay
-                  ? require(loadingLottiePath)
-                  : require(doneLottiePath)
+                enableDoneLottie
+                  ? LottieIndex.doneLottie
+                  : lottie || LottieIndex.loadingOverLay
               }
               autoPlay
               loop={!enableDoneLottie}
@@ -81,7 +79,9 @@ export const Container = ({
       source={backgroundImage || Images.light}>
       <SafeAreaView
         edges={['top', 'left', 'right']}
-        pointerEvents={isLoading || isLoadingOverLay ? 'none' : 'auto'}
+        pointerEvents={
+          isLoading || isLoadingOverLay || isLoadingSkeleton ? 'none' : 'auto'
+        }
         style={[
           styles.flex_1,
           {

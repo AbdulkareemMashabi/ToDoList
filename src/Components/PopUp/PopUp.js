@@ -3,8 +3,9 @@ import Text from '../Text/Text';
 import Button from '../Button/Button';
 import styles from './PopUp.style';
 import Container from '../Contianer/Container';
+import {goBack} from '../../helpers/utils';
 
-export const PopUp = ({navigation, route}) => {
+export const PopUp = ({route}) => {
   const {
     title,
     description,
@@ -15,7 +16,7 @@ export const PopUp = ({navigation, route}) => {
   } = route.params;
 
   const dismissPopUp = () => {
-    navigation.goBack();
+    goBack();
   };
 
   return (
@@ -44,7 +45,7 @@ export const PopUp = ({navigation, route}) => {
             containerStyle={styles.spaceBetweenItems}
             source={'common.cancel'}
             onPress={() => {
-              navigation.pop();
+              goBack();
             }}
           />
         ) : null}

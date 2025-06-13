@@ -7,7 +7,7 @@ import Dashboard from '../Screens/Dashboard/Dashboard';
 import Login from '../Screens/Login/Login';
 import ForgetPassword from '../Screens/ForgetPassword/ForgetPassword';
 import Register from '../Screens/Register/Register';
-import {pagesNames, toastConfig} from '../helpers/utils';
+import {navigationRef, pagesNames, toastConfig} from '../helpers/utils';
 import {useSelector} from 'react-redux';
 import CreateNewTask from '../Screens/CreateNewTask/CreateNewTask';
 import TaskDetailsScreen from '../Screens/TaskDetailsScreen/TaskDetailsScreen';
@@ -34,6 +34,7 @@ export const App = () => {
   return (
     <>
       <NavigationContainer
+        ref={navigationRef}
         theme={{
           ...DefaultTheme,
           colors: {
@@ -43,9 +44,7 @@ export const App = () => {
         }}>
         <Stack.Navigator
           initialRouteName={pagesNames.lottie}
-          screenOptions={({navigation}) =>
-            getScreenOptions(navigation, currentPage)
-          }>
+          screenOptions={() => getScreenOptions(currentPage)}>
           <Stack.Screen
             name={pagesNames.lottie}
             component={Lottie}

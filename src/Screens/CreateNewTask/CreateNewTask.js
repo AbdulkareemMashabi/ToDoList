@@ -7,12 +7,14 @@ import {useDispatch, useSelector} from 'react-redux';
 import {
   resetCreateNewTaskBackgrounds,
   setBackgroundColor,
-  setIsLoading,
 } from '../../helpers/Redux/mainReducer';
 import {
   handleAPIErrors,
+  hideLoader,
   pagesNames,
+  resetNavigation,
   setTaskToCalendar,
+  showLoader,
 } from '../../helpers/utils';
 import Container from '../../Components/Contianer/Container';
 import styles from './CreateNewTask.style';
@@ -21,11 +23,10 @@ import {setImageBackground} from './utils';
 import OneLineToggle from '../../Components/OneLineToggle/OneLineToggle';
 import {createTask} from '../../helpers/taskServices';
 
-export const CreateNewTask = ({navigation, route}) => {
+export const CreateNewTask = () => {
   const {backgroundColor, createNewTaskBackgrounds} = useSelector(
     state => state.main,
   );
-  const {refreshing} = route.params;
   const [image, setImage] = useState(null);
   const [calendar, setCalendar] = useState(false);
   const [isCalendarAvail, setIsCalendarAvail] = useState(false);
@@ -48,22 +49,27 @@ export const CreateNewTask = ({navigation, route}) => {
 
   const onSubmit = async (values, calendarId, showToast) => {
     try {
-      dispatch(setIsLoading(true));
+      showLoader({isLoadingButton: true});
 
       const {task} =
-        (await createTask(
-          {calendarId, color: backgroundColor, ...values},
-          navigation,
-        )) || {};
+        (await createTask({calendarId, color: backgroundColor, ...values})) ||
+        {};
       showToast?.();
-      dispatch(setIsLoading(false));
-      navigation.replace(pagesNames.taskDetailsScreen, {
-        task,
-        refreshing,
-      });
+      hideLoader();
+      resetNavigation([
+        {
+          name: pagesNames.dashboard,
+        },
+        {
+          name: pagesNames.taskDetailsScreen,
+          params: {
+            task,
+          },
+        },
+      ]);
     } catch (e) {
       handleAPIErrors(e);
-      dispatch(setIsLoading(false));
+      hideLoader();
     }
   };
 
