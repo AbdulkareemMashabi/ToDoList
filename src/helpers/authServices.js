@@ -1,4 +1,4 @@
-import {readToken, storeToken, validateAuthentication} from './utils';
+import {callAPI, readToken, storeToken} from './utils';
 import CryptoJS from 'crypto-js';
 import {PRIVATE_KEY} from '@env';
 import {getUniqueId} from 'react-native-device-info';
@@ -6,82 +6,53 @@ import {getUniqueId} from 'react-native-device-info';
 export const signUp = async data => {
   const {email, password} = data || {};
   const securePassword = CryptoJS.AES.encrypt(password, PRIVATE_KEY).toString();
-  return await fetch('http://10.0.2.2:8080/auth/signUp', {
+
+  return await callAPI({
+    url: 'http://10.0.2.2:8080/auth/signUp',
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      email,
-      password: securePassword,
-    }),
-  })
-    .then(async res => {
-      return await validateAuthentication({res});
-    })
-    .catch(error => {
-      throw error;
-    });
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({email, password: securePassword}),
+  });
 };
 
 export const login = async data => {
   const {email, password} = data || {};
   const securePassword = CryptoJS.AES.encrypt(password, PRIVATE_KEY).toString();
-  return await fetch('http://10.0.2.2:8080/auth/login', {
+
+  const resultBody = await callAPI({
+    url: 'http://10.0.2.2:8080/auth/login',
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      email,
-      password: securePassword,
-    }),
-  })
-    .then(async res => {
-      const resultBody = await validateAuthentication({res});
-      const {token} = resultBody || {};
-      return await storeToken(token);
-    })
-    .catch(error => {
-      throw error;
-    });
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({email, password: securePassword}),
+  });
+
+  const {token} = resultBody || {};
+  return await storeToken(token);
 };
 
 export const signUpWithId = async () => {
   const deviceId = await getUniqueId();
   const secureDeviceId = CryptoJS.AES.encrypt(deviceId, PRIVATE_KEY).toString();
-  return await fetch('http://10.0.2.2:8080/auth/signup-Id', {
+
+  const resultBody = await callAPI({
+    url: 'http://10.0.2.2:8080/auth/signup-Id',
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      deviceId: secureDeviceId,
-    }),
-  })
-    .then(async res => {
-      const resultBody = await validateAuthentication({res});
-      const {token} = resultBody || {};
-      return await storeToken(token);
-    })
-    .catch(error => {
-      throw error;
-    });
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({deviceId: secureDeviceId}),
+  });
+
+  const {token} = resultBody || {};
+  return await storeToken(token);
 };
 
 export const deleteAccount = async () => {
   const token = await readToken();
-  return await fetch('http://10.0.2.2:8080/auth/delete-account', {
+
+  await callAPI({
+    url: 'http://10.0.2.2:8080/auth/delete-account',
     method: 'DELETE',
-    headers: {
-      Authorization: 'Bearer ' + token,
-    },
-  })
-    .then(async res => {
-      await validateAuthentication({res});
-      return await storeToken('');
-    })
-    .catch(error => {
-      throw error;
-    });
+    headers: {Authorization: 'Bearer ' + token},
+  });
+
+  return await storeToken('');
 };
