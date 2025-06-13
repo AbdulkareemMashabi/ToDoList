@@ -26,7 +26,6 @@ import {Icons} from '../../assets/Icons';
 import OneLineToggle from '../../Components/OneLineToggle/OneLineToggle';
 import RNCalendarEvents from 'react-native-calendar-events';
 import {updateTask} from '../../helpers/taskServices';
-import {getUserData} from '../Dashboard/utils';
 
 export const TaskDetailsScreen = ({navigation, route}) => {
   const {task} = route.params;
@@ -85,13 +84,11 @@ export const TaskDetailsScreen = ({navigation, route}) => {
         }
         hideLoader();
         goBack();
-        getUserData();
       } catch (e) {
         handleAPIErrors(e);
         hideLoader();
       }
     else {
-      getUserData();
       goBack();
     }
   };
