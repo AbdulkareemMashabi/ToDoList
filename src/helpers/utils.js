@@ -23,6 +23,7 @@ import {
 } from 'react-native-permissions';
 import EncryptedStorage from 'react-native-encrypted-storage';
 import {
+  resetData,
   setIsLoading,
   setIsLoadingOverLay,
   setIsLoadingSkeleton,
@@ -290,6 +291,7 @@ const checkWidgetPermission = async () => {
 export const validateAuthentication = async ({res}) => {
   if (res?.status === 401) {
     await storeToken('');
+    store.dispatch(resetData());
     navigate(pagesNames.nonDismissibleLoginModal);
     throw new Error('loginPage.sessionEnd');
   } else if (![200, 201].includes(res?.status)) {

@@ -26,9 +26,6 @@ export const mainReducer = createSlice({
     setIsLoadingOverLay: (state, action) => {
       state.isLoadingOverLay = action.payload;
     },
-    setUserId: (state, action) => {
-      state.userId = action.payload;
-    },
     setToken: (state, action) => {
       state.token = action.payload;
     },
@@ -44,11 +41,11 @@ export const mainReducer = createSlice({
     resetCreateNewTaskBackgrounds: state => {
       state.createNewTaskBackgrounds = [];
     },
-    setIsDeviceId: state => {
-      state.isDeviceId = true;
-    },
     setEnableDoneLottie: (state, action) => {
       state.enableDoneLottie = action.payload;
+    },
+    resetData: () => {
+      return initialState;
     },
   },
 });
@@ -56,15 +53,14 @@ export const mainReducer = createSlice({
 export const {
   setIsLoading,
   setIsLoadingOverLay,
-  setUserId,
   setBackgroundColor,
   setUserData,
   setCreateNewTaskBackgrounds,
   resetCreateNewTaskBackgrounds,
-  setIsDeviceId,
   setEnableDoneLottie,
   setToken,
   setIsLoadingSkeleton,
+  resetData,
 } = mainReducer.actions;
 
 export default mainReducer.reducer;
