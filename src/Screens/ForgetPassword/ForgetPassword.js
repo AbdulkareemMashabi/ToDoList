@@ -2,7 +2,6 @@ import Locale from '../../helpers/localization';
 import Text from '../../Components/Text/Text';
 import Form from '../../Components/Form/Form';
 import * as Yup from 'yup';
-import {sendPasswordResetEmail} from 'firebase/auth';
 import {
   goBack,
   handleAPIErrors,
@@ -10,7 +9,6 @@ import {
   showLoader,
   showToast,
 } from '../../helpers/utils';
-import {auth} from '../../helpers/firebase';
 import Container from '../../Components/Contianer/Container';
 import {Images} from '../../assets/Images';
 

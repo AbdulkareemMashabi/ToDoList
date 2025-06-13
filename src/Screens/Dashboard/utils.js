@@ -15,7 +15,6 @@ import {
   storeToken,
 } from '../../helpers/utils';
 import styles from './Dashboard.styles';
-import {deleteDocument} from '../../helpers/firebase';
 import {setUserData} from '../../helpers/Redux/mainReducer';
 import {store} from '../../helpers/Redux/store';
 import RNCalendarEvents from 'react-native-calendar-events';
