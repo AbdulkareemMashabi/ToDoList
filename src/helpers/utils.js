@@ -53,12 +53,6 @@ export const pagesUseWaveImage = [
   pagesNames.deleteAccount,
 ];
 
-const errorMessages = {
-  'email-already-in-use': 'APIErrorMessages.emailUsed',
-  'weak-password': 'APIErrorMessages.weakPassword',
-  'invalid-credential': 'APIErrorMessages.invalidUser',
-};
-
 export const backgroundColors = {
   blue: '#32ADE6',
   red: '#FF3B30',
@@ -79,12 +73,9 @@ export const shadowColors = {
 };
 
 export const handleAPIErrors = error => {
-  const message = errorMessages?.[error?.code?.split('/')[1]] || error?.message;
   Alert.alert(
     Locale.t('common.errorOccurred'),
-    message
-      ? Locale.t(message)
-      : error?.message || Locale.t('APIErrorMessages.generalError'),
+    error?.message || Locale.t('APIErrorMessages.generalError'),
   );
 };
 
