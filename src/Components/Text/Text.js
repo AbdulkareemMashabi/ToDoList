@@ -18,6 +18,7 @@ export const Text = ({
   isLineThrough,
   bold,
   isAnimated,
+  flipRTL,
 }) => {
   const getColor = () => {
     if (!color) return null;
@@ -44,6 +45,7 @@ export const Text = ({
         isLineThrough ? {textDecorationLine: 'line-through'} : null,
         style,
         bold ? styles.boldStyle : null,
+        flipRTL ? styles.flipRTL : null,
       ]}>
       {value ? value : Locale.t(localeKey, localeProps)}
     </TextComponent>

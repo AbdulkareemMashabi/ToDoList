@@ -12,4 +12,7 @@ export default StyleSheet.create({
   whiteColor: {color: 'white'},
   blackColor: {color: 'black'},
   boldStyle: {fontWeight: 'bold'},
+  flipRTL: {
+    transform: [{scaleX: -1}],
+  },
 });
