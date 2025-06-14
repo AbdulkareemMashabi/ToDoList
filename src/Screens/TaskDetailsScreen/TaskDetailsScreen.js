@@ -46,25 +46,20 @@ export const TaskDetailsScreen = ({navigation, route}) => {
   });
 
   useEffect(() => {
-    navigation.setOptions({
-      headerTitle: title,
-      headerRight: () => {
-        return enableDoneButton ? (
+    route.params.setNavigationBarItems(oldItems => {
+      return {
+        ...oldItems,
+        rightItems: enableDoneButton ? (
           <Button
             source={'taskDetails.Done'}
             variant="secondary"
             containerStyle={styles.doneButton}
             onPress={setCalendarFun}
           />
-        ) : null;
-      },
-      headerLeft: () => (
-        <Button
-          flipRTL={Platform.OS === 'ios'}
-          source={Platform.OS === 'ios' ? Icons.backButton : Icons.arrow}
-          onPress={setCalendarFun}
-        />
-      ),
+        ) : null,
+        onBackPress: setCalendarFun,
+        pageTitle: title,
+      };
     });
   }, [enableDoneButton, formData, setCalendarFun, calendar, mainTaskSubmitted]);
 

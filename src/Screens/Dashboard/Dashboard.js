@@ -13,12 +13,12 @@ import SwipeableButtons from './DashboardComponents/SwipeableButtons';
 import EmptyComponent from './DashboardComponents/EmptyComponent';
 import {useFocusEffect} from '@react-navigation/native';
 
-export const Dashboard = ({navigation}) => {
+export const Dashboard = ({route}) => {
   const {token, userData, isLoadingSkeleton} = useSelector(state => state.main);
 
   useFocusEffect(
     useCallback(() => {
-      handleEnterFace(navigation, token);
+      handleEnterFace(route, token);
       if (token) {
         getUserData();
       }

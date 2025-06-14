@@ -15,13 +15,16 @@ import AccountDeletion from '../Screens/AccountDeletion/AccountDeletion';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Toast from 'react-native-toast-message';
 import PopUp from '../Components/PopUp/PopUp';
-import Locale from '../helpers/localization';
-import {getScreenOptions} from './utils';
+import {CustomHeaderNavigation} from '../Components/CustomHeaderNavigation/CustomHeaderNavigation';
 
 const Stack = createNativeStackNavigator();
 
 export const App = () => {
-  const [currentPage, setCurrentPage] = useState(null);
+  const [navigationBarItems, setNavigationBarItems] = useState({
+    rightItems: null,
+    onBackPress: null,
+    pageTitle: null,
+  });
   const {isLoading, isLoadingOverLay} = useSelector(state => state.main);
 
   useEffect(() => {
@@ -44,7 +47,14 @@ export const App = () => {
         }}>
         <Stack.Navigator
           initialRouteName={pagesNames.lottie}
-          screenOptions={() => getScreenOptions(currentPage)}>
+          screenOptions={({route}) => ({
+            header: () => (
+              <CustomHeaderNavigation
+                title={route.name}
+                navigationBarItems={navigationBarItems}
+              />
+            ),
+          })}>
           <Stack.Screen
             name={pagesNames.lottie}
             component={Lottie}
@@ -55,22 +65,12 @@ export const App = () => {
           <Stack.Screen
             name={pagesNames.dashboard}
             component={Dashboard}
-            options={{title: Locale.t('pagesNames.dashboard')}}
-            listeners={{
-              focus: () => {
-                setCurrentPage(pagesNames.dashboard);
-              },
-              blur: () => {
-                setCurrentPage(null);
-              },
-              beforeRemove: () => {
-                setCurrentPage(null);
-              },
-            }}
+            initialParams={{setNavigationBarItems}}
           />
           <Stack.Screen
             name={pagesNames.nonDismissibleLoginModal}
             component={Login}
+            initialParams={{setNavigationBarItems}}
             options={{
               presentation: 'modal', // Shows as a modal
               gestureEnabled: false, // Prevent swipe-to-close
@@ -78,37 +78,23 @@ export const App = () => {
             }}
           />
           <Stack.Screen
+            initialParams={{setNavigationBarItems}}
             name={pagesNames.login}
             component={Login}
-            options={{title: Locale.t('pagesNames.login')}}
           />
           <Stack.Screen
             name={pagesNames.forgetPassword}
             component={ForgetPassword}
-            options={{title: Locale.t('pagesNames.forgetPassword')}}
           />
+          <Stack.Screen name={pagesNames.register} component={Register} />
           <Stack.Screen
-            name={pagesNames.register}
-            component={Register}
-            options={{title: Locale.t('pagesNames.register')}}
-          />
-          <Stack.Screen
+            initialParams={{setNavigationBarItems}}
             name={pagesNames.taskDetailsScreen}
             component={TaskDetailsScreen}
-            options={{title: ''}}
-            listeners={{
-              focus: () => {
-                setCurrentPage(pagesNames.taskDetailsScreen);
-              },
-              beforeRemove: () => {
-                setCurrentPage(null);
-              },
-            }}
           />
           <Stack.Screen
             name={pagesNames.deleteAccount}
             component={AccountDeletion}
-            options={{title: Locale.t('pagesNames.deleteAccount')}}
           />
           <Stack.Screen
             name={pagesNames.popUp}
@@ -121,7 +107,6 @@ export const App = () => {
           <Stack.Screen
             name={pagesNames.createNewTask}
             component={CreateNewTask}
-            options={{title: Locale.t('pagesNames.createNewTask')}}
           />
         </Stack.Navigator>
       </NavigationContainer>

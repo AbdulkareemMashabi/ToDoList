@@ -324,20 +324,29 @@ export const hideLoader = async () => {
   dispatch(setIsLoading(false));
 };
 
+const resetNavigationBar = () => {
+  const currentRoute = navigationRef.current?.getCurrentRoute();
+  const {setNavigationBarItems} = currentRoute?.params || {};
+  setNavigationBarItems?.(null);
+};
+
 export const navigate = (screenName, params = {}) => {
   if (navigationRef.isReady()) {
+    resetNavigationBar();
     navigationRef.navigate(screenName, params);
   }
 };
 
 export const goBack = () => {
   if (navigationRef.isReady()) {
+    resetNavigationBar();
     navigationRef.goBack();
   }
 };
 
 export function resetNavigation(routes) {
   if (navigationRef.isReady()) {
+    resetNavigationBar();
     navigationRef.reset({
       index: 0,
       routes,

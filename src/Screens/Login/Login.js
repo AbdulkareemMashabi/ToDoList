@@ -19,19 +19,22 @@ import {Icons} from '../../assets/Icons';
 import {Images} from '../../assets/Images';
 import {login, signUpWithId} from '../../helpers/authServices';
 
-export const Login = ({navigation, route}) => {
+export const Login = ({route}) => {
   useEffect(() => {
-    navigation.setOptions({
-      headerRight: () => (
-        <Button
-          containerStyle={styles.deleteButton}
-          source={Icons.accountDeletion}
-          variant="secondary"
-          onPress={() => {
-            navigate(pagesNames.deleteAccount);
-          }}
-        />
-      ),
+    route.params.setNavigationBarItems(oldItems => {
+      return {
+        ...oldItems,
+        rightItems: (
+          <Button
+            containerStyle={styles.deleteButton}
+            source={Icons.accountDeletion}
+            variant="secondary"
+            onPress={() => {
+              navigate(pagesNames.deleteAccount);
+            }}
+          />
+        ),
+      };
     });
   }, []);
 

@@ -85,7 +85,6 @@ export const Container = ({
         style={[
           styles.flex_1,
           {
-            paddingTop: Platform.OS === 'ios' ? insets.top : 50,
             backgroundColor: backgroundColor,
           },
         ]}

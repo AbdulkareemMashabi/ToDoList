@@ -20,55 +20,58 @@ import {store} from '../../helpers/Redux/store';
 import RNCalendarEvents from 'react-native-calendar-events';
 import {getAllTasks} from '../../helpers/taskServices';
 
-export const handleEnterFace = (navigation, token) => {
-  navigation.setOptions({
-    headerRight: () => (
-      <View style={styles.buttonsContainer}>
-        <Button
-          source={Icons.language}
-          onPress={async () => {
-            try {
-              showLoader();
-              await AsyncStorage.setItem(
-                'language',
-                Locale.language === 'ar' ? 'en' : 'ar',
-              );
-              I18nManager.forceRTL(!Locale.isRTL);
-              I18nManager.allowRTL(!Locale.isRTL);
-              setTimeout(() => {
-                RNRestart.restart();
-              }, 300);
-            } catch (e) {
-              Alert.alert(
-                Locale.t('common.errorOccurred'),
-                Locale.t('myWishesPage.languageErrorChange'),
-              );
-            }
-          }}
-        />
-        {token ? (
+export const handleEnterFace = (route, token) => {
+  route.params.setNavigationBarItems(oldItems => {
+    return {
+      ...oldItems,
+      rightItems: (
+        <View style={styles.buttonsContainer}>
           <Button
-            source={Icons.logOut}
+            source={Icons.language}
             onPress={async () => {
-              navigate(pagesNames.popUp, {
-                title: 'myWishesPage.logOut',
-                confirmButton: async () => {
-                  await storeToken('');
+              try {
+                showLoader();
+                await AsyncStorage.setItem(
+                  'language',
+                  Locale.language === 'ar' ? 'en' : 'ar',
+                );
+                I18nManager.forceRTL(!Locale.isRTL);
+                I18nManager.allowRTL(!Locale.isRTL);
+                setTimeout(() => {
                   RNRestart.restart();
-                },
-              });
+                }, 300);
+              } catch (e) {
+                Alert.alert(
+                  Locale.t('common.errorOccurred'),
+                  Locale.t('myWishesPage.languageErrorChange'),
+                );
+              }
             }}
           />
-        ) : (
-          <Button
-            source={Icons.cloud}
-            onPress={() => {
-              navigate(pagesNames.login);
-            }}
-          />
-        )}
-      </View>
-    ),
+          {token ? (
+            <Button
+              source={Icons.logOut}
+              onPress={async () => {
+                navigate(pagesNames.popUp, {
+                  title: 'myWishesPage.logOut',
+                  confirmButton: async () => {
+                    await storeToken('');
+                    RNRestart.restart();
+                  },
+                });
+              }}
+            />
+          ) : (
+            <Button
+              source={Icons.cloud}
+              onPress={() => {
+                navigate(pagesNames.login);
+              }}
+            />
+          )}
+        </View>
+      ),
+    };
   });
 };
 
