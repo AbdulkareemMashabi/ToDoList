@@ -72,6 +72,7 @@ export const Dashboard = ({route}) => {
         showsVerticalScrollIndicator={false}
         ItemSeparatorComponent={<View style={styles.separator} />}
         data={userData}
+        keyExtractor={item => item._id.toString()}
         renderItem={({item, index}) => {
           return (
             <View key={index}>
